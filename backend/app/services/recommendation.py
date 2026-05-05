@@ -1,5 +1,5 @@
 
-from app.models.medical_center import MedicalCenter
+from app.models import MedicalCenter
 
 def calculate_recommendation_score(center: MedicalCenter, criteria: dict) -> float:
     """

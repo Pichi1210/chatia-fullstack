@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 from sqlmodel import select, SQLModel
 
 from app.api.deps import SessionDep
-from app.models.medical_center import MedicalCenter
+from app.models import MedicalCenter
 from app.services.chatbot import parse_message
 from app.services.yandex_maps import search_medical_centers
 from app.services.recommendation import rank_medical_centers

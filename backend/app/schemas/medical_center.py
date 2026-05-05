@@ -1,6 +1,6 @@
 
 from sqlmodel import SQLModel
-from app.models.medical_center import MedicalCenter
+from app.models import MedicalCenter
 
 class MedicalCenterCreate(SQLModel):
     name: str

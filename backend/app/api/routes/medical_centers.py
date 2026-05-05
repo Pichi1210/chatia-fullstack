@@ -4,7 +4,7 @@ from fastapi import APIRouter, HTTPException
 from sqlmodel import func, select
 
 from app.api.deps import SessionDep
-from app.models.medical_center import MedicalCenter
+from app.models import MedicalCenter
 from app.schemas.medical_center import MedicalCenterCreate, MedicalCentersPublic
 from app.services.yandex_maps import search_medical_centers
 
