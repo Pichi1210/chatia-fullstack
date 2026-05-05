@@ -11,6 +11,7 @@ from app.schemas.medical_center import (
     MedicalCentersPublic,
 )
 from app.services.yandex_maps import search_medical_centers
+from sqlmodel import SQLModel
 
 router = APIRouter()
 
