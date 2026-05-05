@@ -8,7 +8,7 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport, Route } from './routes/__root'
+import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RecoverPasswordRouteImport } from './routes/recover-password'
@@ -18,22 +18,6 @@ import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
 import { Route as LayoutItemsRouteImport } from './routes/_layout/items'
 import { Route as LayoutAdminRouteImport } from './routes/_layout/admin'
-
-import ChatInterface from './components/Chat/ChatInterface'
-
-const LayoutChatRouteImport = new Route({
-  getParentRoute: () => LayoutRoute,
-  path: '/chat',
-  component: function ChatPage() {
-    return (
-      <div className="p-4">
-        <h1 className="text-2xl font-bold mb-4">Chatbot de Centros Médicos</h1>
-        <ChatInterface />
-      </div>
-    )
-  }
-})
-
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -79,11 +63,6 @@ const LayoutAdminRoute = LayoutAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => LayoutRoute,
 } as any)
-const LayoutChatRoute = LayoutChatRouteImport.update({
-  id: '/chat',
-  path: '/chat',
-  getParentRoute: () => LayoutRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
@@ -93,7 +72,6 @@ export interface FileRoutesByFullPath {
   '/admin': typeof LayoutAdminRoute
   '/items': typeof LayoutItemsRoute
   '/settings': typeof LayoutSettingsRoute
-  '/chat': typeof LayoutChatRoute
   '/': typeof LayoutIndexRoute
 }
 export interface FileRoutesByTo {
@@ -104,7 +82,6 @@ export interface FileRoutesByTo {
   '/admin': typeof LayoutAdminRoute
   '/items': typeof LayoutItemsRoute
   '/settings': typeof LayoutSettingsRoute
-  '/chat': typeof LayoutChatRoute
   '/': typeof LayoutIndexRoute
 }
 export interface FileRoutesById {
@@ -117,7 +94,6 @@ export interface FileRoutesById {
   '/_layout/admin': typeof LayoutAdminRoute
   '/_layout/items': typeof LayoutItemsRoute
   '/_layout/settings': typeof LayoutSettingsRoute
-  '/_layout/chat': typeof LayoutChatRoute
   '/_layout/': typeof LayoutIndexRoute
 }
 export interface FileRouteTypes {
@@ -234,7 +210,6 @@ interface LayoutRouteChildren {
   LayoutAdminRoute: typeof LayoutAdminRoute
   LayoutItemsRoute: typeof LayoutItemsRoute
   LayoutSettingsRoute: typeof LayoutSettingsRoute
-  LayoutChatRoute: typeof LayoutChatRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
 }
 
@@ -242,7 +217,6 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutAdminRoute: LayoutAdminRoute,
   LayoutItemsRoute: LayoutItemsRoute,
   LayoutSettingsRoute: LayoutSettingsRoute,
-  LayoutChatRoute: LayoutChatRoute,
   LayoutIndexRoute: LayoutIndexRoute,
 }
 
