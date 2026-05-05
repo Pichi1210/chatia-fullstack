@@ -1,4 +1,3 @@
-
 """Add medical_center table
 
 Revision ID: 45b6f8a28b5b
@@ -9,6 +8,7 @@ Create Date: 2024-07-29 12:00:00.000000
 from alembic import op
 import sqlalchemy as sa
 import sqlmodel
+from sqlalchemy.dialects.postgresql import JSONB
 
 
 # revision identifiers, used by Alembic.
@@ -23,19 +23,19 @@ def upgrade() -> None:
     op.create_table('medicalcenter',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('address', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('city', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('category', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('address', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('city', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('category', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('specialty', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
-    sa.Column('latitude', sa.Float(), nullable=False),
-    sa.Column('longitude', sa.Float(), nullable=False),
+    sa.Column('latitude', sa.Float(), nullable=True),
+    sa.Column('longitude', sa.Float(), nullable=True),
     sa.Column('rating', sa.Float(), nullable=True),
     sa.Column('phone', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('working_hours', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
-    sa.Column('emergency_available', sa.Boolean(), nullable=False),
-    sa.Column('approximate_price_level', sa.Integer(), nullable=True),
+    sa.Column('emergency_available', sa.Boolean(), nullable=True),
+    sa.Column('approximate_price_level', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('yandex_uri', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
-    sa.Column('raw_data', sa.JSON(), nullable=True),
+    sa.Column('raw_data', JSONB, nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
     sa.Column('updated_at', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
     sa.PrimaryKeyConstraint('id')

@@ -3,7 +3,8 @@ import uuid
 from datetime import datetime, timezone
 from typing import Any
 from pydantic import EmailStr
-from sqlalchemy import DateTime, func, JSON
+from sqlalchemy import Column, DateTime, func
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlmodel import Field, Relationship, SQLModel
 
 
@@ -132,18 +133,25 @@ class NewPassword(SQLModel):
 class MedicalCenter(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
     name: str = Field(index=True)
-    address: str
-    city: str = Field(index=True)
-    category: str
+    address: str | None = Field(default=None)
+    city: str | None = Field(default=None, index=True)
+    category: str | None = Field(default=None)
     specialty: str | None = Field(default=None, index=True)
-    latitude: float
-    longitude: float
+    latitude: float | None = Field(default=None)
+    longitude: float | None = Field(default=None)
     rating: float | None = Field(default=None)
     phone: str | None = Field(default=None)
     working_hours: str | None = Field(default=None)
-    emergency_available: bool = Field(default=False)
-    approximate_price_level: int | None = Field(default=None)
+    emergency_available: bool | None = Field(default=None)
+    approximate_price_level: str | None = Field(default=None)
     yandex_uri: str | None = Field(default=None)
-    raw_data: dict[str, Any] | None = Field(default=None, sa_column=JSON)
-    created_at: datetime = Field(default_factory=datetime.utcnow, sa_column_kwargs={"server_default": func.now()})
-    updated_at: datetime = Field(default_factory=datetime.utcnow, sa_column_kwargs={"server_default": func.now(), "onupdate": func.now()})
+    raw_data: dict | None = Field(
+        default=None, sa_column=Column(JSONB, nullable=True)
+    )
+    created_at: datetime = Field(
+        default_factory=datetime.utcnow, sa_column_kwargs={"server_default": func.now()}
+    )
+    updated_at: datetime = Field(
+        default_factory=datetime.utcnow,
+        sa_column_kwargs={"server_default": func.now(), "onupdate": func.now()},
+    )
