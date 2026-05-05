@@ -4,6 +4,7 @@ from sqlmodel import select, SQLModel
 
 from app.api.deps import SessionDep
 from app.models import MedicalCenter
+from app.schemas.medical_center import MedicalCenterPublic
 from app.services.chatbot import parse_message
 from app.services.yandex_maps import search_medical_centers
 from app.services.recommendation import rank_medical_centers
@@ -13,7 +14,7 @@ router = APIRouter()
 class ChatRequest(SQLModel):
     message: str
 
-@router.post("", response_model=list[MedicalCenter])
+@router.post("", response_model=list[MedicalCenterPublic])
 async def chat_with_bot(request: ChatRequest, session: SessionDep):
     """
     Process a user message, find and rank medical centers.

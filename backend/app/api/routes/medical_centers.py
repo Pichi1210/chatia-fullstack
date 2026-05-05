@@ -5,7 +5,11 @@ from sqlmodel import func, select
 
 from app.api.deps import SessionDep
 from app.models import MedicalCenter
-from app.schemas.medical_center import MedicalCenterCreate, MedicalCentersPublic
+from app.schemas.medical_center import (
+    MedicalCenterCreate,
+    MedicalCenterPublic,
+    MedicalCentersPublic,
+)
 from app.services.yandex_maps import search_medical_centers
 
 router = APIRouter()
@@ -14,7 +18,7 @@ class SearchRequest(SQLModel):
     query: str
     city: str
 
-@router.post("/search", response_model=list[MedicalCenter])
+@router.post("/search", response_model=list[MedicalCenterPublic])
 async def search_and_save_medical_centers(search_request: SearchRequest, session: SessionDep):
     """
     Search for medical centers using Yandex Maps API, save them to the database,
@@ -55,7 +59,7 @@ def get_medical_centers(session: SessionDep, skip: int = 0, limit: int = 100) ->
     return MedicalCentersPublic(data=centers, count=count)
 
 
-@router.get("/{id}", response_model=MedicalCenter)
+@router.get("/{id}", response_model=MedicalCenterPublic)
 def get_medical_center(session: SessionDep, id: int) -> Any:
     """
     Get medical center by ID.
