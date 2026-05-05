@@ -1,8 +1,12 @@
 
 import httpx
+import logging
 from app.core.config import settings
 
+logger = logging.getLogger(__name__)
+
 async def search_medical_centers(query: str, city: str) -> list[dict]:
+    logger.info("Checking for YANDEX_API_KEY. Is present: %s", bool(settings.YANDEX_API_KEY))
     if not settings.YANDEX_API_KEY:
         # Return mock data if no API key is provided
         return [

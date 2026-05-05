@@ -40,6 +40,7 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-app}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      YANDEX_API_KEY: ${YANDEX_API_KEY}
 
   backend:
     build:
@@ -71,6 +72,7 @@ services:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       SENTRY_DSN: ${SENTRY_DSN}
+      YANDEX_API_KEY: ${YANDEX_API_KEY}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/utils/health-check/"]
       interval: 10s
