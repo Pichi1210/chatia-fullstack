@@ -206,7 +206,32 @@ The input variables, with their default values (some auto generated) are:
 - `postgres_password`: (default: `"changethis"`) The password for the PostgreSQL database, stored in .env, you can generate one with the method above.
 - `sentry_dsn`: (default: "") The DSN for Sentry, if you are using it, you can set it later in .env.
 
+
+## Chatbot Feature
+
+This project includes a chatbot feature for finding medical centers in Russia.
+
+### Chatbot Usage
+
+- Navigate to the `/chat` page in the frontend.
+- Type a message in the input box, for example: `"Necesito un dentista en Kursk"`.
+- The chatbot will return a list of recommended medical centers based on your query.
+
+### Yandex Maps API Key
+
+The chatbot uses the Yandex Maps Search API to find medical centers. To use this feature, you need to provide a Yandex API key.
+
+- Get an API key from the [Yandex Developer Console](https://developer.tech.yandex.ru/).
+- Add the API key to your `.env` file:
+
+```
+YANDEX_API_KEY=your_api_key_here
+```
+
+If you don't provide an API key, the chatbot will return mock data.
+
 ## Backend Development
+
 
 Backend docs: [backend/README.md](./backend/README.md).
 
