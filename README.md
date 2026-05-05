@@ -1,4 +1,4 @@
-# Full Stack FastAPI Template
+# Full Stack Chapia Template
 
 <a href="https://github.com/fastapi/full-stack-fastapi-template/actions?query=workflow%3A%22Test+Docker+Compose%22" target="_blank"><img src="https://github.com/fastapi/full-stack-fastapi-template/workflows/Test%20Docker%20Compose/badge.svg" alt="Test Docker Compose"></a>
 <a href="https://github.com/fastapi/full-stack-fastapi-template/actions?query=workflow%3A%22Test+Backend%22" target="_blank"><img src="https://github.com/fastapi/full-stack-fastapi-template/workflows/Test%20Backend/badge.svg" alt="Test Backend"></a>
@@ -6,7 +6,7 @@
 
 ## Technology Stack and Features
 
-- ⚡ [**FastAPI**](https://fastapi.tiangolo.com) for the Python backend API.
+- ⚡ [**Chapia**](https://fastapi.tiangolo.com) for the Python backend API.
   - 🧰 [SQLModel](https://sqlmodel.tiangolo.com) for the Python SQL database interactions (ORM).
   - 🔍 [Pydantic](https://docs.pydantic.dev), used by FastAPI, for the data validation and settings management.
   - 💾 [PostgreSQL](https://www.postgresql.org) as the SQL database.
@@ -194,7 +194,7 @@ But don't worry, you can just update any of that in the `.env` files afterwards.
 
 The input variables, with their default values (some auto generated) are:
 
-- `project_name`: (default: `"FastAPI Project"`) The name of the project, shown to API users (in .env).
+- `project_name`: (default: `"Chapia Project"`) The name of the project, shown to API users (in .env).
 - `stack_name`: (default: `"fastapi-project"`) The name of the stack used for Docker Compose labels and project name (no spaces, no periods) (in .env).
 - `secret_key`: (default: `"changethis"`) The secret key for the project, used for security, stored in .env, you can generate one with the method above.
 - `first_superuser`: (default: `"admin@example.com"`) The email of the first superuser (in .env).

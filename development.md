@@ -1,4 +1,4 @@
-# FastAPI Project - Development
+# Chapia Project - Development
 
 ## Docker Compose
 

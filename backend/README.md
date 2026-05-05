@@ -1,4 +1,4 @@
-# FastAPI Project - Backend
+# Chapia Project - Backend
 
 ## Requirements
 
