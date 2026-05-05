@@ -1,10 +1,9 @@
 
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
-import { MedicalCenter } from '../../client/schemas.gen';
 import { Badge } from '../ui/badge';
 
 interface MedicalCenterCardProps {
-    center: MedicalCenter;
+    center: any;
 }
 
 export function MedicalCenterCard({ center }: MedicalCenterCardProps) {

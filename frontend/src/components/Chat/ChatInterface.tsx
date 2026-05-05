@@ -3,20 +3,17 @@ import { useState } from 'react';
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
 import { MedicalCenterCard } from './MedicalCenterCard';
-import { MedicalCenter } from '../../client/schemas.gen';
-import { useClient } from '../../hooks/useClient';
 
 interface Message {
     sender: 'user' | 'bot';
     text: string;
-    recommendations?: MedicalCenter[];
+    recommendations?: any[];
 }
 
 export default function ChatInterface() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const client = useClient();
 
     const handleSendMessage = async () => {
         if (inputValue.trim() === '') return;
@@ -26,25 +23,33 @@ export default function ChatInterface() {
         setInputValue('');
         setIsLoading(true);
 
-        try {
-            const response = await client.post('/api/v1/chat', { message: inputValue });
-            const recommendations: MedicalCenter[] = response.data;
+        // Mock bot response
+        const botMessage: Message = { 
+            sender: 'bot', 
+            text: `He recibido tu mensaje: "${inputValue}". Aquí tienes algunas recomendaciones:`,
+            recommendations: [
+                {
+                    id: 1,
+                    name: "Mock Clinic",
+                    address: "123 Mock Street, Kursk",
+                    city: "Kursk",
+                    category: "Clinic",
+                    specialty: "Dentist",
+                    latitude: 51.7393,
+                    longitude: 36.1872,
+                    rating: 4.5,
+                    phone: "+71234567890",
+                    working_hours: "Mo-Fr 09:00-18:00",
+                    emergency_available: true,
+                    yandex_uri: "https://yandex.ru/maps/"
+                }
+            ]
+        };
 
-            const botMessage: Message = {
-                sender: 'bot',
-                text: recommendations.length > 0 ? 'Aquí tienes algunas recomendaciones:' : 'No he encontrado centros que coincidan con tu búsqueda.',
-                recommendations: recommendations,
-            };
+        setTimeout(() => {
             setMessages(prev => [...prev, botMessage]);
-        } catch (error) {
-            const errorMessage: Message = {
-                sender: 'bot',
-                text: 'Lo siento, ha ocurrido un error al procesar tu solicitud.',
-            };
-            setMessages(prev => [...prev, errorMessage]);
-        } finally {
             setIsLoading(false);
-        }
+        }, 1000)
     };
 
     return (
