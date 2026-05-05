@@ -1,13 +1,30 @@
-
 import { useState } from 'react';
+import { OpenAPI } from '../../client';
 import { Input } from '../../components/ui/input';
 import { Button } from '../../components/ui/button';
 import { MedicalCenterCard } from './MedicalCenterCard';
 
+interface MedicalCenter {
+    id: number;
+    name: string;
+    address?: string | null;
+    city?: string | null;
+    category?: string | null;
+    specialty?: string | null;
+    latitude?: number | null;
+    longitude?: number | null;
+    rating?: number | null;
+    phone?: string | null;
+    working_hours?: string | null;
+    emergency_available?: boolean | null;
+    approximate_price_level?: string | null;
+    yandex_uri?: string | null;
+}
+
 interface Message {
     sender: 'user' | 'bot';
     text: string;
-    recommendations?: any[];
+    recommendations?: MedicalCenter[];
 }
 
 export default function ChatInterface() {
@@ -16,40 +33,50 @@ export default function ChatInterface() {
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSendMessage = async () => {
-        if (inputValue.trim() === '') return;
+        const messageText = inputValue.trim();
+        if (messageText === '') return;
 
-        const userMessage: Message = { sender: 'user', text: inputValue };
-        setMessages(prev => [...prev, userMessage]);
+        const userMessage: Message = { sender: 'user', text: messageText };
+        setMessages((prev) => [...prev, userMessage]);
         setInputValue('');
         setIsLoading(true);
 
-        // Mock bot response
-        const botMessage: Message = { 
-            sender: 'bot', 
-            text: `He recibido tu mensaje: "${inputValue}". Aquí tienes algunas recomendaciones:`,
-            recommendations: [
-                {
-                    id: 1,
-                    name: "Mock Clinic",
-                    address: "123 Mock Street, Kursk",
-                    city: "Kursk",
-                    category: "Clinic",
-                    specialty: "Dentist",
-                    latitude: 51.7393,
-                    longitude: 36.1872,
-                    rating: 4.5,
-                    phone: "+71234567890",
-                    working_hours: "Mo-Fr 09:00-18:00",
-                    emergency_available: true,
-                    yandex_uri: "https://yandex.ru/maps/"
-                }
-            ]
-        };
+        try {
+            const response = await fetch(`${OpenAPI.BASE}/api/v1/chat`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem('access_token') || ''}`,
+                },
+                body: JSON.stringify({ message: messageText }),
+            });
 
-        setTimeout(() => {
-            setMessages(prev => [...prev, botMessage]);
+            if (!response.ok) {
+                throw new Error('No se pudo obtener respuesta del servidor');
+            }
+
+            const recommendations = (await response.json()) as MedicalCenter[];
+            const botMessage: Message = {
+                sender: 'bot',
+                text:
+                    recommendations.length > 0
+                        ? `Encontre ${recommendations.length} recomendacion(es) para: "${messageText}".`
+                        : `No encontre recomendaciones para: "${messageText}".`,
+                recommendations,
+            };
+
+            setMessages((prev) => [...prev, botMessage]);
+        } catch (error) {
+            setMessages((prev) => [
+                ...prev,
+                {
+                    sender: 'bot',
+                    text: 'No pude conectar con el buscador medico. Revisa que el backend este corriendo y que YANDEX_API_KEY este disponible en el contenedor.',
+                },
+            ]);
+        } finally {
             setIsLoading(false);
-        }, 1000)
+        }
     };
 
     return (
@@ -62,24 +89,26 @@ export default function ChatInterface() {
                         </div>
                         {msg.recommendations && (
                             <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {msg.recommendations.map(center => (
+                                {msg.recommendations.map((center) => (
                                     <MedicalCenterCard key={center.id} center={center} />
                                 ))}
                             </div>
                         )}
                     </div>
                 ))}
-                 {isLoading && <div className="text-center">Buscando...</div>}
+                {isLoading && <div className="text-center">Buscando...</div>}
             </div>
             <div className="flex mt-4">
                 <Input
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
-                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                    onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
                     placeholder="Necesito un dentista en Kursk..."
                     disabled={isLoading}
                 />
-                <Button onClick={handleSendMessage} className="ml-2" disabled={isLoading}>Enviar</Button>
+                <Button onClick={handleSendMessage} className="ml-2" disabled={isLoading}>
+                    Enviar
+                </Button>
             </div>
         </div>
     );

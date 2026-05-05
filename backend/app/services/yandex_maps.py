@@ -8,25 +8,11 @@ logger = logging.getLogger(__name__)
 async def search_medical_centers(query: str, city: str) -> list[dict]:
     logger.info("Checking for YANDEX_API_KEY. Is present: %s", bool(settings.YANDEX_API_KEY))
     if not settings.YANDEX_API_KEY:
-        # Return mock data if no API key is provided
-        return [
-            {
-                "name": "Mock Clinic",
-                "address": "123 Mock Street, Kursk",
-                "city": "Kursk",
-                "category": "Clinic",
-                "specialty": "Dentist",
-                "latitude": 51.7393, 
-                "longitude": 36.1872,
-                "rating": 4.5,
-                "phone": "+71234567890",
-                "working_hours": "Mo-Fr 09:00-18:00",
-                "emergency_available": True,
-                "yandex_uri": "https://yandex.ru/maps/"
-            }
-        ]
+        logger.warning("YANDEX_API_KEY is not configured; skipping Yandex Maps search.")
+        return []
 
-    api_url = f"https://search-maps.yandex.ru/v1/?text={query}&type=biz&lang=ru_RU&apikey={settings.YANDEX_API_KEY}"
+    search_text = f"{query} {city}".strip()
+    api_url = f"https://search-maps.yandex.ru/v1/?text={search_text}&type=biz&lang=ru_RU&apikey={settings.YANDEX_API_KEY}"
     
     async with httpx.AsyncClient() as client:
         try:
@@ -45,6 +31,7 @@ async def search_medical_centers(query: str, city: str) -> list[dict]:
                     "address": org_meta.get("address"),
                     "city": city, # Assuming city is constant for the search
                     "category": ", ".join([cat.get("name") for cat in org_meta.get("Categories", [])]),
+                    "specialty": query,
                     "latitude": point[1],
                     "longitude": point[0],
                     "rating": org_meta.get("rating", {}).get("score"),

@@ -25,12 +25,14 @@ async def chat_with_bot(request: ChatRequest, session: SessionDep):
     # 2. Build a search query for Yandex
     query_parts = [criteria.get("specialty"), criteria.get("type"), "medical"]
     search_query = " ".join(filter(None, query_parts))
-    city = criteria.get("city", "Kursk") # Default to Kursk if no city is found
+    city = criteria.get("city") or "Kursk"  # Default to Kursk if no city is found
 
     # 3. Search on Yandex and save new results
     centers_from_yandex = await search_medical_centers(query=search_query, city=city)
     if centers_from_yandex:
         for center_data in centers_from_yandex:
+            if criteria.get("specialty") and not center_data.get("specialty"):
+                center_data["specialty"] = criteria["specialty"]
             statement = select(MedicalCenter).where(MedicalCenter.name == center_data["name"], MedicalCenter.address == center_data["address"])
             if not session.exec(statement).first():
                 db_center = MedicalCenter.model_validate(center_data)
@@ -39,8 +41,7 @@ async def chat_with_bot(request: ChatRequest, session: SessionDep):
 
     # 4. Get all relevant centers from DB
     statement = select(MedicalCenter)
-    if criteria.get("city"):
-        statement = statement.where(MedicalCenter.city == criteria["city"])
+    statement = statement.where(MedicalCenter.city == city)
     if criteria.get("specialty"):
         statement = statement.where(MedicalCenter.specialty.contains(criteria["specialty"]))
 
