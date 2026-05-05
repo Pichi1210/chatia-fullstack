@@ -40,6 +40,7 @@ class Settings(BaseSettings):
     BACKEND_CORS_ORIGINS: Annotated[
         list[AnyUrl] | str, BeforeValidator(parse_cors)
     ] = []
+    BACKEND_CORS_ORIGIN_REGEX: str | None = None
 
     @computed_field  # type: ignore[prop-decorator]
     @property
