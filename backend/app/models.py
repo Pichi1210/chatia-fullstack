@@ -130,21 +130,91 @@ class NewPassword(SQLModel):
     token: str
     new_password: str = Field(min_length=8, max_length=128)
 
+class MedicalInstitutionType(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    name: str = Field(index=True, unique=True, max_length=255)
+    description: str | None = Field(default=None)
+    urgency_level: str | None = Field(default=None, max_length=50)
+    is_emergency_capable: bool = Field(default=False)
+    created_at: datetime = Field(
+        default_factory=datetime.utcnow, sa_column_kwargs={"server_default": func.now()}
+    )
+    updated_at: datetime = Field(
+        default_factory=datetime.utcnow,
+        sa_column_kwargs={"server_default": func.now(), "onupdate": func.now()},
+    )
+
+    centers: list["MedicalCenter"] = Relationship(back_populates="institution_type")
+
+
+class MedicalService(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    name: str = Field(index=True, unique=True, max_length=255)
+    description: str | None = Field(default=None)
+    category: str | None = Field(default=None, index=True, max_length=100)
+    requires_appointment: bool = Field(default=True)
+    is_emergency_service: bool = Field(default=False)
+    created_at: datetime = Field(
+        default_factory=datetime.utcnow, sa_column_kwargs={"server_default": func.now()}
+    )
+    updated_at: datetime = Field(
+        default_factory=datetime.utcnow,
+        sa_column_kwargs={"server_default": func.now(), "onupdate": func.now()},
+    )
+
+    center_links: list["MedicalCenterService"] = Relationship(
+        back_populates="medical_service"
+    )
+    need_rules: list["NeedServiceRule"] = Relationship(
+        back_populates="recommended_service"
+    )
+    recommendation_rules: list["RecommendationRule"] = Relationship(
+        back_populates="recommended_service"
+    )
+
+
+class MedicalSpecialty(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    name: str = Field(index=True, unique=True, max_length=255)
+    description: str | None = Field(default=None)
+    created_at: datetime = Field(
+        default_factory=datetime.utcnow, sa_column_kwargs={"server_default": func.now()}
+    )
+    updated_at: datetime = Field(
+        default_factory=datetime.utcnow,
+        sa_column_kwargs={"server_default": func.now(), "onupdate": func.now()},
+    )
+
+    center_links: list["MedicalCenterSpecialty"] = Relationship(
+        back_populates="medical_specialty"
+    )
+    need_rules: list["NeedServiceRule"] = Relationship(
+        back_populates="recommended_specialty"
+    )
+    recommendation_rules: list["RecommendationRule"] = Relationship(
+        back_populates="recommended_specialty"
+    )
+
+
 class MedicalCenter(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
     name: str = Field(index=True)
-    address: str | None = Field(default=None)
+    institution_type_id: int | None = Field(
+        default=None, foreign_key="medicalinstitutiontype.id", index=True
+    )
     city: str | None = Field(default=None, index=True)
-    category: str | None = Field(default=None)
-    specialty: str | None = Field(default=None, index=True)
+    district: str | None = Field(default=None, index=True)
+    address: str | None = Field(default=None)
     latitude: float | None = Field(default=None)
     longitude: float | None = Field(default=None)
-    rating: float | None = Field(default=None)
     phone: str | None = Field(default=None)
+    website: str | None = Field(default=None)
     working_hours: str | None = Field(default=None)
-    emergency_available: bool | None = Field(default=None)
-    approximate_price_level: str | None = Field(default=None)
-    yandex_uri: str | None = Field(default=None)
+    rating: float | None = Field(default=None)
+    price_level: str | None = Field(default=None)
+    has_emergency: bool = Field(default=False)
+    is_public: bool = Field(default=False)
+    description: str | None = Field(default=None)
     raw_data: dict | None = Field(
         default=None, sa_column=Column(JSONB, nullable=True)
     )
@@ -154,4 +224,163 @@ class MedicalCenter(SQLModel, table=True):
     updated_at: datetime = Field(
         default_factory=datetime.utcnow,
         sa_column_kwargs={"server_default": func.now(), "onupdate": func.now()},
+    )
+
+    institution_type: MedicalInstitutionType | None = Relationship(
+        back_populates="centers"
+    )
+    service_links: list["MedicalCenterService"] = Relationship(
+        back_populates="medical_center"
+    )
+    specialty_links: list["MedicalCenterSpecialty"] = Relationship(
+        back_populates="medical_center"
+    )
+
+
+class MedicalCenterService(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    medical_center_id: int = Field(foreign_key="medicalcenter.id", index=True)
+    medical_service_id: int = Field(foreign_key="medicalservice.id", index=True)
+    available: bool = Field(default=True)
+    price_estimate: str | None = Field(default=None)
+    appointment_required: bool = Field(default=True)
+    notes: str | None = Field(default=None)
+
+    medical_center: MedicalCenter | None = Relationship(back_populates="service_links")
+    medical_service: MedicalService | None = Relationship(back_populates="center_links")
+
+
+class MedicalCenterSpecialty(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    medical_center_id: int = Field(foreign_key="medicalcenter.id", index=True)
+    medical_specialty_id: int = Field(foreign_key="medicalspecialty.id", index=True)
+    available: bool = Field(default=True)
+    doctor_count: int | None = Field(default=None)
+    notes: str | None = Field(default=None)
+
+    medical_center: MedicalCenter | None = Relationship(back_populates="specialty_links")
+    medical_specialty: MedicalSpecialty | None = Relationship(
+        back_populates="center_links"
+    )
+
+
+class HealthNeed(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    name: str = Field(index=True, unique=True, max_length=255)
+    description: str | None = Field(default=None)
+    urgency_level: str | None = Field(default=None, max_length=50)
+    keywords: list[str] = Field(default_factory=list, sa_column=Column(JSONB))
+    created_at: datetime = Field(
+        default_factory=datetime.utcnow, sa_column_kwargs={"server_default": func.now()}
+    )
+    updated_at: datetime = Field(
+        default_factory=datetime.utcnow,
+        sa_column_kwargs={"server_default": func.now(), "onupdate": func.now()},
+    )
+
+    need_rules: list["NeedServiceRule"] = Relationship(back_populates="health_need")
+    triage_questions: list["TriageQuestion"] = Relationship(
+        back_populates="health_need"
+    )
+    recommendation_rules: list["RecommendationRule"] = Relationship(
+        back_populates="health_need"
+    )
+
+
+class NeedServiceRule(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    health_need_id: int = Field(foreign_key="healthneed.id", index=True)
+    recommended_service_id: int | None = Field(
+        default=None, foreign_key="medicalservice.id", index=True
+    )
+    recommended_specialty_id: int | None = Field(
+        default=None, foreign_key="medicalspecialty.id", index=True
+    )
+    recommended_institution_type_id: int | None = Field(
+        default=None, foreign_key="medicalinstitutiontype.id", index=True
+    )
+    priority: int = Field(default=100, index=True)
+    urgency_required: str | None = Field(default=None, max_length=50)
+    explanation: str | None = Field(default=None)
+
+    health_need: HealthNeed | None = Relationship(back_populates="need_rules")
+    recommended_service: MedicalService | None = Relationship(
+        back_populates="need_rules"
+    )
+    recommended_specialty: MedicalSpecialty | None = Relationship(
+        back_populates="need_rules"
+    )
+    recommended_institution_type: MedicalInstitutionType | None = Relationship()
+
+
+class TriageQuestion(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    health_need_id: int = Field(foreign_key="healthneed.id", index=True)
+    question_text: str
+    answer_type: str = Field(default="single_choice", max_length=50)
+    priority: int = Field(default=100, index=True)
+    is_required: bool = Field(default=True)
+    created_at: datetime = Field(
+        default_factory=datetime.utcnow, sa_column_kwargs={"server_default": func.now()}
+    )
+    updated_at: datetime = Field(
+        default_factory=datetime.utcnow,
+        sa_column_kwargs={"server_default": func.now(), "onupdate": func.now()},
+    )
+
+    health_need: HealthNeed | None = Relationship(back_populates="triage_questions")
+    answer_options: list["TriageAnswerOption"] = Relationship(
+        back_populates="question",
+        sa_relationship_kwargs={
+            "foreign_keys": "[TriageAnswerOption.question_id]",
+        },
+    )
+
+
+class TriageAnswerOption(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    question_id: int = Field(foreign_key="triagequestion.id", index=True)
+    option_text: str
+    risk_score: int = Field(default=0)
+    next_question_id: int | None = Field(
+        default=None, foreign_key="triagequestion.id", index=True
+    )
+
+    question: TriageQuestion | None = Relationship(
+        back_populates="answer_options",
+        sa_relationship_kwargs={
+            "foreign_keys": "[TriageAnswerOption.question_id]",
+        },
+    )
+    next_question: TriageQuestion | None = Relationship(
+        sa_relationship_kwargs={
+            "foreign_keys": "[TriageAnswerOption.next_question_id]",
+        }
+    )
+
+
+class RecommendationRule(SQLModel, table=True):
+    id: int | None = Field(default=None, primary_key=True)
+    health_need_id: int = Field(foreign_key="healthneed.id", index=True)
+    min_risk_score: int = Field(default=0)
+    max_risk_score: int = Field(default=999)
+    recommended_institution_type_id: int | None = Field(
+        default=None, foreign_key="medicalinstitutiontype.id", index=True
+    )
+    recommended_service_id: int | None = Field(
+        default=None, foreign_key="medicalservice.id", index=True
+    )
+    recommended_specialty_id: int | None = Field(
+        default=None, foreign_key="medicalspecialty.id", index=True
+    )
+    message: str
+    priority: int = Field(default=100, index=True)
+
+    health_need: HealthNeed | None = Relationship(back_populates="recommendation_rules")
+    recommended_institution_type: MedicalInstitutionType | None = Relationship()
+    recommended_service: MedicalService | None = Relationship(
+        back_populates="recommendation_rules"
+    )
+    recommended_specialty: MedicalSpecialty | None = Relationship(
+        back_populates="recommendation_rules"
     )

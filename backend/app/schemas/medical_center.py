@@ -1,21 +1,24 @@
 from typing import Any
+
 from sqlmodel import SQLModel
 
 
 class MedicalCenterBase(SQLModel):
     name: str
-    address: str | None = None
+    institution_type_id: int | None = None
     city: str | None = None
-    category: str | None = None
-    specialty: str | None = None
+    district: str | None = None
+    address: str | None = None
     latitude: float | None = None
     longitude: float | None = None
-    rating: float | None = None
     phone: str | None = None
+    website: str | None = None
     working_hours: str | None = None
-    emergency_available: bool | None = None
-    approximate_price_level: str | None = None
-    yandex_uri: str | None = None
+    rating: float | None = None
+    price_level: str | None = None
+    has_emergency: bool = False
+    is_public: bool = False
+    description: str | None = None
     raw_data: dict[str, Any] | None = None
 
 
@@ -25,18 +28,20 @@ class MedicalCenterCreate(MedicalCenterBase):
 
 class MedicalCenterUpdate(SQLModel):
     name: str | None = None
-    address: str | None = None
+    institution_type_id: int | None = None
     city: str | None = None
-    category: str | None = None
-    specialty: str | None = None
+    district: str | None = None
+    address: str | None = None
     latitude: float | None = None
     longitude: float | None = None
-    rating: float | None = None
     phone: str | None = None
+    website: str | None = None
     working_hours: str | None = None
-    emergency_available: bool | None = None
-    approximate_price_level: str | None = None
-    yandex_uri: str | None = None
+    rating: float | None = None
+    price_level: str | None = None
+    has_emergency: bool | None = None
+    is_public: bool | None = None
+    description: str | None = None
     raw_data: dict[str, Any] | None = None
 
 

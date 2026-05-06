@@ -1,0 +1,344 @@
+{
+  "institution_types": [
+    {
+      "name": "Emergency hospital",
+      "description": "Hospital capable of urgent and emergency care.",
+      "urgency_level": "high",
+      "is_emergency_capable": true
+    },
+    {
+      "name": "General clinic",
+      "description": "Clinic for planned consultations and basic diagnostics.",
+      "urgency_level": "medium",
+      "is_emergency_capable": false
+    },
+    {
+      "name": "Dental clinic",
+      "description": "Clinic focused on dental care.",
+      "urgency_level": "low",
+      "is_emergency_capable": false
+    },
+    {
+      "name": "Diagnostic laboratory",
+      "description": "Institution for laboratory tests and sample collection.",
+      "urgency_level": "low",
+      "is_emergency_capable": false
+    },
+    {
+      "name": "Pediatric clinic",
+      "description": "Clinic focused on children's health.",
+      "urgency_level": "medium",
+      "is_emergency_capable": false
+    }
+  ],
+  "services": [
+    {
+      "name": "Emergency care",
+      "description": "Immediate evaluation for potentially serious symptoms.",
+      "category": "urgent",
+      "requires_appointment": false,
+      "is_emergency_service": true
+    },
+    {
+      "name": "Dental consultation",
+      "description": "Dental examination and treatment plan.",
+      "category": "consultation",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Blood test",
+      "description": "Blood sample collection and laboratory analysis.",
+      "category": "diagnostics",
+      "requires_appointment": false,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Pediatric consultation",
+      "description": "Medical consultation for children.",
+      "category": "consultation",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Cardiology consultation",
+      "description": "Cardiovascular examination and treatment planning.",
+      "category": "consultation",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    }
+  ],
+  "specialties": [
+    {
+      "name": "Dentistry",
+      "description": "Diagnosis and treatment of teeth and oral cavity conditions."
+    },
+    {
+      "name": "Cardiology",
+      "description": "Diagnosis and treatment of heart and vascular conditions."
+    },
+    {
+      "name": "Pediatrics",
+      "description": "Medical care for children."
+    },
+    {
+      "name": "Laboratory diagnostics",
+      "description": "Clinical laboratory tests."
+    },
+    {
+      "name": "Emergency medicine",
+      "description": "Urgent assessment and stabilization."
+    }
+  ],
+  "health_needs": [
+    {
+      "name": "Tooth pain",
+      "description": "Pain in a tooth, gum, or jaw that may require dental care.",
+      "urgency_level": "medium",
+      "keywords": ["muela", "diente", "dolor dental", "encia", "dentista"]
+    },
+    {
+      "name": "Chest pain",
+      "description": "Chest pain or pressure that may require urgent evaluation.",
+      "urgency_level": "high",
+      "keywords": ["dolor en el pecho", "pecho", "opresion", "cardiaco", "corazon"]
+    },
+    {
+      "name": "Blood analysis",
+      "description": "Need for routine or requested blood testing.",
+      "urgency_level": "low",
+      "keywords": ["analisis de sangre", "sangre", "laboratorio", "hemograma"]
+    },
+    {
+      "name": "Child fever",
+      "description": "Fever or febrile symptoms in a child.",
+      "urgency_level": "medium",
+      "keywords": ["hijo fiebre", "nino fiebre", "bebe fiebre", "fiebre infantil", "mi hijo tiene fiebre"]
+    }
+  ],
+  "need_service_rules": [
+    {
+      "health_need": "Tooth pain",
+      "recommended_service": "Dental consultation",
+      "recommended_specialty": "Dentistry",
+      "recommended_institution_type": "Dental clinic",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Dental pain is usually handled by a dental clinic unless there are severe systemic symptoms."
+    },
+    {
+      "health_need": "Chest pain",
+      "recommended_service": "Emergency care",
+      "recommended_specialty": "Emergency medicine",
+      "recommended_institution_type": "Emergency hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Chest pain can be serious and should be evaluated urgently when risk signs are present."
+    },
+    {
+      "health_need": "Blood analysis",
+      "recommended_service": "Blood test",
+      "recommended_specialty": "Laboratory diagnostics",
+      "recommended_institution_type": "Diagnostic laboratory",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "Blood tests are usually handled by a diagnostic laboratory."
+    },
+    {
+      "health_need": "Child fever",
+      "recommended_service": "Pediatric consultation",
+      "recommended_specialty": "Pediatrics",
+      "recommended_institution_type": "Pediatric clinic",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "A child with fever should be evaluated by pediatrics unless emergency signs are present."
+    }
+  ],
+  "triage_questions": [
+    {
+      "health_need": "Tooth pain",
+      "question_text": "El dolor es muy intenso o tienes hinchazon en la cara?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        { "option_text": "No", "risk_score": 0 },
+        { "option_text": "Si, dolor intenso", "risk_score": 2 },
+        { "option_text": "Si, hinchazon o fiebre", "risk_score": 4 }
+      ]
+    },
+    {
+      "health_need": "Chest pain",
+      "question_text": "Tienes falta de aire, sudor frio, mareo o dolor que se irradia al brazo?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        { "option_text": "No", "risk_score": 2 },
+        { "option_text": "Si", "risk_score": 8 }
+      ]
+    },
+    {
+      "health_need": "Child fever",
+      "question_text": "Que tan alta es la fiebre o hay signos de alarma?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        { "option_text": "Menos de 38.5 y buen estado general", "risk_score": 1 },
+        { "option_text": "Mas de 39 o fiebre persistente", "risk_score": 4 },
+        { "option_text": "Dificultad para respirar, somnolencia o convulsiones", "risk_score": 9 }
+      ]
+    }
+  ],
+  "recommendation_rules": [
+    {
+      "health_need": "Tooth pain",
+      "min_risk_score": 0,
+      "max_risk_score": 3,
+      "recommended_institution_type": "Dental clinic",
+      "recommended_service": "Dental consultation",
+      "recommended_specialty": "Dentistry",
+      "message": "Lo mas adecuado es una clinica dental para consulta odontologica.",
+      "priority": 10
+    },
+    {
+      "health_need": "Tooth pain",
+      "min_risk_score": 4,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Emergency hospital",
+      "recommended_service": "Emergency care",
+      "recommended_specialty": "Emergency medicine",
+      "message": "Por los sintomas de alarma, conviene acudir a una guardia o urgencias.",
+      "priority": 1
+    },
+    {
+      "health_need": "Chest pain",
+      "min_risk_score": 0,
+      "max_risk_score": 3,
+      "recommended_institution_type": "General clinic",
+      "recommended_service": "Cardiology consultation",
+      "recommended_specialty": "Cardiology",
+      "message": "Si no hay signos de alarma, una consulta medica/cardiologica puede orientar el siguiente paso.",
+      "priority": 10
+    },
+    {
+      "health_need": "Chest pain",
+      "min_risk_score": 4,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Emergency hospital",
+      "recommended_service": "Emergency care",
+      "recommended_specialty": "Emergency medicine",
+      "message": "Dolor de pecho con signos de alarma requiere evaluacion urgente.",
+      "priority": 1
+    },
+    {
+      "health_need": "Blood analysis",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Diagnostic laboratory",
+      "recommended_service": "Blood test",
+      "recommended_specialty": "Laboratory diagnostics",
+      "message": "Para analisis de sangre, busca un laboratorio diagnostico.",
+      "priority": 10
+    },
+    {
+      "health_need": "Child fever",
+      "min_risk_score": 0,
+      "max_risk_score": 5,
+      "recommended_institution_type": "Pediatric clinic",
+      "recommended_service": "Pediatric consultation",
+      "recommended_specialty": "Pediatrics",
+      "message": "Lo mas adecuado es una consulta pediatrica.",
+      "priority": 10
+    },
+    {
+      "health_need": "Child fever",
+      "min_risk_score": 6,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Emergency hospital",
+      "recommended_service": "Emergency care",
+      "recommended_specialty": "Emergency medicine",
+      "message": "Los signos de alarma en un menor requieren atencion urgente.",
+      "priority": 1
+    }
+  ],
+  "medical_centers": [
+    {
+      "name": "Kursk Emergency Hospital",
+      "institution_type": "Emergency hospital",
+      "city": "Kursk",
+      "district": "Central",
+      "address": "Central district, Kursk",
+      "latitude": 51.7300,
+      "longitude": 36.1900,
+      "phone": "+7 4712 000001",
+      "website": "https://example.com/emergency",
+      "working_hours": "24/7",
+      "rating": 4.4,
+      "price_level": "public",
+      "has_emergency": true,
+      "is_public": true,
+      "description": "Emergency hospital with urgent care.",
+      "services": ["Emergency care"],
+      "specialties": ["Emergency medicine", "Cardiology"]
+    },
+    {
+      "name": "Kursk Dental Care",
+      "institution_type": "Dental clinic",
+      "city": "Kursk",
+      "district": "Central",
+      "address": "Dental street 10, Kursk",
+      "latitude": 51.7350,
+      "longitude": 36.1850,
+      "phone": "+7 4712 000002",
+      "website": "https://example.com/dental",
+      "working_hours": "Mo-Fr 09:00-18:00",
+      "rating": 4.7,
+      "price_level": "medium",
+      "has_emergency": false,
+      "is_public": false,
+      "description": "Dental clinic for consultations and planned treatment.",
+      "services": ["Dental consultation"],
+      "specialties": ["Dentistry"]
+    },
+    {
+      "name": "Kursk Diagnostic Lab",
+      "institution_type": "Diagnostic laboratory",
+      "city": "Kursk",
+      "district": "North",
+      "address": "Lab avenue 4, Kursk",
+      "latitude": 51.7420,
+      "longitude": 36.1920,
+      "phone": "+7 4712 000003",
+      "website": "https://example.com/lab",
+      "working_hours": "Mo-Sa 08:00-14:00",
+      "rating": 4.5,
+      "price_level": "low",
+      "has_emergency": false,
+      "is_public": false,
+      "description": "Laboratory for routine blood testing.",
+      "services": ["Blood test"],
+      "specialties": ["Laboratory diagnostics"]
+    },
+    {
+      "name": "Kursk Pediatric Clinic",
+      "institution_type": "Pediatric clinic",
+      "city": "Kursk",
+      "district": "South",
+      "address": "Children health 7, Kursk",
+      "latitude": 51.7200,
+      "longitude": 36.1800,
+      "phone": "+7 4712 000004",
+      "website": "https://example.com/pediatric",
+      "working_hours": "Mo-Fr 08:00-20:00",
+      "rating": 4.6,
+      "price_level": "medium",
+      "has_emergency": false,
+      "is_public": true,
+      "description": "Pediatric outpatient clinic.",
+      "services": ["Pediatric consultation"],
+      "specialties": ["Pediatrics"]
+    }
+  ]
+}
