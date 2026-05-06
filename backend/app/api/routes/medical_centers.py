@@ -6,7 +6,6 @@ from sqlmodel import func, select
 from app.api.deps import SessionDep
 from app.models import MedicalCenter
 from app.schemas.medical_center import (
-    MedicalCenterCreate,
     MedicalCenterPublic,
     MedicalCentersPublic,
 )
@@ -19,33 +18,15 @@ class SearchRequest(SQLModel):
     query: str
     city: str
 
-@router.post("/search", response_model=list[MedicalCenterPublic])
-async def search_and_save_medical_centers(search_request: SearchRequest, session: SessionDep):
+@router.post("/search", response_model=None)
+async def search_and_save_medical_centers(search_request: SearchRequest):
     """
-    Search for medical centers using Yandex Maps API, save them to the database,
-    and return the saved centers.
+    Search for medical centers using Yandex Maps API and return the service result.
     """
-    centers_from_yandex = await search_medical_centers(query=search_request.query, city=search_request.city)
-    if not centers_from_yandex:
-        return []
-
-    saved_centers = []
-    for center_data in centers_from_yandex:
-        # Check if center already exists by name and address to avoid duplicates
-        statement = select(MedicalCenter).where(MedicalCenter.name == center_data["name"], MedicalCenter.address == center_data["address"])
-        existing_center = session.exec(statement).first()
-        
-        if not existing_center:
-            center_create = MedicalCenterCreate(**center_data)
-            db_center = MedicalCenter.model_validate(center_create)
-            session.add(db_center)
-            session.commit()
-            session.refresh(db_center)
-            saved_centers.append(db_center)
-        else:
-            saved_centers.append(existing_center)
-
-    return saved_centers
+    return await search_medical_centers(
+        query=search_request.query,
+        city=search_request.city,
+    )
 
 @router.get("/", response_model=MedicalCentersPublic)
 def get_medical_centers(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
