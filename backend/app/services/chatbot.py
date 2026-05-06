@@ -15,15 +15,8 @@ from app.models import (
     TriageAnswerOption,
     TriageQuestion,
 )
-from app.schemas.chat import (
-    ChatRecommendationResponse,
-    ChatTriageResponse,
-    ChatUnknownNeedResponse,
-)
+from app.schemas.chat import ChatResponse
 from app.schemas.medical_catalog import (
-    MedicalInstitutionTypePublic,
-    MedicalServicePublic,
-    MedicalSpecialtyPublic,
     TriageAnswerOptionPublic,
     TriageQuestionPublic,
 )
@@ -63,7 +56,7 @@ def get_triage_questions(session: Session, health_need_id: int) -> list[TriageQu
 def build_triage_response(
     session: Session,
     health_need: HealthNeed,
-) -> ChatTriageResponse:
+) -> ChatResponse:
     questions = []
     for question in get_triage_questions(session, health_need.id):
         options = session.exec(
@@ -90,11 +83,12 @@ def build_triage_response(
             )
         )
 
-    return ChatTriageResponse(
-        message="Necesito hacer unas preguntas basicas para recomendar el tipo de institucion adecuado.",
+    return ChatResponse(
+        message="Necesito hacer unas preguntas basicas para recomendarte el tipo de institucion adecuado.",
         health_need_id=health_need.id,
         health_need_name=health_need.name,
         questions=questions,
+        recommendations=[],
     )
 
 
@@ -178,7 +172,7 @@ def build_recommendation_response(
     health_need: HealthNeed,
     risk_score: int,
     city: str | None = None,
-) -> ChatRecommendationResponse:
+) -> ChatResponse:
     recommendation_rule = select_recommendation_rule(session, health_need.id, risk_score)
     default_rule = select_default_need_rule(session, health_need.id)
 
@@ -225,23 +219,19 @@ def build_recommendation_response(
         else "Puedo recomendarte una institucion medica segun tu necesidad."
     )
 
-    return ChatRecommendationResponse(
+    return ChatResponse(
         message=message,
         health_need_id=health_need.id,
+        health_need_name=health_need.name,
         risk_score=risk_score,
-        recommended_institution_type=MedicalInstitutionTypePublic.model_validate(
-            institution_type
-        )
-        if institution_type
-        else None,
-        recommended_service=MedicalServicePublic.model_validate(service)
-        if service
-        else None,
-        recommended_specialty=MedicalSpecialtyPublic.model_validate(specialty)
-        if specialty
-        else None,
+        recommended_institution_type=institution_type.name if institution_type else None,
+        recommended_service=service.name if service else None,
+        recommended_specialty=specialty.name if specialty else None,
         explanation=default_rule.explanation if default_rule else None,
-        centers=[MedicalCenterPublic.model_validate(center) for center in centers],
+        questions=[],
+        recommendations=[
+            MedicalCenterPublic.model_validate(center) for center in centers
+        ],
     )
 
 
@@ -249,14 +239,16 @@ def handle_initial_chat(
     session: Session,
     message: str,
     city: str | None = None,
-) -> ChatTriageResponse | ChatRecommendationResponse | ChatUnknownNeedResponse:
+) -> ChatResponse:
     health_need = identify_health_need(session, message)
     if not health_need:
         supported_needs = [
             need.name for need in session.exec(select(HealthNeed).order_by(HealthNeed.name))
         ]
-        return ChatUnknownNeedResponse(
+        return ChatResponse(
             message="No pude identificar la necesidad medica. Describe el problema con mas detalle.",
+            questions=[],
+            recommendations=[],
             supported_needs=supported_needs,
         )
 

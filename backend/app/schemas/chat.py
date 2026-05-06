@@ -1,11 +1,6 @@
 from sqlmodel import Field, SQLModel
 
-from app.schemas.medical_catalog import (
-    MedicalInstitutionTypePublic,
-    MedicalServicePublic,
-    MedicalSpecialtyPublic,
-    TriageQuestionPublic,
-)
+from app.schemas.medical_catalog import TriageQuestionPublic
 from app.schemas.medical_center import MedicalCenterPublic
 
 
@@ -14,30 +9,28 @@ class ChatRequest(SQLModel):
     city: str | None = None
 
 
+class ChatAnswer(SQLModel):
+    question_id: int
+    answer_option_id: int
+    risk_score: int | None = None
+
+
 class ChatAnswerRequest(SQLModel):
     health_need_id: int
+    answers: list[ChatAnswer] = Field(default_factory=list)
     selected_option_ids: list[int] = Field(default_factory=list)
     city: str | None = None
 
 
-class ChatRecommendationResponse(SQLModel):
+class ChatResponse(SQLModel):
     message: str
     health_need_id: int | None = None
-    risk_score: int = 0
-    recommended_institution_type: MedicalInstitutionTypePublic | None = None
-    recommended_service: MedicalServicePublic | None = None
-    recommended_specialty: MedicalSpecialtyPublic | None = None
+    health_need_name: str | None = None
+    recommended_service: str | None = None
+    recommended_specialty: str | None = None
+    recommended_institution_type: str | None = None
     explanation: str | None = None
-    centers: list[MedicalCenterPublic] = Field(default_factory=list)
-
-
-class ChatTriageResponse(SQLModel):
-    message: str
-    health_need_id: int
-    health_need_name: str
+    risk_score: int = 0
     questions: list[TriageQuestionPublic] = Field(default_factory=list)
-
-
-class ChatUnknownNeedResponse(SQLModel):
-    message: str
+    recommendations: list[MedicalCenterPublic] = Field(default_factory=list)
     supported_needs: list[str] = Field(default_factory=list)
