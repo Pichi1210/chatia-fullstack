@@ -1,3 +1,4 @@
+import re
 import unicodedata
 
 from sqlmodel import Session, select
@@ -24,8 +25,13 @@ from app.schemas.medical_center import MedicalCenterPublic
 
 
 def normalize_text(value: str) -> str:
-    normalized = unicodedata.normalize("NFKD", value.casefold())
-    return "".join(char for char in normalized if not unicodedata.combining(char))
+    lowered = value.casefold()
+    normalized = unicodedata.normalize("NFKD", lowered)
+    without_accents = "".join(
+        char for char in normalized if not unicodedata.combining(char)
+    )
+    without_punctuation = re.sub(r"[^\w\s]", " ", without_accents, flags=re.UNICODE)
+    return re.sub(r"\s+", " ", without_punctuation).strip()
 
 
 def normalize_city(value: str | None) -> str:
@@ -37,20 +43,148 @@ def normalize_city(value: str | None) -> str:
     return value
 
 
-def identify_health_need(session: Session, message: str) -> HealthNeed | None:
+def has_any(normalized_message: str, terms: set[str]) -> bool:
+    return any(normalize_text(term) in normalized_message for term in terms)
+
+
+def score_health_needs(
+    session: Session,
+    message: str,
+) -> list[tuple[int, HealthNeed]]:
     normalized_message = normalize_text(message)
     health_needs = session.exec(select(HealthNeed)).all()
 
-    best_match: tuple[int, HealthNeed] | None = None
+    scored: list[tuple[int, HealthNeed]] = []
     for need in health_needs:
         score = 0
+        matches = 0
         for keyword in need.keywords or []:
-            if normalize_text(keyword) in normalized_message:
-                score += len(keyword)
-        if score and (best_match is None or score > best_match[0]):
-            best_match = (score, need)
+            normalized_keyword = normalize_text(keyword)
+            if normalized_keyword and normalized_keyword in normalized_message:
+                matches += 1
+                score += 10 + len(normalized_keyword.split()) * 4
+        if score:
+            scored.append((score + matches * 3, need))
 
-    return best_match[1] if best_match else None
+    scored.sort(key=lambda item: item[0], reverse=True)
+    return scored
+
+
+def get_need_by_name(session: Session, name: str) -> HealthNeed | None:
+    return session.exec(select(HealthNeed).where(HealthNeed.name == name)).first()
+
+
+def identify_combined_health_need(
+    session: Session,
+    message: str,
+) -> tuple[HealthNeed, str] | None:
+    normalized_message = normalize_text(message)
+    has_fever = has_any(
+        normalized_message,
+        {"fiebre", "temperatura", "calentura", "febril", "температура", "жар", "лихорадка"},
+    )
+    has_weakness = has_any(
+        normalized_message,
+        {"debilidad", "debil", "débil", "cansancio", "sin fuerzas", "слабость", "усталость"},
+    )
+    has_knee = has_any(
+        normalized_message,
+        {"rodilla", "dolor en la rodilla", "колено", "боль в колене", "болит колено"},
+    )
+    has_joint = has_any(
+        normalized_message,
+        {"articulacion", "articulación", "su сустав", "сустав", "боль в суставе"},
+    )
+    has_headache = has_any(
+        normalized_message,
+        {"cabeza", "dolor de cabeza", "cefalea", "голова", "головная боль"},
+    )
+    has_body_pain = has_any(
+        normalized_message,
+        {"me duele el cuerpo", "dolor muscular", "dolor corporal", "cuerpo cortado", "ломота", "болит тело", "мышцы"},
+    )
+    has_throat = has_any(
+        normalized_message,
+        {"garganta", "dolor de garganta", "горло", "болит горло"},
+    )
+    has_inflammation = has_any(
+        normalized_message,
+        {"inflamacion", "inflamación", "hinchada", "hinchado", "опух", "воспаление"},
+    )
+
+    candidates: list[tuple[str, str]] = []
+    if has_fever and has_knee:
+        candidates.append(
+            (
+                "Dolor de rodilla",
+                "Parece que tienes fiebre acompañada de dolor articular. Para orientarte mejor necesito hacer unas preguntas.",
+            )
+        )
+    if has_fever and has_joint:
+        candidates.append(
+            (
+                "Dolor articular",
+                "Parece que tienes fiebre acompañada de dolor articular. Para orientarte mejor necesito hacer unas preguntas.",
+            )
+        )
+    if has_fever and has_inflammation:
+        candidates.append(
+            (
+                "Inflamación articular",
+                "Parece que hay fiebre con inflamacion articular. Para orientarte mejor necesito hacer unas preguntas.",
+            )
+        )
+    if has_fever and has_weakness:
+        candidates.append(
+            (
+                "Fiebre con debilidad",
+                "Parece que tienes fiebre con debilidad. Para orientarte mejor necesito hacer unas preguntas.",
+            )
+        )
+    if has_fever and has_headache:
+        candidates.append(
+            (
+                "Dolor de cabeza con fiebre",
+                "Parece que tienes dolor de cabeza acompañado de fiebre. Para orientarte mejor necesito hacer unas preguntas.",
+            )
+        )
+    if has_fever and has_body_pain:
+        candidates.append(
+            (
+                "Dolor muscular o corporal",
+                "Parece que tienes dolor corporal acompañado de fiebre. Para orientarte mejor necesito hacer unas preguntas.",
+            )
+        )
+    if has_fever and has_throat:
+        candidates.append(
+            (
+                "Dolor de garganta",
+                "Parece que tienes fiebre y dolor de garganta. Para orientarte mejor necesito hacer unas preguntas.",
+            )
+        )
+    if has_body_pain and has_headache:
+        candidates.append(
+            (
+                "Dolor de cabeza",
+                "Parece que tienes dolor corporal y predominio de dolor de cabeza. Para orientarte mejor necesito hacer unas preguntas.",
+            )
+        )
+
+    for need_name, message_text in candidates:
+        need = get_need_by_name(session, need_name)
+        if need:
+            return need, message_text
+
+    return None
+
+
+def identify_health_need(session: Session, message: str) -> HealthNeed | None:
+    combined = identify_combined_health_need(session, message)
+    if combined:
+        return combined[0]
+
+    scored = score_health_needs(session, message)
+    return scored[0][1] if scored else None
 
 
 def get_triage_questions(session: Session, health_need_id: int) -> list[TriageQuestion]:
@@ -65,6 +199,7 @@ def get_triage_questions(session: Session, health_need_id: int) -> list[TriageQu
 def build_triage_response(
     session: Session,
     health_need: HealthNeed,
+    message: str | None = None,
 ) -> ChatResponse:
     questions = []
     for question in get_triage_questions(session, health_need.id):
@@ -93,7 +228,8 @@ def build_triage_response(
         )
 
     return ChatResponse(
-        message="Necesito hacer unas preguntas basicas para recomendarte el tipo de institucion adecuado.",
+        message=message
+        or "Necesito hacer unas preguntas basicas para recomendarte el tipo de institucion adecuado.",
         health_need_id=health_need.id,
         health_need_name=health_need.name,
         questions=questions,
@@ -249,13 +385,14 @@ def handle_initial_chat(
     message: str,
     city: str | None = None,
 ) -> ChatResponse:
-    health_need = identify_health_need(session, message)
+    combined = identify_combined_health_need(session, message)
+    health_need = combined[0] if combined else identify_health_need(session, message)
     if not health_need:
         supported_needs = [
             need.name for need in session.exec(select(HealthNeed).order_by(HealthNeed.name))
         ]
         return ChatResponse(
-            message="No pude identificar la necesidad medica. Describe el problema con mas detalle.",
+            message="No pude identificar la necesidad con suficiente seguridad. Puedes describir el sintoma principal, duracion, intensidad y si estas en Kursk.",
             questions=[],
             recommendations=[],
             supported_needs=supported_needs,
@@ -263,6 +400,10 @@ def handle_initial_chat(
 
     questions = get_triage_questions(session, health_need.id)
     if questions:
-        return build_triage_response(session, health_need)
+        return build_triage_response(
+            session,
+            health_need,
+            message=combined[1] if combined else None,
+        )
 
     return build_recommendation_response(session, health_need, risk_score=0, city=city)

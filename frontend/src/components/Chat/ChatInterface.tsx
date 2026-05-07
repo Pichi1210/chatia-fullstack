@@ -185,12 +185,12 @@ export default function ChatInterface() {
 
                     return (
                         <div key={index} className={`mb-4 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
-                            <div className={`inline-block p-2 rounded-lg ${msg.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}>
+                            <div className={`inline-block p-2 rounded-lg ${msg.sender === 'user' ? 'bg-blue-600 text-white' : 'bg-gray-800 text-white'}`}>
                                 {msg.text}
                             </div>
 
                             {questions.length > 0 && msg.healthNeedId && (
-                                <div className="mt-3 space-y-3">
+                                <div className="mt-3 space-y-3 rounded-lg border bg-white p-3 text-gray-900 shadow-sm dark:bg-gray-900 dark:text-gray-100">
                                     {questions.map((question) => (
                                         <div key={question.id} className="space-y-2">
                                             <p className="text-sm font-medium">{question.question_text}</p>
@@ -201,6 +201,7 @@ export default function ChatInterface() {
                                                         type="button"
                                                         variant="outline"
                                                         size="sm"
+                                                        className="border-gray-400 bg-white text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
                                                         disabled={isLoading}
                                                         onClick={() => handleAnswerQuestion(msg.healthNeedId!, question, option)}
                                                     >

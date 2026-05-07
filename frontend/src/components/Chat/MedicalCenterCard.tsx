@@ -22,7 +22,7 @@ interface MedicalCenterCardProps {
 
 export function MedicalCenterCard({ center }: MedicalCenterCardProps) {
     return (
-        <Card>
+        <Card className="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
             <CardHeader>
                 <CardTitle>{center.name}</CardTitle>
                 <div className="flex flex-wrap gap-2">
@@ -43,7 +43,7 @@ export function MedicalCenterCard({ center }: MedicalCenterCardProps) {
                         href={center.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-500 hover:underline"
+                        className="text-blue-600 hover:underline dark:text-blue-400"
                     >
                         Sitio web
                     </a>
