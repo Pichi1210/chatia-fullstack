@@ -28,6 +28,15 @@ def normalize_text(value: str) -> str:
     return "".join(char for char in normalized if not unicodedata.combining(char))
 
 
+def normalize_city(value: str | None) -> str:
+    if not value:
+        return "Курск"
+    normalized = normalize_text(value)
+    if normalized in {"kursk", "курск"}:
+        return "Курск"
+    return value
+
+
 def identify_health_need(session: Session, message: str) -> HealthNeed | None:
     normalized_message = normalize_text(message)
     health_needs = session.exec(select(HealthNeed)).all()
@@ -135,11 +144,11 @@ def find_matching_centers(
     specialty_id: int | None,
     city: str | None,
 ) -> list[MedicalCenter]:
+    city = normalize_city(city)
     statement = select(MedicalCenter)
     if institution_type_id is not None:
         statement = statement.where(MedicalCenter.institution_type_id == institution_type_id)
-    if city:
-        statement = statement.where(MedicalCenter.city == city)
+    statement = statement.where(MedicalCenter.city == city)
 
     centers = list(session.exec(statement).all())
 

@@ -1,344 +1,169 @@
 {
   "institution_types": [
-    {
-      "name": "Emergency hospital",
-      "description": "Hospital capable of urgent and emergency care.",
-      "urgency_level": "high",
-      "is_emergency_capable": true
-    },
-    {
-      "name": "General clinic",
-      "description": "Clinic for planned consultations and basic diagnostics.",
-      "urgency_level": "medium",
-      "is_emergency_capable": false
-    },
-    {
-      "name": "Dental clinic",
-      "description": "Clinic focused on dental care.",
-      "urgency_level": "low",
-      "is_emergency_capable": false
-    },
-    {
-      "name": "Diagnostic laboratory",
-      "description": "Institution for laboratory tests and sample collection.",
-      "urgency_level": "low",
-      "is_emergency_capable": false
-    },
-    {
-      "name": "Pediatric clinic",
-      "description": "Clinic focused on children's health.",
-      "urgency_level": "medium",
-      "is_emergency_capable": false
-    }
+    {"name": "Hospital", "description": "Hospital general para atencion especializada, internacion y urgencias.", "urgency_level": "high", "is_emergency_capable": true},
+    {"name": "Policlínico", "description": "Centro ambulatorio publico para consulta general, vacunacion y especialistas.", "urgency_level": "medium", "is_emergency_capable": false},
+    {"name": "Clínica privada", "description": "Centro medico privado para consultas programadas y diagnostico basico.", "urgency_level": "medium", "is_emergency_capable": false},
+    {"name": "Clínica dental", "description": "Institucion especializada en odontologia.", "urgency_level": "low", "is_emergency_capable": false},
+    {"name": "Centro pediátrico", "description": "Centro especializado en salud infantil.", "urgency_level": "medium", "is_emergency_capable": false},
+    {"name": "Laboratorio", "description": "Centro para toma de muestras y analisis clinicos.", "urgency_level": "low", "is_emergency_capable": false},
+    {"name": "Centro diagnóstico", "description": "Centro para imagenologia, ecografia, radiografia y diagnostico instrumental.", "urgency_level": "medium", "is_emergency_capable": false},
+    {"name": "Centro oftalmológico", "description": "Centro especializado en vision y enfermedades oculares.", "urgency_level": "low", "is_emergency_capable": false},
+    {"name": "Clínica ginecológica", "description": "Centro especializado en salud ginecologica y embarazo.", "urgency_level": "medium", "is_emergency_capable": false},
+    {"name": "Farmacia", "description": "Institucion para compra de medicamentos y orientacion farmaceutica basica.", "urgency_level": "low", "is_emergency_capable": false},
+    {"name": "Centro de urgencias", "description": "Centro para atencion rapida de sintomas agudos y lesiones.", "urgency_level": "high", "is_emergency_capable": true}
   ],
   "services": [
-    {
-      "name": "Emergency care",
-      "description": "Immediate evaluation for potentially serious symptoms.",
-      "category": "urgent",
-      "requires_appointment": false,
-      "is_emergency_service": true
-    },
-    {
-      "name": "Dental consultation",
-      "description": "Dental examination and treatment plan.",
-      "category": "consultation",
-      "requires_appointment": true,
-      "is_emergency_service": false
-    },
-    {
-      "name": "Blood test",
-      "description": "Blood sample collection and laboratory analysis.",
-      "category": "diagnostics",
-      "requires_appointment": false,
-      "is_emergency_service": false
-    },
-    {
-      "name": "Pediatric consultation",
-      "description": "Medical consultation for children.",
-      "category": "consultation",
-      "requires_appointment": true,
-      "is_emergency_service": false
-    },
-    {
-      "name": "Cardiology consultation",
-      "description": "Cardiovascular examination and treatment planning.",
-      "category": "consultation",
-      "requires_appointment": true,
-      "is_emergency_service": false
-    }
+    {"name": "Medicina general", "description": "Consulta medica inicial y seguimiento de problemas frecuentes.", "category": "consultation", "requires_appointment": true, "is_emergency_service": false},
+    {"name": "Atención urgente", "description": "Evaluacion rapida de sintomas agudos o potencialmente graves.", "category": "urgent", "requires_appointment": false, "is_emergency_service": true},
+    {"name": "Odontología", "description": "Consulta, tratamiento y prevencion dental.", "category": "consultation", "requires_appointment": true, "is_emergency_service": false},
+    {"name": "Pediatría", "description": "Consulta medica para ninos.", "category": "consultation", "requires_appointment": true, "is_emergency_service": false},
+    {"name": "Vacunación", "description": "Aplicacion de vacunas infantiles y generales.", "category": "prevention", "requires_appointment": true, "is_emergency_service": false},
+    {"name": "Cardiología", "description": "Consulta y seguimiento cardiovascular.", "category": "consultation", "requires_appointment": true, "is_emergency_service": false},
+    {"name": "Ginecología", "description": "Consulta ginecologica y control de embarazo.", "category": "consultation", "requires_appointment": true, "is_emergency_service": false},
+    {"name": "Oftalmología", "description": "Evaluacion de vision y enfermedades oculares.", "category": "consultation", "requires_appointment": true, "is_emergency_service": false},
+    {"name": "Dermatología", "description": "Consulta por piel, lunares, erupciones y alergias cutaneas.", "category": "consultation", "requires_appointment": true, "is_emergency_service": false},
+    {"name": "Traumatología", "description": "Consulta por golpes, fracturas, articulaciones y lesiones.", "category": "consultation", "requires_appointment": true, "is_emergency_service": false},
+    {"name": "Neurología", "description": "Consulta por cefaleas, mareos y problemas neurologicos.", "category": "consultation", "requires_appointment": true, "is_emergency_service": false},
+    {"name": "Análisis de sangre", "description": "Extraccion y procesamiento de sangre.", "category": "diagnostics", "requires_appointment": false, "is_emergency_service": false},
+    {"name": "Diagnóstico por imagen", "description": "Estudios de imagen para apoyo diagnostico.", "category": "diagnostics", "requires_appointment": true, "is_emergency_service": false},
+    {"name": "Ecografía", "description": "Diagnostico por ultrasonido.", "category": "diagnostics", "requires_appointment": true, "is_emergency_service": false},
+    {"name": "Radiografía", "description": "Estudios radiograficos.", "category": "diagnostics", "requires_appointment": true, "is_emergency_service": false},
+    {"name": "Farmacia", "description": "Venta de medicamentos y productos de salud.", "category": "pharmacy", "requires_appointment": false, "is_emergency_service": false},
+    {"name": "Rehabilitación", "description": "Fisioterapia y recuperacion funcional.", "category": "rehabilitation", "requires_appointment": true, "is_emergency_service": false}
   ],
   "specialties": [
-    {
-      "name": "Dentistry",
-      "description": "Diagnosis and treatment of teeth and oral cavity conditions."
-    },
-    {
-      "name": "Cardiology",
-      "description": "Diagnosis and treatment of heart and vascular conditions."
-    },
-    {
-      "name": "Pediatrics",
-      "description": "Medical care for children."
-    },
-    {
-      "name": "Laboratory diagnostics",
-      "description": "Clinical laboratory tests."
-    },
-    {
-      "name": "Emergency medicine",
-      "description": "Urgent assessment and stabilization."
-    }
+    {"name": "Médico general", "description": "Atencion medica primaria y orientacion inicial."},
+    {"name": "Dentista", "description": "Especialista en salud dental."},
+    {"name": "Pediatra", "description": "Especialista en salud infantil."},
+    {"name": "Cardiólogo", "description": "Especialista en corazon y sistema cardiovascular."},
+    {"name": "Ginecólogo", "description": "Especialista en salud ginecologica y embarazo."},
+    {"name": "Oftalmólogo", "description": "Especialista en vision y ojos."},
+    {"name": "Dermatólogo", "description": "Especialista en piel."},
+    {"name": "Traumatólogo", "description": "Especialista en lesiones y aparato locomotor."},
+    {"name": "Neurólogo", "description": "Especialista en sistema nervioso."},
+    {"name": "Enfermería", "description": "Personal de enfermeria para procedimientos, control y vacunacion."},
+    {"name": "Técnico de laboratorio", "description": "Personal especializado en toma y procesamiento de muestras."},
+    {"name": "Farmacéutico", "description": "Especialista en medicamentos y dispensacion farmaceutica."}
   ],
   "health_needs": [
-    {
-      "name": "Tooth pain",
-      "description": "Pain in a tooth, gum, or jaw that may require dental care.",
-      "urgency_level": "medium",
-      "keywords": ["muela", "diente", "dolor dental", "encia", "dentista"]
-    },
-    {
-      "name": "Chest pain",
-      "description": "Chest pain or pressure that may require urgent evaluation.",
-      "urgency_level": "high",
-      "keywords": ["dolor en el pecho", "pecho", "opresion", "cardiaco", "corazon"]
-    },
-    {
-      "name": "Blood analysis",
-      "description": "Need for routine or requested blood testing.",
-      "urgency_level": "low",
-      "keywords": ["analisis de sangre", "sangre", "laboratorio", "hemograma"]
-    },
-    {
-      "name": "Child fever",
-      "description": "Fever or febrile symptoms in a child.",
-      "urgency_level": "medium",
-      "keywords": ["hijo fiebre", "nino fiebre", "bebe fiebre", "fiebre infantil", "mi hijo tiene fiebre"]
-    }
+    {"name": "Dolor dental", "description": "Dolor en muela, diente, encia o mandibula.", "urgency_level": "medium", "keywords": ["dolor dental", "muela", "me duele una muela", "diente", "encia", "dentista", "зуб болит", "болит зуб", "зубная боль", "стоматолог"]},
+    {"name": "Vacunación infantil", "description": "Vacunas para ninos o calendario infantil.", "urgency_level": "low", "keywords": ["vacuna infantil", "vacunacion infantil", "vacunar a mi hijo", "vacuna niño", "прививка ребенку", "детская вакцинация", "вакцина ребенку"]},
+    {"name": "Vacunación general", "description": "Vacunacion preventiva para adultos.", "urgency_level": "low", "keywords": ["vacuna", "vacunacion", "vacunarme", "прививка", "вакцинация", "вакцина"]},
+    {"name": "Herida con riesgo de tétanos", "description": "Herida sucia, mordedura, corte profundo o riesgo de tetanos.", "urgency_level": "high", "keywords": ["tetanos", "herida oxidada", "corte profundo", "mordedura", "herida sucia", "столбняк", "грязная рана", "укус", "порез"]},
+    {"name": "Dolor en el pecho", "description": "Dolor, presion u opresion en el pecho.", "urgency_level": "high", "keywords": ["dolor en el pecho", "pecho", "opresion", "corazon", "cardiaco", "боль в груди", "сердце", "давит в груди"]},
+    {"name": "Fiebre infantil", "description": "Fiebre en un nino o bebe.", "urgency_level": "medium", "keywords": ["fiebre infantil", "mi hijo tiene fiebre", "niño fiebre", "bebe fiebre", "температура у ребенка", "лихорадка ребенок", "у ребенка жар"]},
+    {"name": "Análisis de sangre", "description": "Necesidad de analitica o extraccion de sangre.", "urgency_level": "low", "keywords": ["analisis de sangre", "sangre", "hemograma", "laboratorio", "анализ крови", "сдать кровь", "лаборатория"]},
+    {"name": "Control de embarazo", "description": "Seguimiento del embarazo o consulta prenatal.", "urgency_level": "medium", "keywords": ["embarazo", "control embarazo", "prenatal", "estoy embarazada", "беременность", "ведение беременности", "гинеколог беременность"]},
+    {"name": "Dolor abdominal", "description": "Dolor de abdomen, estomago o vientre.", "urgency_level": "medium", "keywords": ["dolor abdominal", "dolor de barriga", "dolor de estomago", "abdomen", "боль в животе", "живот болит", "желудок"]},
+    {"name": "Dolor de cabeza", "description": "Cefalea, migraña o dolor intenso de cabeza.", "urgency_level": "medium", "keywords": ["dolor de cabeza", "migraña", "cefalea", "me duele la cabeza", "головная боль", "мигрень", "болит голова"]},
+    {"name": "Problemas de visión", "description": "Vision borrosa, dolor ocular o necesidad de revisar la vista.", "urgency_level": "low", "keywords": ["vision", "vista", "veo borroso", "ojos", "oftalmologo", "зрение", "плохо вижу", "глаза", "офтальмолог"]},
+    {"name": "Dolor de espalda", "description": "Dolor lumbar, dorsal o cervical.", "urgency_level": "low", "keywords": ["dolor de espalda", "lumbalgia", "espalda", "columna", "болит спина", "поясница", "спина"]},
+    {"name": "Problemas dermatológicos", "description": "Erupcion, alergia, manchas, acne o lesiones de piel.", "urgency_level": "low", "keywords": ["piel", "dermatologico", "erupcion", "alergia en la piel", "acne", "dermatologo", "кожа", "сыпь", "дерматолог", "акне"]},
+    {"name": "Dolor de oído", "description": "Dolor de oido o molestia auditiva.", "urgency_level": "low", "keywords": ["dolor de oido", "oido", "otitis", "me duele el oido", "болит ухо", "отит", "ухо"]},
+    {"name": "Control de presión arterial", "description": "Control o seguimiento de hipertension.", "urgency_level": "low", "keywords": ["presion arterial", "hipertension", "control presion", "tension alta", "давление", "гипертония", "измерить давление"]},
+    {"name": "Control de diabetes", "description": "Seguimiento de glucosa o diabetes.", "urgency_level": "low", "keywords": ["diabetes", "glucosa", "azucar", "control diabetes", "диабет", "сахар", "глюкоза"]},
+    {"name": "Consulta pediátrica", "description": "Consulta general para ninos.", "urgency_level": "low", "keywords": ["pediatra", "consulta pediatrica", "mi hijo necesita medico", "niño medico", "педиатр", "детский врач", "ребенку врач"]},
+    {"name": "Consulta ginecológica", "description": "Consulta ginecologica general.", "urgency_level": "low", "keywords": ["ginecologo", "consulta ginecologica", "salud femenina", "гинеколог", "женская консультация"]},
+    {"name": "Consulta cardiológica", "description": "Consulta cardiovascular programada.", "urgency_level": "low", "keywords": ["cardiologo", "consulta cardiologica", "revision corazon", "кардиолог", "сердце консультация"]},
+    {"name": "Consulta oftalmológica", "description": "Consulta programada de oftalmologia.", "urgency_level": "low", "keywords": ["oftalmologo", "consulta oftalmologica", "revisar vista", "окулист", "офтальмолог консультация"]},
+    {"name": "Compra de medicamentos", "description": "Necesidad de comprar medicamentos.", "urgency_level": "low", "keywords": ["comprar medicamentos", "medicamentos", "pastillas", "receta", "купить лекарства", "лекарства", "таблетки"]},
+    {"name": "Necesidad de farmacia", "description": "Buscar una farmacia cercana.", "urgency_level": "low", "keywords": ["farmacia", "necesito farmacia", "botica", "аптека", "найти аптеку"]}
   ],
   "need_service_rules": [
-    {
-      "health_need": "Tooth pain",
-      "recommended_service": "Dental consultation",
-      "recommended_specialty": "Dentistry",
-      "recommended_institution_type": "Dental clinic",
-      "priority": 10,
-      "urgency_required": "medium",
-      "explanation": "Dental pain is usually handled by a dental clinic unless there are severe systemic symptoms."
-    },
-    {
-      "health_need": "Chest pain",
-      "recommended_service": "Emergency care",
-      "recommended_specialty": "Emergency medicine",
-      "recommended_institution_type": "Emergency hospital",
-      "priority": 1,
-      "urgency_required": "high",
-      "explanation": "Chest pain can be serious and should be evaluated urgently when risk signs are present."
-    },
-    {
-      "health_need": "Blood analysis",
-      "recommended_service": "Blood test",
-      "recommended_specialty": "Laboratory diagnostics",
-      "recommended_institution_type": "Diagnostic laboratory",
-      "priority": 10,
-      "urgency_required": "low",
-      "explanation": "Blood tests are usually handled by a diagnostic laboratory."
-    },
-    {
-      "health_need": "Child fever",
-      "recommended_service": "Pediatric consultation",
-      "recommended_specialty": "Pediatrics",
-      "recommended_institution_type": "Pediatric clinic",
-      "priority": 10,
-      "urgency_required": "medium",
-      "explanation": "A child with fever should be evaluated by pediatrics unless emergency signs are present."
-    }
+    {"health_need": "Dolor dental", "recommended_service": "Odontología", "recommended_specialty": "Dentista", "recommended_institution_type": "Clínica dental", "priority": 10, "urgency_required": "medium", "explanation": "El dolor dental se atiende principalmente en clinicas dentales; si hay fiebre o hinchazon extensa, conviene urgencias."},
+    {"health_need": "Vacunación infantil", "recommended_service": "Vacunación", "recommended_specialty": "Pediatra", "recommended_institution_type": "Policlínico", "priority": 10, "urgency_required": "low", "explanation": "La vacunacion infantil debe coordinarse con pediatria o policlinico."},
+    {"health_need": "Vacunación infantil", "recommended_service": "Vacunación", "recommended_specialty": "Pediatra", "recommended_institution_type": "Centro pediátrico", "priority": 20, "urgency_required": "low", "explanation": "Un centro pediatrico tambien puede orientar sobre calendario de vacunas."},
+    {"health_need": "Vacunación general", "recommended_service": "Vacunación", "recommended_specialty": "Enfermería", "recommended_institution_type": "Policlínico", "priority": 10, "urgency_required": "low", "explanation": "Para vacunacion general, un policlinico suele ser la primera opcion."},
+    {"health_need": "Herida con riesgo de tétanos", "recommended_service": "Atención urgente", "recommended_specialty": "Médico general", "recommended_institution_type": "Centro de urgencias", "priority": 5, "urgency_required": "high", "explanation": "Heridas sucias, mordeduras o cortes profundos requieren evaluacion pronta y posible profilaxis antitetanica."},
+    {"health_need": "Dolor en el pecho", "recommended_service": "Atención urgente", "recommended_specialty": "Cardiólogo", "recommended_institution_type": "Hospital", "priority": 1, "urgency_required": "high", "explanation": "El dolor toracico puede ser grave; con signos de alarma se prioriza hospital o urgencias."},
+    {"health_need": "Fiebre infantil", "recommended_service": "Pediatría", "recommended_specialty": "Pediatra", "recommended_institution_type": "Centro pediátrico", "priority": 10, "urgency_required": "medium", "explanation": "La fiebre infantil suele requerir evaluacion pediatrica, especialmente si persiste o hay signos de alarma."},
+    {"health_need": "Análisis de sangre", "recommended_service": "Análisis de sangre", "recommended_specialty": "Técnico de laboratorio", "recommended_institution_type": "Laboratorio", "priority": 10, "urgency_required": "low", "explanation": "Los analisis de sangre se realizan en laboratorios o centros diagnosticos."},
+    {"health_need": "Control de embarazo", "recommended_service": "Ginecología", "recommended_specialty": "Ginecólogo", "recommended_institution_type": "Clínica ginecológica", "priority": 10, "urgency_required": "medium", "explanation": "El seguimiento del embarazo corresponde a ginecologia."},
+    {"health_need": "Dolor abdominal", "recommended_service": "Medicina general", "recommended_specialty": "Médico general", "recommended_institution_type": "Policlínico", "priority": 10, "urgency_required": "medium", "explanation": "El dolor abdominal sin signos de alarma puede iniciar por medicina general."},
+    {"health_need": "Dolor de cabeza", "recommended_service": "Neurología", "recommended_specialty": "Neurólogo", "recommended_institution_type": "Clínica privada", "priority": 10, "urgency_required": "medium", "explanation": "Cefaleas persistentes o recurrentes pueden requerir neurologia."},
+    {"health_need": "Problemas de visión", "recommended_service": "Oftalmología", "recommended_specialty": "Oftalmólogo", "recommended_institution_type": "Centro oftalmológico", "priority": 10, "urgency_required": "low", "explanation": "Los problemas de vision se evalúan en oftalmologia."},
+    {"health_need": "Dolor de espalda", "recommended_service": "Traumatología", "recommended_specialty": "Traumatólogo", "recommended_institution_type": "Policlínico", "priority": 10, "urgency_required": "low", "explanation": "Dolor de espalda puede valorarse por traumatologia o medicina general."},
+    {"health_need": "Problemas dermatológicos", "recommended_service": "Dermatología", "recommended_specialty": "Dermatólogo", "recommended_institution_type": "Clínica privada", "priority": 10, "urgency_required": "low", "explanation": "Lesiones o erupciones cutaneas se orientan a dermatologia."},
+    {"health_need": "Dolor de oído", "recommended_service": "Medicina general", "recommended_specialty": "Médico general", "recommended_institution_type": "Policlínico", "priority": 10, "urgency_required": "low", "explanation": "Dolor de oido puede iniciar con medicina general para decidir derivacion."},
+    {"health_need": "Control de presión arterial", "recommended_service": "Medicina general", "recommended_specialty": "Médico general", "recommended_institution_type": "Policlínico", "priority": 10, "urgency_required": "low", "explanation": "La presion arterial se controla en atencion primaria o cardiologia."},
+    {"health_need": "Control de diabetes", "recommended_service": "Medicina general", "recommended_specialty": "Médico general", "recommended_institution_type": "Policlínico", "priority": 10, "urgency_required": "low", "explanation": "El seguimiento de diabetes puede iniciar en medicina general con controles de laboratorio."},
+    {"health_need": "Consulta pediátrica", "recommended_service": "Pediatría", "recommended_specialty": "Pediatra", "recommended_institution_type": "Centro pediátrico", "priority": 10, "urgency_required": "low", "explanation": "Para consultas infantiles programadas, pediatria es la opcion principal."},
+    {"health_need": "Consulta ginecológica", "recommended_service": "Ginecología", "recommended_specialty": "Ginecólogo", "recommended_institution_type": "Clínica ginecológica", "priority": 10, "urgency_required": "low", "explanation": "La consulta ginecologica corresponde a una clinica ginecologica o policlinico."},
+    {"health_need": "Consulta cardiológica", "recommended_service": "Cardiología", "recommended_specialty": "Cardiólogo", "recommended_institution_type": "Clínica privada", "priority": 10, "urgency_required": "low", "explanation": "Consulta cardiologica programada puede realizarse en clinica o hospital."},
+    {"health_need": "Consulta oftalmológica", "recommended_service": "Oftalmología", "recommended_specialty": "Oftalmólogo", "recommended_institution_type": "Centro oftalmológico", "priority": 10, "urgency_required": "low", "explanation": "La revision de vista se realiza en centro oftalmologico."},
+    {"health_need": "Compra de medicamentos", "recommended_service": "Farmacia", "recommended_specialty": "Farmacéutico", "recommended_institution_type": "Farmacia", "priority": 10, "urgency_required": "low", "explanation": "Para medicamentos, busca una farmacia."},
+    {"health_need": "Necesidad de farmacia", "recommended_service": "Farmacia", "recommended_specialty": "Farmacéutico", "recommended_institution_type": "Farmacia", "priority": 10, "urgency_required": "low", "explanation": "Una farmacia puede cubrir compra de medicamentos y productos basicos de salud."}
   ],
   "triage_questions": [
-    {
-      "health_need": "Tooth pain",
-      "question_text": "El dolor es muy intenso o tienes hinchazon en la cara?",
-      "answer_type": "single_choice",
-      "priority": 10,
-      "is_required": true,
-      "options": [
-        { "option_text": "No", "risk_score": 0 },
-        { "option_text": "Si, dolor intenso", "risk_score": 2 },
-        { "option_text": "Si, hinchazon o fiebre", "risk_score": 4 }
-      ]
-    },
-    {
-      "health_need": "Chest pain",
-      "question_text": "Tienes falta de aire, sudor frio, mareo o dolor que se irradia al brazo?",
-      "answer_type": "single_choice",
-      "priority": 10,
-      "is_required": true,
-      "options": [
-        { "option_text": "No", "risk_score": 2 },
-        { "option_text": "Si", "risk_score": 8 }
-      ]
-    },
-    {
-      "health_need": "Child fever",
-      "question_text": "Que tan alta es la fiebre o hay signos de alarma?",
-      "answer_type": "single_choice",
-      "priority": 10,
-      "is_required": true,
-      "options": [
-        { "option_text": "Menos de 38.5 y buen estado general", "risk_score": 1 },
-        { "option_text": "Mas de 39 o fiebre persistente", "risk_score": 4 },
-        { "option_text": "Dificultad para respirar, somnolencia o convulsiones", "risk_score": 9 }
-      ]
-    }
+    {"health_need": "Dolor dental", "question_text": "El dolor es muy intenso o tienes hinchazon en la cara?", "answer_type": "single_choice", "priority": 10, "is_required": true, "options": [{"option_text": "No, es tolerable", "risk_score": 0}, {"option_text": "Si, dolor intenso", "risk_score": 2}, {"option_text": "Si, hinchazon, fiebre o dificultad para abrir la boca", "risk_score": 6}]},
+    {"health_need": "Dolor en el pecho", "question_text": "Tienes falta de aire, sudor frio, mareo o dolor que va al brazo/mandibula?", "answer_type": "single_choice", "priority": 10, "is_required": true, "options": [{"option_text": "No", "risk_score": 2}, {"option_text": "Si", "risk_score": 9}]},
+    {"health_need": "Fiebre infantil", "question_text": "Que tan alta es la fiebre o hay signos de alarma?", "answer_type": "single_choice", "priority": 10, "is_required": true, "options": [{"option_text": "Menos de 38.5 y buen estado general", "risk_score": 1}, {"option_text": "Mas de 39 o fiebre persistente", "risk_score": 4}, {"option_text": "Dificultad para respirar, somnolencia o convulsiones", "risk_score": 9}]},
+    {"health_need": "Vacunación infantil", "question_text": "El nino esta enfermo ahora o tuvo una reaccion fuerte a una vacuna?", "answer_type": "single_choice", "priority": 10, "is_required": true, "options": [{"option_text": "No, solo necesito vacunacion programada", "risk_score": 0}, {"option_text": "Tiene fiebre o enfermedad aguda", "risk_score": 4}, {"option_text": "Tuvo reaccion alergica grave antes", "risk_score": 8}]},
+    {"health_need": "Herida con riesgo de tétanos", "question_text": "La herida es profunda, sucia, por mordedura o con metal oxidado?", "answer_type": "single_choice", "priority": 10, "is_required": true, "options": [{"option_text": "No, es superficial y limpia", "risk_score": 2}, {"option_text": "Si, sucia o profunda", "risk_score": 7}, {"option_text": "Si, mordedura o no recuerdo mi vacuna antitetanica", "risk_score": 9}]},
+    {"health_need": "Dolor abdominal", "question_text": "El dolor abdominal es intenso o viene con fiebre, vomitos persistentes o abdomen rigido?", "answer_type": "single_choice", "priority": 10, "is_required": true, "options": [{"option_text": "No, es leve o moderado", "risk_score": 1}, {"option_text": "Si, intenso o persistente", "risk_score": 5}, {"option_text": "Si, con fiebre alta, vomitos persistentes o abdomen rigido", "risk_score": 9}]},
+    {"health_need": "Dolor de cabeza", "question_text": "El dolor empezo de golpe o hay debilidad, confusion, fiebre alta o rigidez de cuello?", "answer_type": "single_choice", "priority": 10, "is_required": true, "options": [{"option_text": "No, es parecido a dolores previos", "risk_score": 1}, {"option_text": "Es muy intenso o nuevo", "risk_score": 5}, {"option_text": "Si, hay signos neurologicos o rigidez de cuello", "risk_score": 9}]}
   ],
   "recommendation_rules": [
-    {
-      "health_need": "Tooth pain",
-      "min_risk_score": 0,
-      "max_risk_score": 3,
-      "recommended_institution_type": "Dental clinic",
-      "recommended_service": "Dental consultation",
-      "recommended_specialty": "Dentistry",
-      "message": "Lo mas adecuado es una clinica dental para consulta odontologica.",
-      "priority": 10
-    },
-    {
-      "health_need": "Tooth pain",
-      "min_risk_score": 4,
-      "max_risk_score": 99,
-      "recommended_institution_type": "Emergency hospital",
-      "recommended_service": "Emergency care",
-      "recommended_specialty": "Emergency medicine",
-      "message": "Por los sintomas de alarma, conviene acudir a una guardia o urgencias.",
-      "priority": 1
-    },
-    {
-      "health_need": "Chest pain",
-      "min_risk_score": 0,
-      "max_risk_score": 3,
-      "recommended_institution_type": "General clinic",
-      "recommended_service": "Cardiology consultation",
-      "recommended_specialty": "Cardiology",
-      "message": "Si no hay signos de alarma, una consulta medica/cardiologica puede orientar el siguiente paso.",
-      "priority": 10
-    },
-    {
-      "health_need": "Chest pain",
-      "min_risk_score": 4,
-      "max_risk_score": 99,
-      "recommended_institution_type": "Emergency hospital",
-      "recommended_service": "Emergency care",
-      "recommended_specialty": "Emergency medicine",
-      "message": "Dolor de pecho con signos de alarma requiere evaluacion urgente.",
-      "priority": 1
-    },
-    {
-      "health_need": "Blood analysis",
-      "min_risk_score": 0,
-      "max_risk_score": 99,
-      "recommended_institution_type": "Diagnostic laboratory",
-      "recommended_service": "Blood test",
-      "recommended_specialty": "Laboratory diagnostics",
-      "message": "Para analisis de sangre, busca un laboratorio diagnostico.",
-      "priority": 10
-    },
-    {
-      "health_need": "Child fever",
-      "min_risk_score": 0,
-      "max_risk_score": 5,
-      "recommended_institution_type": "Pediatric clinic",
-      "recommended_service": "Pediatric consultation",
-      "recommended_specialty": "Pediatrics",
-      "message": "Lo mas adecuado es una consulta pediatrica.",
-      "priority": 10
-    },
-    {
-      "health_need": "Child fever",
-      "min_risk_score": 6,
-      "max_risk_score": 99,
-      "recommended_institution_type": "Emergency hospital",
-      "recommended_service": "Emergency care",
-      "recommended_specialty": "Emergency medicine",
-      "message": "Los signos de alarma en un menor requieren atencion urgente.",
-      "priority": 1
-    }
+    {"health_need": "Dolor dental", "min_risk_score": 0, "max_risk_score": 3, "recommended_institution_type": "Clínica dental", "recommended_service": "Odontología", "recommended_specialty": "Dentista", "message": "Segun tus respuestas, te recomiendo acudir a una clinica dental.", "priority": 10},
+    {"health_need": "Dolor dental", "min_risk_score": 4, "max_risk_score": 99, "recommended_institution_type": "Centro de urgencias", "recommended_service": "Atención urgente", "recommended_specialty": "Médico general", "message": "Hay signos de posible complicacion. Te recomiendo acudir a urgencias.", "priority": 1},
+    {"health_need": "Dolor en el pecho", "min_risk_score": 0, "max_risk_score": 3, "recommended_institution_type": "Clínica privada", "recommended_service": "Cardiología", "recommended_specialty": "Cardiólogo", "message": "Si no hay signos de alarma, agenda una consulta cardiologica.", "priority": 10},
+    {"health_need": "Dolor en el pecho", "min_risk_score": 4, "max_risk_score": 99, "recommended_institution_type": "Hospital", "recommended_service": "Atención urgente", "recommended_specialty": "Cardiólogo", "message": "Dolor de pecho con signos de alarma requiere hospital o urgencias.", "priority": 1},
+    {"health_need": "Fiebre infantil", "min_risk_score": 0, "max_risk_score": 5, "recommended_institution_type": "Centro pediátrico", "recommended_service": "Pediatría", "recommended_specialty": "Pediatra", "message": "Te recomiendo una consulta pediatrica.", "priority": 10},
+    {"health_need": "Fiebre infantil", "min_risk_score": 6, "max_risk_score": 99, "recommended_institution_type": "Hospital", "recommended_service": "Atención urgente", "recommended_specialty": "Pediatra", "message": "Hay signos de alarma en un menor. Acude a hospital o urgencias.", "priority": 1},
+    {"health_need": "Vacunación infantil", "min_risk_score": 0, "max_risk_score": 3, "recommended_institution_type": "Centro pediátrico", "recommended_service": "Vacunación", "recommended_specialty": "Pediatra", "message": "Para vacunacion infantil programada, acude a policlinico o centro pediatrico.", "priority": 10},
+    {"health_need": "Vacunación infantil", "min_risk_score": 4, "max_risk_score": 99, "recommended_institution_type": "Centro pediátrico", "recommended_service": "Pediatría", "recommended_specialty": "Pediatra", "message": "Antes de vacunar, conviene consultar pediatria por los antecedentes o sintomas.", "priority": 5},
+    {"health_need": "Herida con riesgo de tétanos", "min_risk_score": 0, "max_risk_score": 4, "recommended_institution_type": "Policlínico", "recommended_service": "Vacunación", "recommended_specialty": "Enfermería", "message": "Consulta por vacunacion antitetanica y curacion de la herida.", "priority": 10},
+    {"health_need": "Herida con riesgo de tétanos", "min_risk_score": 5, "max_risk_score": 99, "recommended_institution_type": "Centro de urgencias", "recommended_service": "Atención urgente", "recommended_specialty": "Médico general", "message": "La herida requiere evaluacion urgente y posible profilaxis antitetanica.", "priority": 1},
+    {"health_need": "Dolor abdominal", "min_risk_score": 0, "max_risk_score": 4, "recommended_institution_type": "Policlínico", "recommended_service": "Medicina general", "recommended_specialty": "Médico general", "message": "Puedes iniciar con medicina general en policlinico.", "priority": 10},
+    {"health_need": "Dolor abdominal", "min_risk_score": 5, "max_risk_score": 99, "recommended_institution_type": "Hospital", "recommended_service": "Atención urgente", "recommended_specialty": "Médico general", "message": "Dolor abdominal con signos de alarma debe evaluarse en urgencias.", "priority": 1},
+    {"health_need": "Dolor de cabeza", "min_risk_score": 0, "max_risk_score": 4, "recommended_institution_type": "Clínica privada", "recommended_service": "Neurología", "recommended_specialty": "Neurólogo", "message": "Para cefalea recurrente o persistente, agenda neurologia.", "priority": 10},
+    {"health_need": "Dolor de cabeza", "min_risk_score": 5, "max_risk_score": 99, "recommended_institution_type": "Hospital", "recommended_service": "Atención urgente", "recommended_specialty": "Neurólogo", "message": "Dolor de cabeza con signos de alarma requiere urgencias.", "priority": 1},
+    {"health_need": "Análisis de sangre", "min_risk_score": 0, "max_risk_score": 99, "recommended_institution_type": "Laboratorio", "recommended_service": "Análisis de sangre", "recommended_specialty": "Técnico de laboratorio", "message": "Para analisis de sangre, te recomiendo un laboratorio.", "priority": 10},
+    {"health_need": "Control de embarazo", "min_risk_score": 0, "max_risk_score": 99, "recommended_institution_type": "Clínica ginecológica", "recommended_service": "Ginecología", "recommended_specialty": "Ginecólogo", "message": "Para control de embarazo, agenda ginecologia.", "priority": 10},
+    {"health_need": "Problemas de visión", "min_risk_score": 0, "max_risk_score": 99, "recommended_institution_type": "Centro oftalmológico", "recommended_service": "Oftalmología", "recommended_specialty": "Oftalmólogo", "message": "Te recomiendo un centro oftalmologico.", "priority": 10},
+    {"health_need": "Dolor de espalda", "min_risk_score": 0, "max_risk_score": 99, "recommended_institution_type": "Policlínico", "recommended_service": "Traumatología", "recommended_specialty": "Traumatólogo", "message": "Para dolor de espalda, consulta traumatologia o medicina general.", "priority": 10},
+    {"health_need": "Problemas dermatológicos", "min_risk_score": 0, "max_risk_score": 99, "recommended_institution_type": "Clínica privada", "recommended_service": "Dermatología", "recommended_specialty": "Dermatólogo", "message": "Te recomiendo dermatologia.", "priority": 10},
+    {"health_need": "Dolor de oído", "min_risk_score": 0, "max_risk_score": 99, "recommended_institution_type": "Policlínico", "recommended_service": "Medicina general", "recommended_specialty": "Médico general", "message": "Puedes iniciar con medicina general en policlinico.", "priority": 10},
+    {"health_need": "Control de presión arterial", "min_risk_score": 0, "max_risk_score": 99, "recommended_institution_type": "Policlínico", "recommended_service": "Medicina general", "recommended_specialty": "Médico general", "message": "Para control de presion arterial, acude a medicina general.", "priority": 10},
+    {"health_need": "Control de diabetes", "min_risk_score": 0, "max_risk_score": 99, "recommended_institution_type": "Policlínico", "recommended_service": "Medicina general", "recommended_specialty": "Médico general", "message": "Para control de diabetes, inicia por medicina general y laboratorio.", "priority": 10},
+    {"health_need": "Consulta pediátrica", "min_risk_score": 0, "max_risk_score": 99, "recommended_institution_type": "Centro pediátrico", "recommended_service": "Pediatría", "recommended_specialty": "Pediatra", "message": "Te recomiendo una consulta pediatrica.", "priority": 10},
+    {"health_need": "Consulta ginecológica", "min_risk_score": 0, "max_risk_score": 99, "recommended_institution_type": "Clínica ginecológica", "recommended_service": "Ginecología", "recommended_specialty": "Ginecólogo", "message": "Te recomiendo una clinica ginecologica.", "priority": 10},
+    {"health_need": "Consulta cardiológica", "min_risk_score": 0, "max_risk_score": 99, "recommended_institution_type": "Clínica privada", "recommended_service": "Cardiología", "recommended_specialty": "Cardiólogo", "message": "Te recomiendo una consulta cardiologica.", "priority": 10},
+    {"health_need": "Consulta oftalmológica", "min_risk_score": 0, "max_risk_score": 99, "recommended_institution_type": "Centro oftalmológico", "recommended_service": "Oftalmología", "recommended_specialty": "Oftalmólogo", "message": "Te recomiendo una consulta oftalmologica.", "priority": 10},
+    {"health_need": "Compra de medicamentos", "min_risk_score": 0, "max_risk_score": 99, "recommended_institution_type": "Farmacia", "recommended_service": "Farmacia", "recommended_specialty": "Farmacéutico", "message": "Te recomiendo una farmacia en Kursk.", "priority": 10},
+    {"health_need": "Necesidad de farmacia", "min_risk_score": 0, "max_risk_score": 99, "recommended_institution_type": "Farmacia", "recommended_service": "Farmacia", "recommended_specialty": "Farmacéutico", "message": "Te recomiendo una farmacia cercana en Kursk.", "priority": 10}
   ],
   "medical_centers": [
-    {
-      "name": "Kursk Emergency Hospital",
-      "institution_type": "Emergency hospital",
-      "city": "Kursk",
-      "district": "Central",
-      "address": "Central district, Kursk",
-      "latitude": 51.7300,
-      "longitude": 36.1900,
-      "phone": "+7 4712 000001",
-      "website": "https://example.com/emergency",
-      "working_hours": "24/7",
-      "rating": 4.4,
-      "price_level": "public",
-      "has_emergency": true,
-      "is_public": true,
-      "description": "Emergency hospital with urgent care.",
-      "services": ["Emergency care"],
-      "specialties": ["Emergency medicine", "Cardiology"]
-    },
-    {
-      "name": "Kursk Dental Care",
-      "institution_type": "Dental clinic",
-      "city": "Kursk",
-      "district": "Central",
-      "address": "Dental street 10, Kursk",
-      "latitude": 51.7350,
-      "longitude": 36.1850,
-      "phone": "+7 4712 000002",
-      "website": "https://example.com/dental",
-      "working_hours": "Mo-Fr 09:00-18:00",
-      "rating": 4.7,
-      "price_level": "medium",
-      "has_emergency": false,
-      "is_public": false,
-      "description": "Dental clinic for consultations and planned treatment.",
-      "services": ["Dental consultation"],
-      "specialties": ["Dentistry"]
-    },
-    {
-      "name": "Kursk Diagnostic Lab",
-      "institution_type": "Diagnostic laboratory",
-      "city": "Kursk",
-      "district": "North",
-      "address": "Lab avenue 4, Kursk",
-      "latitude": 51.7420,
-      "longitude": 36.1920,
-      "phone": "+7 4712 000003",
-      "website": "https://example.com/lab",
-      "working_hours": "Mo-Sa 08:00-14:00",
-      "rating": 4.5,
-      "price_level": "low",
-      "has_emergency": false,
-      "is_public": false,
-      "description": "Laboratory for routine blood testing.",
-      "services": ["Blood test"],
-      "specialties": ["Laboratory diagnostics"]
-    },
-    {
-      "name": "Kursk Pediatric Clinic",
-      "institution_type": "Pediatric clinic",
-      "city": "Kursk",
-      "district": "South",
-      "address": "Children health 7, Kursk",
-      "latitude": 51.7200,
-      "longitude": 36.1800,
-      "phone": "+7 4712 000004",
-      "website": "https://example.com/pediatric",
-      "working_hours": "Mo-Fr 08:00-20:00",
-      "rating": 4.6,
-      "price_level": "medium",
-      "has_emergency": false,
-      "is_public": true,
-      "description": "Pediatric outpatient clinic.",
-      "services": ["Pediatric consultation"],
-      "specialties": ["Pediatrics"]
-    }
+    {"name": "Kursk Regional Clinical Hospital", "institution_type": "Hospital", "city": "Курск", "district": "Центральный", "address": "ул. Сумская, 45А", "latitude": 51.716, "longitude": 36.184, "phone": "+7 4712 52-98-00", "website": "https://kurskokb.ru", "working_hours": "24/7", "rating": 4.4, "price_level": "public", "has_emergency": true, "is_public": true, "description": "Hospital regional multidisciplinario para atencion especializada y urgencias.", "services": ["Atención urgente", "Cardiología", "Traumatología", "Neurología", "Diagnóstico por imagen", "Radiografía"], "specialties": ["Médico general", "Cardiólogo", "Traumatólogo", "Neurólogo", "Enfermería"]},
+    {"name": "Kursk City Clinical Hospital No. 1", "institution_type": "Hospital", "city": "Курск", "district": "Центральный", "address": "ул. Димитрова, 62", "latitude": 51.735, "longitude": 36.193, "phone": "+7 4712 70-20-01", "website": "https://example.com/kursk-gkb1", "working_hours": "24/7", "rating": 4.1, "price_level": "public", "has_emergency": true, "is_public": true, "description": "Hospital municipal con servicios de urgencias y especialistas.", "services": ["Atención urgente", "Medicina general", "Cardiología", "Traumatología", "Ecografía", "Radiografía"], "specialties": ["Médico general", "Cardiólogo", "Traumatólogo", "Enfermería"]},
+    {"name": "Kursk Emergency Care Center", "institution_type": "Centro de urgencias", "city": "Курск", "district": "Центральный", "address": "ул. Радищева, 42", "latitude": 51.729, "longitude": 36.191, "phone": "+7 4712 03-00-03", "website": "https://example.com/kursk-urgent", "working_hours": "24/7", "rating": 4.0, "price_level": "public", "has_emergency": true, "is_public": true, "description": "Centro de atencion rapida para sintomas agudos, heridas y lesiones.", "services": ["Atención urgente", "Medicina general", "Vacunación", "Radiografía"], "specialties": ["Médico general", "Enfermería", "Traumatólogo"]},
+    {"name": "City Polyclinic No. 1 Kursk", "institution_type": "Policlínico", "city": "Курск", "district": "Центральный", "address": "ул. Ленина, 30", "latitude": 51.731, "longitude": 36.190, "phone": "+7 4712 51-02-10", "website": "https://example.com/polyclinic1", "working_hours": "Mo-Fr 08:00-20:00", "rating": 4.0, "price_level": "public", "has_emergency": false, "is_public": true, "description": "Policlinico para medicina general, vacunacion y especialistas.", "services": ["Medicina general", "Vacunación", "Cardiología", "Dermatología", "Análisis de sangre"], "specialties": ["Médico general", "Enfermería", "Cardiólogo", "Dermatólogo", "Técnico de laboratorio"]},
+    {"name": "City Polyclinic No. 2 Kursk", "institution_type": "Policlínico", "city": "Курск", "district": "Сеймский", "address": "пр-т Кулакова, 23", "latitude": 51.676, "longitude": 36.135, "phone": "+7 4712 37-18-20", "website": "https://example.com/polyclinic2", "working_hours": "Mo-Fr 08:00-20:00", "rating": 3.9, "price_level": "public", "has_emergency": false, "is_public": true, "description": "Policlinico del distrito Seimsky para atencion primaria.", "services": ["Medicina general", "Vacunación", "Traumatología", "Neurología", "Análisis de sangre"], "specialties": ["Médico general", "Enfermería", "Traumatólogo", "Neurólogo", "Técnico de laboratorio"]},
+    {"name": "City Polyclinic No. 5 Kursk", "institution_type": "Policlínico", "city": "Курск", "district": "Железнодорожный", "address": "ул. Союзная, 30", "latitude": 51.753, "longitude": 36.231, "phone": "+7 4712 26-41-00", "website": "https://example.com/polyclinic5", "working_hours": "Mo-Fr 08:00-19:00", "rating": 3.8, "price_level": "public", "has_emergency": false, "is_public": true, "description": "Policlinico de atencion primaria para adultos.", "services": ["Medicina general", "Vacunación", "Análisis de sangre"], "specialties": ["Médico general", "Enfermería", "Técnico de laboratorio"]},
+    {"name": "Medassist Kursk", "institution_type": "Clínica privada", "city": "Курск", "district": "Центральный", "address": "ул. Димитрова, 16", "latitude": 51.732, "longitude": 36.191, "phone": "+7 4712 39-03-03", "website": "https://medassist-kursk.ru", "working_hours": "Mo-Sa 08:00-20:00", "rating": 4.6, "price_level": "medium", "has_emergency": false, "is_public": false, "description": "Clinica privada multidisciplinaria en Kursk.", "services": ["Medicina general", "Cardiología", "Ginecología", "Neurología", "Dermatología", "Ecografía"], "specialties": ["Médico general", "Cardiólogo", "Ginecólogo", "Neurólogo", "Dermatólogo"]},
+    {"name": "Expert Clinic Kursk", "institution_type": "Clínica privada", "city": "Курск", "district": "Центральный", "address": "ул. Карла Маркса, 66Б", "latitude": 51.741, "longitude": 36.195, "phone": "+7 4712 74-70-70", "website": "https://example.com/expert-kursk", "working_hours": "Mo-Sa 08:00-21:00", "rating": 4.5, "price_level": "medium", "has_emergency": false, "is_public": false, "description": "Centro privado para consultas y diagnostico.", "services": ["Medicina general", "Cardiología", "Neurología", "Diagnóstico por imagen", "Ecografía"], "specialties": ["Médico general", "Cardiólogo", "Neurólogo", "Enfermería"]},
+    {"name": "Healthy Family Kursk", "institution_type": "Clínica privada", "city": "Курск", "district": "Центральный", "address": "ул. Радищева, 86", "latitude": 51.725, "longitude": 36.187, "phone": "+7 4712 54-33-22", "website": "https://example.com/healthy-family", "working_hours": "Mo-Sa 09:00-20:00", "rating": 4.4, "price_level": "medium", "has_emergency": false, "is_public": false, "description": "Clinica familiar con consultas generales y especialistas.", "services": ["Medicina general", "Pediatría", "Ginecología", "Dermatología", "Análisis de sangre"], "specialties": ["Médico general", "Pediatra", "Ginecólogo", "Dermatólogo", "Técnico de laboratorio"]},
+    {"name": "Kursk Dental Clinic No. 1", "institution_type": "Clínica dental", "city": "Курск", "district": "Центральный", "address": "ул. Горького, 15", "latitude": 51.733, "longitude": 36.188, "phone": "+7 4712 52-05-55", "website": "https://example.com/dental1", "working_hours": "Mo-Fr 08:00-20:00", "rating": 4.3, "price_level": "public", "has_emergency": false, "is_public": true, "description": "Clinica dental publica para consulta y tratamiento odontologico.", "services": ["Odontología"], "specialties": ["Dentista"]},
+    {"name": "Dental Lux Kursk", "institution_type": "Clínica dental", "city": "Курск", "district": "Центральный", "address": "ул. Ленина, 72", "latitude": 51.728, "longitude": 36.190, "phone": "+7 4712 58-88-88", "website": "https://example.com/dental-lux", "working_hours": "Mo-Sa 09:00-21:00", "rating": 4.8, "price_level": "high", "has_emergency": false, "is_public": false, "description": "Clinica dental privada con odontologia general.", "services": ["Odontología"], "specialties": ["Dentista"]},
+    {"name": "Smile Studio Kursk", "institution_type": "Clínica dental", "city": "Курск", "district": "Сеймский", "address": "пр-т Кулакова, 9", "latitude": 51.679, "longitude": 36.134, "phone": "+7 4712 37-77-37", "website": "https://example.com/smile-studio", "working_hours": "Mo-Sa 09:00-20:00", "rating": 4.6, "price_level": "medium", "has_emergency": false, "is_public": false, "description": "Clinica dental privada en Seimsky.", "services": ["Odontología"], "specialties": ["Dentista"]},
+    {"name": "Children Polyclinic No. 1 Kursk", "institution_type": "Centro pediátrico", "city": "Курск", "district": "Центральный", "address": "ул. Садовая, 40", "latitude": 51.729, "longitude": 36.184, "phone": "+7 4712 51-11-01", "website": "https://example.com/child-polyclinic1", "working_hours": "Mo-Fr 08:00-19:00", "rating": 4.0, "price_level": "public", "has_emergency": false, "is_public": true, "description": "Centro pediatrico publico para consulta y vacunacion infantil.", "services": ["Pediatría", "Vacunación", "Análisis de sangre"], "specialties": ["Pediatra", "Enfermería", "Técnico de laboratorio"]},
+    {"name": "Children Polyclinic No. 2 Kursk", "institution_type": "Centro pediátrico", "city": "Курск", "district": "Железнодорожный", "address": "ул. Маяковского, 100", "latitude": 51.754, "longitude": 36.228, "phone": "+7 4712 26-00-12", "website": "https://example.com/child-polyclinic2", "working_hours": "Mo-Fr 08:00-19:00", "rating": 3.9, "price_level": "public", "has_emergency": false, "is_public": true, "description": "Pediatria y vacunacion para ninos.", "services": ["Pediatría", "Vacunación"], "specialties": ["Pediatra", "Enfermería"]},
+    {"name": "Pediatric Center Zdorovie Detey", "institution_type": "Centro pediátrico", "city": "Курск", "district": "Центральный", "address": "ул. Карла Маркса, 55", "latitude": 51.740, "longitude": 36.191, "phone": "+7 4712 44-24-24", "website": "https://example.com/zdorovie-detey", "working_hours": "Mo-Sa 09:00-20:00", "rating": 4.6, "price_level": "medium", "has_emergency": false, "is_public": false, "description": "Centro pediatrico privado para consultas y vacunacion.", "services": ["Pediatría", "Vacunación", "Análisis de sangre"], "specialties": ["Pediatra", "Enfermería", "Técnico de laboratorio"]},
+    {"name": "Invitro Kursk Lenin", "institution_type": "Laboratorio", "city": "Курск", "district": "Центральный", "address": "ул. Ленина, 60", "latitude": 51.730, "longitude": 36.189, "phone": "+7 800 200-36-30", "website": "https://www.invitro.ru", "working_hours": "Mo-Sa 07:30-17:00", "rating": 4.5, "price_level": "medium", "has_emergency": false, "is_public": false, "description": "Laboratorio de analisis clinicos.", "services": ["Análisis de sangre"], "specialties": ["Técnico de laboratorio"]},
+    {"name": "Gemotest Kursk", "institution_type": "Laboratorio", "city": "Курск", "district": "Центральный", "address": "ул. Радищева, 79", "latitude": 51.727, "longitude": 36.187, "phone": "+7 800 550-13-13", "website": "https://gemotest.ru", "working_hours": "Mo-Sa 07:30-15:00", "rating": 4.4, "price_level": "medium", "has_emergency": false, "is_public": false, "description": "Laboratorio para analisis de sangre y pruebas clinicas.", "services": ["Análisis de sangre"], "specialties": ["Técnico de laboratorio"]},
+    {"name": "KDL Kursk Laboratory", "institution_type": "Laboratorio", "city": "Курск", "district": "Сеймский", "address": "пр-т Кулакова, 5", "latitude": 51.681, "longitude": 36.136, "phone": "+7 800 700-60-40", "website": "https://kdl.ru", "working_hours": "Mo-Sa 07:30-14:00", "rating": 4.3, "price_level": "medium", "has_emergency": false, "is_public": false, "description": "Laboratorio diagnostico privado.", "services": ["Análisis de sangre"], "specialties": ["Técnico de laboratorio"]},
+    {"name": "MRT Expert Kursk", "institution_type": "Centro diagnóstico", "city": "Курск", "district": "Центральный", "address": "ул. Карла Маркса, 49", "latitude": 51.739, "longitude": 36.192, "phone": "+7 4712 73-03-03", "website": "https://example.com/mrt-expert", "working_hours": "Mo-Su 08:00-22:00", "rating": 4.5, "price_level": "high", "has_emergency": false, "is_public": false, "description": "Centro de diagnostico por imagen.", "services": ["Diagnóstico por imagen", "Ecografía", "Radiografía"], "specialties": ["Médico general", "Enfermería"]},
+    {"name": "Diagnostic Center Kursk", "institution_type": "Centro diagnóstico", "city": "Курск", "district": "Центральный", "address": "ул. Павлуновского, 48", "latitude": 51.724, "longitude": 36.188, "phone": "+7 4712 54-00-54", "website": "https://example.com/diagnostic-kursk", "working_hours": "Mo-Sa 08:00-20:00", "rating": 4.2, "price_level": "medium", "has_emergency": false, "is_public": false, "description": "Ecografia, radiografia y estudios diagnosticos.", "services": ["Diagnóstico por imagen", "Ecografía", "Radiografía", "Análisis de sangre"], "specialties": ["Técnico de laboratorio", "Enfermería"]},
+    {"name": "Ophthalmology Center Kursk", "institution_type": "Centro oftalmológico", "city": "Курск", "district": "Центральный", "address": "ул. Радищева, 20", "latitude": 51.732, "longitude": 36.186, "phone": "+7 4712 70-10-10", "website": "https://example.com/eye-kursk", "working_hours": "Mo-Sa 09:00-19:00", "rating": 4.7, "price_level": "medium", "has_emergency": false, "is_public": false, "description": "Centro oftalmologico para revision de vista y consultas.", "services": ["Oftalmología"], "specialties": ["Oftalmólogo"]},
+    {"name": "Vision Plus Kursk", "institution_type": "Centro oftalmológico", "city": "Курск", "district": "Сеймский", "address": "пр-т Кулакова, 24", "latitude": 51.677, "longitude": 36.133, "phone": "+7 4712 37-10-37", "website": "https://example.com/vision-plus", "working_hours": "Mo-Sa 09:00-20:00", "rating": 4.5, "price_level": "medium", "has_emergency": false, "is_public": false, "description": "Consulta oftalmologica y control de vision.", "services": ["Oftalmología"], "specialties": ["Oftalmólogo"]},
+    {"name": "Women's Health Kursk", "institution_type": "Clínica ginecológica", "city": "Курск", "district": "Центральный", "address": "ул. Ленина, 90", "latitude": 51.724, "longitude": 36.190, "phone": "+7 4712 55-90-90", "website": "https://example.com/womens-health", "working_hours": "Mo-Sa 09:00-20:00", "rating": 4.6, "price_level": "medium", "has_emergency": false, "is_public": false, "description": "Clinica ginecologica para consulta y control de embarazo.", "services": ["Ginecología", "Ecografía", "Análisis de sangre"], "specialties": ["Ginecólogo", "Técnico de laboratorio"]},
+    {"name": "Perinatal Consultation Kursk", "institution_type": "Clínica ginecológica", "city": "Курск", "district": "Центральный", "address": "ул. Пирогова, 10", "latitude": 51.721, "longitude": 36.184, "phone": "+7 4712 52-44-20", "website": "https://example.com/perinatal-kursk", "working_hours": "Mo-Fr 08:00-18:00", "rating": 4.2, "price_level": "public", "has_emergency": false, "is_public": true, "description": "Consulta de embarazo y salud femenina.", "services": ["Ginecología", "Ecografía", "Vacunación"], "specialties": ["Ginecólogo", "Enfermería"]},
+    {"name": "Apteka 36.6 Kursk Center", "institution_type": "Farmacia", "city": "Курск", "district": "Центральный", "address": "ул. Ленина, 24", "latitude": 51.732, "longitude": 36.190, "phone": "+7 4712 51-36-36", "website": "https://example.com/apteka366-kursk", "working_hours": "Mo-Su 08:00-22:00", "rating": 4.3, "price_level": "low", "has_emergency": false, "is_public": false, "description": "Farmacia centrica con medicamentos y productos de salud.", "services": ["Farmacia"], "specialties": ["Farmacéutico"]},
+    {"name": "Rigla Pharmacy Kursk", "institution_type": "Farmacia", "city": "Курск", "district": "Центральный", "address": "ул. Карла Маркса, 17", "latitude": 51.735, "longitude": 36.194, "phone": "+7 4712 70-36-60", "website": "https://www.rigla.ru", "working_hours": "Mo-Su 08:00-22:00", "rating": 4.2, "price_level": "low", "has_emergency": false, "is_public": false, "description": "Farmacia de red con medicamentos basicos.", "services": ["Farmacia"], "specialties": ["Farmacéutico"]},
+    {"name": "April Pharmacy Kursk", "institution_type": "Farmacia", "city": "Курск", "district": "Сеймский", "address": "пр-т Кулакова, 3", "latitude": 51.680, "longitude": 36.137, "phone": "+7 800 200-90-01", "website": "https://apteka-april.ru", "working_hours": "Mo-Su 08:00-21:00", "rating": 4.1, "price_level": "low", "has_emergency": false, "is_public": false, "description": "Farmacia para compra de medicamentos y productos sanitarios.", "services": ["Farmacia"], "specialties": ["Farmacéutico"]},
+    {"name": "Rehabilitation Center Kursk", "institution_type": "Clínica privada", "city": "Курск", "district": "Центральный", "address": "ул. Садовая, 12", "latitude": 51.728, "longitude": 36.183, "phone": "+7 4712 56-22-56", "website": "https://example.com/rehab-kursk", "working_hours": "Mo-Fr 09:00-19:00", "rating": 4.4, "price_level": "medium", "has_emergency": false, "is_public": false, "description": "Centro privado de rehabilitacion y fisioterapia.", "services": ["Rehabilitación", "Traumatología"], "specialties": ["Traumatólogo", "Enfermería"]},
+    {"name": "Dermatology Clinic Kursk", "institution_type": "Clínica privada", "city": "Курск", "district": "Центральный", "address": "ул. Радищева, 60", "latitude": 51.726, "longitude": 36.188, "phone": "+7 4712 44-60-60", "website": "https://example.com/derma-kursk", "working_hours": "Mo-Sa 09:00-19:00", "rating": 4.5, "price_level": "medium", "has_emergency": false, "is_public": false, "description": "Clinica dermatologica para piel, alergias y acne.", "services": ["Dermatología"], "specialties": ["Dermatólogo"]},
+    {"name": "Neurology Center Kursk", "institution_type": "Clínica privada", "city": "Курск", "district": "Центральный", "address": "ул. Дзержинского, 84", "latitude": 51.722, "longitude": 36.187, "phone": "+7 4712 73-84-84", "website": "https://example.com/neuro-kursk", "working_hours": "Mo-Fr 09:00-18:00", "rating": 4.3, "price_level": "medium", "has_emergency": false, "is_public": false, "description": "Centro de neurologia para cefaleas, mareos y dolor cronico.", "services": ["Neurología", "Diagnóstico por imagen"], "specialties": ["Neurólogo"]},
+    {"name": "Cardio Center Kursk", "institution_type": "Clínica privada", "city": "Курск", "district": "Центральный", "address": "ул. Перекальского, 5", "latitude": 51.737, "longitude": 36.188, "phone": "+7 4712 77-05-05", "website": "https://example.com/cardio-kursk", "working_hours": "Mo-Sa 08:00-20:00", "rating": 4.6, "price_level": "medium", "has_emergency": false, "is_public": false, "description": "Centro cardiologico para consulta y seguimiento cardiovascular.", "services": ["Cardiología", "Medicina general", "Análisis de sangre"], "specialties": ["Cardiólogo", "Médico general", "Técnico de laboratorio"]}
   ]
 }

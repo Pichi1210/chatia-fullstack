@@ -33,6 +33,11 @@ def get_by_name(session: Session, model: type[Any], name: str):
 def create_if_missing(session: Session, model: type[Any], data: dict[str, Any]):
     existing = get_by_name(session, model, data["name"])
     if existing:
+        for key, value in data.items():
+            setattr(existing, key, value)
+        session.add(existing)
+        session.commit()
+        session.refresh(existing)
         return existing
     obj = model(**data)
     session.add(obj)
@@ -186,6 +191,12 @@ def seed_centers(session: Session, data: dict[str, Any]) -> None:
             session.commit()
             session.refresh(center)
             logger.info("Created medical center: %s", item["name"])
+        else:
+            for key, value in center_data.items():
+                setattr(center, key, value)
+            session.add(center)
+            session.commit()
+            session.refresh(center)
 
         for service_name in item["services"]:
             service = get_by_name(session, MedicalService, service_name)

@@ -154,7 +154,7 @@ export default function ChatInterface() {
                             risk_score: option.risk_score,
                         },
                     ],
-                    city: 'Kursk',
+                    city: 'Курск',
                 },
                 '/api/v1/chat/answer',
             );
