@@ -46,6 +46,7 @@ interface ChatResponse {
     recommended_service?: string | null;
     recommended_specialty?: string | null;
     recommended_institution_type?: string | null;
+    risk_score?: number;
     questions: TriageQuestion[];
     recommendations: MedicalCenter[];
 }
@@ -54,6 +55,10 @@ interface Message {
     sender: 'user' | 'bot';
     text: string;
     healthNeedId?: number | null;
+    recommendedService?: string | null;
+    recommendedSpecialty?: string | null;
+    recommendedInstitutionType?: string | null;
+    riskScore?: number;
     questions?: TriageQuestion[];
     recommendations?: MedicalCenter[];
 }
@@ -65,6 +70,7 @@ const normalizeChatResponse = (response: Partial<ChatResponse>): ChatResponse =>
     recommended_service: response.recommended_service ?? null,
     recommended_specialty: response.recommended_specialty ?? null,
     recommended_institution_type: response.recommended_institution_type ?? null,
+    risk_score: response.risk_score ?? 0,
     questions: Array.isArray(response.questions) ? response.questions : [],
     recommendations: Array.isArray(response.recommendations)
         ? response.recommendations
@@ -75,6 +81,12 @@ export default function ChatInterface() {
     const [messages, setMessages] = useState<Message[]>([]);
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedAnswers, setSelectedAnswers] = useState<
+        Record<number, Record<number, TriageAnswerOption>>
+    >({});
+    const [submittedTriageMessages, setSubmittedTriageMessages] = useState<
+        Record<number, boolean>
+    >({});
 
     const appendBotResponse = (response: ChatResponse) => {
         setMessages((prev) => [
@@ -83,6 +95,10 @@ export default function ChatInterface() {
                 sender: 'bot',
                 text: response.message,
                 healthNeedId: response.health_need_id,
+                recommendedService: response.recommended_service,
+                recommendedSpecialty: response.recommended_specialty,
+                recommendedInstitutionType: response.recommended_institution_type,
+                riskScore: response.risk_score,
                 questions: response.questions,
                 recommendations: response.recommendations,
             },
@@ -117,7 +133,7 @@ export default function ChatInterface() {
         try {
             const response = await requestChat({ message: messageText });
             appendBotResponse(response);
-        } catch (error) {
+        } catch (_error) {
             setMessages((prev) => [
                 ...prev,
                 {
@@ -132,14 +148,41 @@ export default function ChatInterface() {
         }
     };
 
-    const handleAnswerQuestion = async (
-        healthNeedId: number,
-        question: TriageQuestion,
+    const handleSelectAnswer = (
+        messageIndex: number,
+        questionId: number,
         option: TriageAnswerOption,
     ) => {
+        setSelectedAnswers((prev) => ({
+            ...prev,
+            [messageIndex]: {
+                ...(prev[messageIndex] || {}),
+                [questionId]: option,
+            },
+        }));
+    };
+
+    const areRequiredQuestionsAnswered = (
+        messageIndex: number,
+        questions: TriageQuestion[],
+    ) => {
+        const answers = selectedAnswers[messageIndex] || {};
+        return questions
+            .filter((question) => question.is_required)
+            .every((question) => Boolean(answers[question.id]));
+    };
+
+    const handleSubmitTriageAnswers = async (
+        messageIndex: number,
+        healthNeedId: number,
+        questions: TriageQuestion[],
+    ) => {
+        const answersByQuestion = selectedAnswers[messageIndex] || {};
+        if (!areRequiredQuestionsAnswered(messageIndex, questions)) return;
+
         setMessages((prev) => [
             ...prev,
-            { sender: 'user', text: option.option_text },
+            { sender: 'user', text: 'Respuestas de triaje enviadas' },
         ]);
         setIsLoading(true);
 
@@ -147,24 +190,31 @@ export default function ChatInterface() {
             const response = await requestChat(
                 {
                     health_need_id: healthNeedId,
-                    answers: [
-                        {
-                            question_id: question.id,
-                            answer_option_id: option.id,
-                            risk_score: option.risk_score,
-                        },
-                    ],
+                    answers: questions
+                        .filter((question) => answersByQuestion[question.id])
+                        .map((question) => {
+                            const option = answersByQuestion[question.id];
+                            return {
+                                question_id: question.id,
+                                answer_option_id: option.id,
+                                risk_score: option.risk_score,
+                            };
+                        }),
                     city: 'Курск',
                 },
                 '/api/v1/chat/answer',
             );
             appendBotResponse(response);
-        } catch (error) {
+            setSubmittedTriageMessages((prev) => ({
+                ...prev,
+                [messageIndex]: true,
+            }));
+        } catch (_error) {
             setMessages((prev) => [
                 ...prev,
                 {
                     sender: 'bot',
-                    text: 'No pude procesar la respuesta de triaje.',
+                    text: 'No pude procesar las respuestas de triaje.',
                     questions: [],
                     recommendations: [],
                 },
@@ -182,6 +232,12 @@ export default function ChatInterface() {
                     const recommendations = Array.isArray(msg.recommendations)
                         ? msg.recommendations
                         : [];
+                    const answersForMessage = selectedAnswers[index] || {};
+                    const isTriageSubmitted = Boolean(submittedTriageMessages[index]);
+                    const canSubmitTriage =
+                        questions.length > 0 &&
+                        !isTriageSubmitted &&
+                        areRequiredQuestionsAnswered(index, questions);
 
                     return (
                         <div key={index} className={`mb-4 ${msg.sender === 'user' ? 'text-right' : 'text-left'}`}>
@@ -195,22 +251,69 @@ export default function ChatInterface() {
                                         <div key={question.id} className="space-y-2">
                                             <p className="text-sm font-medium">{question.question_text}</p>
                                             <div className="flex flex-wrap gap-2">
-                                                {question.answer_options.map((option) => (
-                                                    <Button
-                                                        key={option.id}
-                                                        type="button"
-                                                        variant="outline"
-                                                        size="sm"
-                                                        className="border-gray-400 bg-white text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700"
-                                                        disabled={isLoading}
-                                                        onClick={() => handleAnswerQuestion(msg.healthNeedId!, question, option)}
-                                                    >
-                                                        {option.option_text}
-                                                    </Button>
-                                                ))}
+                                                {question.answer_options.map((option) => {
+                                                    const isSelected =
+                                                        answersForMessage[question.id]?.id === option.id;
+
+                                                    return (
+                                                        <Button
+                                                            key={option.id}
+                                                            type="button"
+                                                            variant={isSelected ? 'default' : 'outline'}
+                                                            size="sm"
+                                                            className={
+                                                                isSelected
+                                                                    ? ''
+                                                                    : 'border-gray-400 bg-white text-gray-900 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700'
+                                                            }
+                                                            disabled={isLoading || isTriageSubmitted}
+                                                            onClick={() =>
+                                                                handleSelectAnswer(index, question.id, option)
+                                                            }
+                                                        >
+                                                            {option.option_text}
+                                                        </Button>
+                                                    );
+                                                })}
                                             </div>
                                         </div>
                                     ))}
+                                    <Button
+                                        type="button"
+                                        className="w-full"
+                                        disabled={isLoading || !canSubmitTriage}
+                                        onClick={() =>
+                                            handleSubmitTriageAnswers(
+                                                index,
+                                                msg.healthNeedId!,
+                                                questions,
+                                            )
+                                        }
+                                    >
+                                        Analizar respuestas
+                                    </Button>
+                                </div>
+                            )}
+
+                            {(msg.recommendedService ||
+                                msg.recommendedSpecialty ||
+                                msg.recommendedInstitutionType) && (
+                                <div className="mt-3 rounded-lg border bg-white p-3 text-sm text-gray-900 shadow-sm dark:bg-gray-900 dark:text-gray-100">
+                                    {msg.recommendedService && (
+                                        <p>Servicio: {msg.recommendedService}</p>
+                                    )}
+                                    {msg.recommendedSpecialty && (
+                                        <p>Especialidad: {msg.recommendedSpecialty}</p>
+                                    )}
+                                    {msg.recommendedInstitutionType && (
+                                        <p>
+                                            Tipo de institución:{' '}
+                                            {msg.recommendedInstitutionType}
+                                        </p>
+                                    )}
+                                    {typeof msg.riskScore === 'number' && (
+                                        <p>Riesgo: {msg.riskScore}</p>
+                                    )}
                                 </div>
                             )}
 
