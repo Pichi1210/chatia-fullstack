@@ -722,6 +722,409 @@
         "?????? ??????",
         "?????????? ???????"
       ]
+    },
+    {
+      "name": "Knee pain",
+      "description": "Dolor localizado en la rodilla, con o sin hinchazon, lesion o fiebre asociada.",
+      "urgency_level": "medium",
+      "keywords": [
+        "rodilla",
+        "me duele la rodilla",
+        "dolor de rodilla",
+        "dolor en la rodilla",
+        "dolor articular",
+        "articulación",
+        "articulacion",
+        "hinchazón de rodilla",
+        "hinchazon de rodilla",
+        "no puedo caminar",
+        "колено",
+        "болит колено",
+        "боль в колене",
+        "сустав"
+      ]
+    },
+    {
+      "name": "Joint pain",
+      "description": "Dolor en articulaciones como rodilla, hombro, codo, muñeca o tobillo.",
+      "urgency_level": "medium",
+      "keywords": [
+        "dolor articular",
+        "articulación",
+        "articulacion",
+        "dolor en articulacion",
+        "dolor en las articulaciones",
+        "hombro",
+        "codo",
+        "tobillo",
+        "muñeca",
+        "сустав",
+        "боль в суставе",
+        "болят суставы"
+      ]
+    },
+    {
+      "name": "General fever",
+      "description": "Fiebre o temperatura elevada sin foco especifico.",
+      "urgency_level": "medium",
+      "keywords": [
+        "fiebre",
+        "temperatura",
+        "calentura",
+        "temperatura alta",
+        "tengo fiebre",
+        "febril",
+        "температура",
+        "жар",
+        "лихорадка"
+      ]
+    },
+    {
+      "name": "Weakness",
+      "description": "Debilidad, cansancio intenso o sensacion de falta de fuerzas.",
+      "urgency_level": "medium",
+      "keywords": [
+        "debil",
+        "débil",
+        "debilidad",
+        "me siento debil",
+        "me siento débil",
+        "cansancio",
+        "sin fuerzas",
+        "слабость",
+        "усталость",
+        "нет сил"
+      ]
+    },
+    {
+      "name": "General malaise",
+      "description": "Malestar general, decaimiento o sensacion inespecifica de enfermedad.",
+      "urgency_level": "low",
+      "keywords": [
+        "malestar",
+        "malestar general",
+        "me siento mal",
+        "decaido",
+        "decaída",
+        "sin energia",
+        "me encuentro mal",
+        "плохо себя чувствую",
+        "недомогание",
+        "слабость"
+      ]
+    },
+    {
+      "name": "Body pain",
+      "description": "Dolor corporal general, dolor muscular o sensacion de cuerpo cortado.",
+      "urgency_level": "medium",
+      "keywords": [
+        "me duele el cuerpo",
+        "dolor corporal",
+        "dolor muscular",
+        "dolor en el cuerpo",
+        "cuerpo cortado",
+        "ломота",
+        "болит тело",
+        "мышцы"
+      ]
+    },
+    {
+      "name": "Headache",
+      "description": "Dolor de cabeza, cefalea o migraña.",
+      "urgency_level": "medium",
+      "keywords": [
+        "dolor de cabeza",
+        "me duele la cabeza",
+        "cabeza",
+        "cefalea",
+        "migraña",
+        "migrena",
+        "болит голова",
+        "головная боль",
+        "мигрень"
+      ]
+    },
+    {
+      "name": "Headache with fever",
+      "description": "Dolor de cabeza acompañado de fiebre o sintomas infecciosos.",
+      "urgency_level": "high",
+      "keywords": [
+        "dolor de cabeza y fiebre",
+        "fiebre y dolor de cabeza",
+        "me duele la cabeza y tengo fiebre",
+        "cabeza y fiebre",
+        "головная боль и температура",
+        "болит голова и температура",
+        "жар и голова"
+      ]
+    },
+    {
+      "name": "Wound or trauma",
+      "description": "Herida, golpe, caida, corte, mordedura o lesion reciente.",
+      "urgency_level": "medium",
+      "keywords": [
+        "herida",
+        "golpe",
+        "lesion",
+        "lesión",
+        "trauma",
+        "corte",
+        "caida",
+        "caída",
+        "mordedura",
+        "sangrado",
+        "рана",
+        "травма",
+        "ушиб",
+        "порез",
+        "укус",
+        "кровь"
+      ]
+    },
+    {
+      "name": "Tetanus vaccination",
+      "description": "Vacuna antitetanica preventiva o posterior a herida con riesgo.",
+      "urgency_level": "medium",
+      "keywords": [
+        "tetanos",
+        "tétanos",
+        "vacuna tetanos",
+        "vacuna contra el tetanos",
+        "antitetanica",
+        "antitetánica",
+        "herida oxidada",
+        "столбняк",
+        "прививка от столбняка",
+        "вакцина от столбняка"
+      ]
+    },
+    {
+      "name": "Child vaccination",
+      "description": "Vacunacion infantil preventiva o consulta pediatrica por vacunas.",
+      "urgency_level": "low",
+      "keywords": [
+        "vacuna",
+        "vacunas",
+        "vacunacion",
+        "vacunación",
+        "inmunizacion",
+        "inmunización",
+        "tetanos",
+        "tétanos",
+        "hijo",
+        "niño",
+        "pediatra",
+        "прививка",
+        "вакцина",
+        "столбняк",
+        "ребенок",
+        "дети",
+        "педиатр"
+      ]
+    },
+    {
+      "name": "Vision problems",
+      "description": "Vision borrosa, dolor ocular, ojo rojo o necesidad de revisar la vista.",
+      "urgency_level": "low",
+      "keywords": [
+        "vision",
+        "visión",
+        "vista",
+        "veo borroso",
+        "ojos",
+        "dolor de ojo",
+        "oftalmologo",
+        "oftalmólogo",
+        "зрение",
+        "плохо вижу",
+        "глаза",
+        "офтальмолог"
+      ]
+    },
+    {
+      "name": "Abdominal pain",
+      "description": "Dolor de abdomen, estomago, vientre o barriga.",
+      "urgency_level": "medium",
+      "keywords": [
+        "dolor abdominal",
+        "dolor de barriga",
+        "dolor de estomago",
+        "dolor de estómago",
+        "abdomen",
+        "vientre",
+        "боль в животе",
+        "живот болит",
+        "желудок"
+      ]
+    },
+    {
+      "name": "Back pain",
+      "description": "Dolor lumbar, dorsal, cervical o de columna.",
+      "urgency_level": "low",
+      "keywords": [
+        "dolor de espalda",
+        "lumbalgia",
+        "espalda",
+        "columna",
+        "cuello",
+        "lumbar",
+        "болит спина",
+        "поясница",
+        "спина"
+      ]
+    },
+    {
+      "name": "Dermatological problem",
+      "description": "Problemas de piel como erupcion, alergia, manchas, acne o lesiones cutaneas.",
+      "urgency_level": "low",
+      "keywords": [
+        "piel",
+        "dermatologico",
+        "dermatológico",
+        "erupcion",
+        "erupción",
+        "alergia en la piel",
+        "acne",
+        "acné",
+        "dermatologo",
+        "dermatólogo",
+        "кожа",
+        "сыпь",
+        "дерматолог",
+        "акне"
+      ]
+    },
+    {
+      "name": "Ear pain",
+      "description": "Dolor de oido, otitis o molestia auditiva.",
+      "urgency_level": "low",
+      "keywords": [
+        "dolor de oido",
+        "dolor de oído",
+        "oido",
+        "oído",
+        "otitis",
+        "me duele el oido",
+        "me duele el oído",
+        "болит ухо",
+        "отит",
+        "ухо"
+      ]
+    },
+    {
+      "name": "Blood pressure control",
+      "description": "Control o seguimiento de presion arterial o hipertension.",
+      "urgency_level": "low",
+      "keywords": [
+        "presion arterial",
+        "presión arterial",
+        "hipertension",
+        "hipertensión",
+        "control presion",
+        "control presión",
+        "tension alta",
+        "tensión alta",
+        "давление",
+        "гипертония",
+        "измерить давление"
+      ]
+    },
+    {
+      "name": "Diabetes control",
+      "description": "Control de diabetes, glucosa o azucar en sangre.",
+      "urgency_level": "low",
+      "keywords": [
+        "diabetes",
+        "glucosa",
+        "azucar",
+        "azúcar",
+        "control diabetes",
+        "diabetico",
+        "diabético",
+        "диабет",
+        "сахар",
+        "глюкоза"
+      ]
+    },
+    {
+      "name": "Pediatric consultation",
+      "description": "Consulta medica general para niños o adolescentes.",
+      "urgency_level": "low",
+      "keywords": [
+        "pediatra",
+        "consulta pediatrica",
+        "consulta pediátrica",
+        "mi hijo necesita medico",
+        "mi hijo necesita médico",
+        "niño medico",
+        "niño médico",
+        "ребенку врач",
+        "педиатр",
+        "детский врач"
+      ]
+    },
+    {
+      "name": "Gynecological consultation",
+      "description": "Consulta ginecologica general o salud femenina.",
+      "urgency_level": "low",
+      "keywords": [
+        "ginecologo",
+        "ginecólogo",
+        "consulta ginecologica",
+        "consulta ginecológica",
+        "salud femenina",
+        "embarazo",
+        "гинеколог",
+        "женская консультация"
+      ]
+    },
+    {
+      "name": "Cardiology consultation",
+      "description": "Consulta programada de cardiologia o control cardiovascular.",
+      "urgency_level": "low",
+      "keywords": [
+        "cardiologo",
+        "cardiólogo",
+        "consulta cardiologica",
+        "consulta cardiológica",
+        "revision corazon",
+        "revisión corazón",
+        "кардиолог",
+        "сердце консультация"
+      ]
+    },
+    {
+      "name": "Ophthalmology consultation",
+      "description": "Consulta programada de oftalmologia o revision de vista.",
+      "urgency_level": "low",
+      "keywords": [
+        "oftalmologo",
+        "oftalmólogo",
+        "consulta oftalmologica",
+        "consulta oftalmológica",
+        "revisar vista",
+        "oculista",
+        "окулист",
+        "офтальмолог консультация"
+      ]
+    },
+    {
+      "name": "Pharmacy need",
+      "description": "Necesidad de farmacia, medicamentos o productos de salud.",
+      "urgency_level": "low",
+      "keywords": [
+        "farmacia",
+        "necesito farmacia",
+        "botica",
+        "comprar medicamentos",
+        "medicamentos",
+        "pastillas",
+        "receta",
+        "аптека",
+        "найти аптеку",
+        "лекарства",
+        "таблетки"
+      ]
     }
   ],
   "need_service_rules": [
@@ -1030,6 +1433,276 @@
       "priority": 10,
       "urgency_required": "medium",
       "explanation": "Articulacion inflamada con fiebre puede requerir urgencias."
+    },
+    {
+      "health_need": "Knee pain",
+      "recommended_service": "Traumatología",
+      "recommended_specialty": "Traumatólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El dolor de rodilla se orienta inicialmente a traumatologia en policlinico si no hay signos de alarma."
+    },
+    {
+      "health_need": "Knee pain",
+      "recommended_service": "Traumatología",
+      "recommended_specialty": "Traumatólogo",
+      "recommended_institution_type": "Hospital",
+      "priority": 20,
+      "urgency_required": "medium",
+      "explanation": "Si hay lesion importante, incapacidad para caminar o fiebre, puede requerir hospital."
+    },
+    {
+      "health_need": "Knee pain",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Traumatólogo",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Dolor de rodilla con fiebre, deformidad, golpe fuerte o imposibilidad para caminar requiere evaluacion urgente."
+    },
+    {
+      "health_need": "Joint pain",
+      "recommended_service": "Traumatología",
+      "recommended_specialty": "Traumatólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El dolor articular sin signos de alarma puede iniciar por traumatologia o medicina general."
+    },
+    {
+      "health_need": "General fever",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "La fiebre general suele evaluarse primero por medicina general en policlinico."
+    },
+    {
+      "health_need": "General fever",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Fiebre con dificultad respiratoria, debilidad intensa o signos de alarma requiere urgencias."
+    },
+    {
+      "health_need": "Weakness",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "La debilidad puede iniciar por medicina general para valorar causas frecuentes."
+    },
+    {
+      "health_need": "Weakness",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Debilidad repentina, dolor de pecho o dificultad respiratoria requiere urgencias."
+    },
+    {
+      "health_need": "General malaise",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "El malestar general sin signos de alarma puede evaluarse por medicina general."
+    },
+    {
+      "health_need": "Body pain",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El dolor corporal o muscular puede iniciar por medicina general."
+    },
+    {
+      "health_need": "Headache",
+      "recommended_service": "Neurología",
+      "recommended_specialty": "Neurólogo",
+      "recommended_institution_type": "Clínica privada",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Cefaleas persistentes o recurrentes pueden requerir neurologia."
+    },
+    {
+      "health_need": "Headache with fever",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Dolor de cabeza con fiebre puede iniciar por medicina general si no hay signos de alarma."
+    },
+    {
+      "health_need": "Headache with fever",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Neurólogo",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Dolor de cabeza con fiebre alta, rigidez de cuello, confusion o signos neurologicos requiere urgencias."
+    },
+    {
+      "health_need": "Wound or trauma",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Centro de urgencias",
+      "priority": 5,
+      "urgency_required": "medium",
+      "explanation": "Heridas, golpes o lesiones recientes deben evaluarse segun profundidad, sangrado y movilidad."
+    },
+    {
+      "health_need": "Tetanus vaccination",
+      "recommended_service": "Vacunación",
+      "recommended_specialty": "Enfermería",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La vacuna antitetanica preventiva puede gestionarse en policlinico."
+    },
+    {
+      "health_need": "Tetanus vaccination",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Vacuna antitetanica tras herida sucia, mordedura o corte profundo requiere evaluacion urgente."
+    },
+    {
+      "health_need": "Child vaccination",
+      "recommended_service": "Vacunación",
+      "recommended_specialty": "Pediatra",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La vacunacion infantil preventiva se coordina con pediatria o policlinico."
+    },
+    {
+      "health_need": "Child vaccination",
+      "recommended_service": "Vacunación",
+      "recommended_specialty": "Pediatra",
+      "recommended_institution_type": "Centro pediátrico",
+      "priority": 20,
+      "urgency_required": "low",
+      "explanation": "Un centro pediatrico tambien puede orientar sobre calendario y vacunas infantiles."
+    },
+    {
+      "health_need": "Vision problems",
+      "recommended_service": "Oftalmología",
+      "recommended_specialty": "Oftalmólogo",
+      "recommended_institution_type": "Centro oftalmológico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "Los problemas de vision se evaluan en oftalmologia."
+    },
+    {
+      "health_need": "Abdominal pain",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El dolor abdominal sin signos de alarma puede iniciar por medicina general."
+    },
+    {
+      "health_need": "Back pain",
+      "recommended_service": "Traumatología",
+      "recommended_specialty": "Traumatólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "El dolor de espalda puede valorarse en traumatologia o medicina general."
+    },
+    {
+      "health_need": "Dermatological problem",
+      "recommended_service": "Dermatología",
+      "recommended_specialty": "Dermatólogo",
+      "recommended_institution_type": "Clínica privada",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "Los problemas de piel se evaluan en dermatologia."
+    },
+    {
+      "health_need": "Ear pain",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "El dolor de oido puede iniciar por medicina general."
+    },
+    {
+      "health_need": "Blood pressure control",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "El control de presion arterial puede realizarse por medicina general."
+    },
+    {
+      "health_need": "Diabetes control",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "El control de diabetes puede realizarse por medicina general."
+    },
+    {
+      "health_need": "Pediatric consultation",
+      "recommended_service": "Pediatría",
+      "recommended_specialty": "Pediatra",
+      "recommended_institution_type": "Centro pediátrico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La consulta para niños corresponde a pediatria."
+    },
+    {
+      "health_need": "Gynecological consultation",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Clínica ginecológica",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La consulta ginecologica corresponde a ginecologia."
+    },
+    {
+      "health_need": "Cardiology consultation",
+      "recommended_service": "Cardiología",
+      "recommended_specialty": "Cardiólogo",
+      "recommended_institution_type": "Clínica privada",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La consulta cardiovascular programada corresponde a cardiologia."
+    },
+    {
+      "health_need": "Ophthalmology consultation",
+      "recommended_service": "Oftalmología",
+      "recommended_specialty": "Oftalmólogo",
+      "recommended_institution_type": "Centro oftalmológico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La consulta oftalmologica corresponde a oftalmologia."
+    },
+    {
+      "health_need": "Pharmacy need",
+      "recommended_service": "Farmacia",
+      "recommended_specialty": "Farmacéutico",
+      "recommended_institution_type": "Farmacia",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "Para medicamentos o productos de salud, una farmacia es la opcion adecuada."
     }
   ],
   "triage_questions": [
@@ -1379,6 +2052,284 @@
         {
           "option_text": "Dificultad para respirar o tragar",
           "risk_score": 8
+        }
+      ]
+    },
+    {
+      "health_need": "Knee pain",
+      "question_text": "¿La rodilla está hinchada?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Si, algo hinchada",
+          "risk_score": 3
+        },
+        {
+          "option_text": "Si, muy hinchada o caliente",
+          "risk_score": 6
+        }
+      ]
+    },
+    {
+      "health_need": "Knee pain",
+      "question_text": "¿Puedes caminar normalmente?",
+      "answer_type": "single_choice",
+      "priority": 20,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "Si",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Camino con dificultad",
+          "risk_score": 4
+        },
+        {
+          "option_text": "No puedo caminar",
+          "risk_score": 8
+        }
+      ]
+    },
+    {
+      "health_need": "Knee pain",
+      "question_text": "¿Hubo golpe o lesión?",
+      "answer_type": "single_choice",
+      "priority": 30,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Si, golpe leve",
+          "risk_score": 3
+        },
+        {
+          "option_text": "Si, golpe fuerte o deformidad",
+          "risk_score": 8
+        }
+      ]
+    },
+    {
+      "health_need": "Knee pain",
+      "question_text": "¿También tienes fiebre?",
+      "answer_type": "single_choice",
+      "priority": 40,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Si, fiebre baja",
+          "risk_score": 4
+        },
+        {
+          "option_text": "Si, fiebre alta o escalofrios",
+          "risk_score": 8
+        }
+      ]
+    },
+    {
+      "health_need": "General fever",
+      "question_text": "¿La temperatura es mayor a 38.5 °C?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No o no lo se",
+          "risk_score": 1
+        },
+        {
+          "option_text": "Si, mayor a 38.5 °C",
+          "risk_score": 4
+        },
+        {
+          "option_text": "Si, mayor a 39.5 °C",
+          "risk_score": 7
+        }
+      ]
+    },
+    {
+      "health_need": "General fever",
+      "question_text": "¿Tienes dificultad para respirar?",
+      "answer_type": "single_choice",
+      "priority": 20,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Si",
+          "risk_score": 4
+        }
+      ]
+    },
+    {
+      "health_need": "General fever",
+      "question_text": "¿Te sientes muy débil?",
+      "answer_type": "single_choice",
+      "priority": 30,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Si, debilidad moderada",
+          "risk_score": 4
+        },
+        {
+          "option_text": "Si, casi no puedo levantarme",
+          "risk_score": 8
+        }
+      ]
+    },
+    {
+      "health_need": "General fever",
+      "question_text": "¿Cuántos días llevas con fiebre?",
+      "answer_type": "single_choice",
+      "priority": 40,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "Menos de 2 dias",
+          "risk_score": 1
+        },
+        {
+          "option_text": "2 a 3 dias",
+          "risk_score": 3
+        },
+        {
+          "option_text": "Mas de 3 dias",
+          "risk_score": 5
+        }
+      ]
+    },
+    {
+      "health_need": "Weakness",
+      "question_text": "¿La debilidad apareció de repente?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No, fue gradual",
+          "risk_score": 1
+        },
+        {
+          "option_text": "Si, de repente",
+          "risk_score": 7
+        }
+      ]
+    },
+    {
+      "health_need": "Weakness",
+      "question_text": "¿Tienes fiebre?",
+      "answer_type": "single_choice",
+      "priority": 20,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Si",
+          "risk_score": 4
+        }
+      ]
+    },
+    {
+      "health_need": "Weakness",
+      "question_text": "¿Tienes dolor en el pecho o dificultad para respirar?",
+      "answer_type": "single_choice",
+      "priority": 30,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Si, uno de los dos",
+          "risk_score": 8
+        },
+        {
+          "option_text": "Si, ambos",
+          "risk_score": 10
+        }
+      ]
+    },
+    {
+      "health_need": "Child vaccination",
+      "question_text": "¿Es una vacuna preventiva?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "Si, preventiva o calendario",
+          "risk_score": 0
+        },
+        {
+          "option_text": "No lo se",
+          "risk_score": 1
+        },
+        {
+          "option_text": "No, es por una exposicion o accidente",
+          "risk_score": 5
+        }
+      ]
+    },
+    {
+      "health_need": "Child vaccination",
+      "question_text": "¿Hubo una herida o exposición reciente?",
+      "answer_type": "single_choice",
+      "priority": 20,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Si, herida limpia o leve",
+          "risk_score": 4
+        },
+        {
+          "option_text": "Si, herida sucia, mordedura o metal oxidado",
+          "risk_score": 9
+        }
+      ]
+    },
+    {
+      "health_need": "Child vaccination",
+      "question_text": "¿El paciente es un niño?",
+      "answer_type": "single_choice",
+      "priority": 30,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "Si",
+          "risk_score": 0
+        },
+        {
+          "option_text": "No, es adulto",
+          "risk_score": 1
         }
       ]
     }
@@ -1873,6 +2824,126 @@
       "recommended_specialty": "Traumatólogo",
       "message": "Inflamacion articular con fiebre o dolor intenso requiere urgencias.",
       "priority": 1
+    },
+    {
+      "health_need": "Knee pain",
+      "min_risk_score": 0,
+      "max_risk_score": 7,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Traumatología",
+      "recommended_specialty": "Traumatólogo",
+      "message": "Te recomiendo consulta con traumatologia en policlinico.",
+      "priority": 10
+    },
+    {
+      "health_need": "Knee pain",
+      "min_risk_score": 8,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Traumatólogo",
+      "message": "Dolor de rodilla con fiebre, lesion fuerte o incapacidad para caminar requiere urgencias.",
+      "priority": 1
+    },
+    {
+      "health_need": "General fever",
+      "min_risk_score": 0,
+      "max_risk_score": 7,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Te recomiendo medicina general en policlinico.",
+      "priority": 10
+    },
+    {
+      "health_need": "General fever",
+      "min_risk_score": 8,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Médico general",
+      "message": "Fiebre con signos de alarma requiere atencion urgente.",
+      "priority": 1
+    },
+    {
+      "health_need": "Weakness",
+      "min_risk_score": 0,
+      "max_risk_score": 6,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Te recomiendo medicina general para valorar la debilidad.",
+      "priority": 10
+    },
+    {
+      "health_need": "Weakness",
+      "min_risk_score": 7,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Médico general",
+      "message": "Debilidad repentina o con dolor toracico/dificultad respiratoria requiere urgencias.",
+      "priority": 1
+    },
+    {
+      "health_need": "Child vaccination",
+      "min_risk_score": 0,
+      "max_risk_score": 4,
+      "recommended_institution_type": "Centro pediátrico",
+      "recommended_service": "Vacunación",
+      "recommended_specialty": "Pediatra",
+      "message": "Para vacunacion infantil preventiva, acude a policlinico o centro pediatrico.",
+      "priority": 10
+    },
+    {
+      "health_need": "Child vaccination",
+      "min_risk_score": 5,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Médico general",
+      "message": "Si la vacuna se relaciona con herida o exposicion reciente, conviene evaluacion urgente.",
+      "priority": 1
+    },
+    {
+      "health_need": "Tetanus vaccination",
+      "min_risk_score": 0,
+      "max_risk_score": 4,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Vacunación",
+      "recommended_specialty": "Enfermería",
+      "message": "Consulta por vacunacion antitetanica en policlinico.",
+      "priority": 10
+    },
+    {
+      "health_need": "Tetanus vaccination",
+      "min_risk_score": 5,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Médico general",
+      "message": "Herida con riesgo de tetanos requiere evaluacion urgente.",
+      "priority": 1
+    },
+    {
+      "health_need": "Headache with fever",
+      "min_risk_score": 0,
+      "max_risk_score": 5,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Dolor de cabeza con fiebre sin signos de alarma puede iniciar por medicina general.",
+      "priority": 10
+    },
+    {
+      "health_need": "Headache with fever",
+      "min_risk_score": 6,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Neurólogo",
+      "message": "Dolor de cabeza con fiebre alta, confusion o rigidez de cuello requiere urgencias.",
+      "priority": 1
     }
   ],
   "medical_centers": [
@@ -1950,7 +3021,7 @@
       "phone": "+7 4712 03-00-03",
       "website": "https://example.com/kursk-urgent",
       "working_hours": "24/7",
-      "rating": 4.0,
+      "rating": 4,
       "price_level": "public",
       "has_emergency": true,
       "is_public": true,
@@ -1978,7 +3049,7 @@
       "phone": "+7 4712 51-02-10",
       "website": "https://example.com/polyclinic1",
       "working_hours": "Mo-Fr 08:00-20:00",
-      "rating": 4.0,
+      "rating": 4,
       "price_level": "public",
       "has_emergency": false,
       "is_public": true,
@@ -2229,7 +3300,7 @@
       "phone": "+7 4712 51-11-01",
       "website": "https://example.com/child-polyclinic1",
       "working_hours": "Mo-Fr 08:00-19:00",
-      "rating": 4.0,
+      "rating": 4,
       "price_level": "public",
       "has_emergency": false,
       "is_public": true,

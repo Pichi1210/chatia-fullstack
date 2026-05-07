@@ -23,6 +23,32 @@ from app.schemas.medical_catalog import (
 )
 from app.schemas.medical_center import MedicalCenterPublic
 
+PREFERRED_HEALTH_NEEDS = {
+    "Knee pain",
+    "Joint pain",
+    "General fever",
+    "Weakness",
+    "General malaise",
+    "Body pain",
+    "Headache",
+    "Headache with fever",
+    "Wound or trauma",
+    "Tetanus vaccination",
+    "Child vaccination",
+    "Vision problems",
+    "Abdominal pain",
+    "Back pain",
+    "Dermatological problem",
+    "Ear pain",
+    "Blood pressure control",
+    "Diabetes control",
+    "Pediatric consultation",
+    "Gynecological consultation",
+    "Cardiology consultation",
+    "Ophthalmology consultation",
+    "Pharmacy need",
+}
+
 
 def normalize_text(value: str) -> str:
     lowered = value.casefold()
@@ -66,7 +92,10 @@ def score_health_needs(
         if score:
             scored.append((score + matches * 3, need))
 
-    scored.sort(key=lambda item: item[0], reverse=True)
+    scored.sort(
+        key=lambda item: (item[0], item[1].name in PREFERRED_HEALTH_NEEDS),
+        reverse=True,
+    )
     return scored
 
 
@@ -85,7 +114,7 @@ def identify_combined_health_need(
     )
     has_weakness = has_any(
         normalized_message,
-        {"debilidad", "debil", "débil", "cansancio", "sin fuerzas", "слабость", "усталость"},
+        {"debilidad", "debil", "débil", "cansancio", "sin fuerzas", "слабость", "усталость", "нет сил"},
     )
     has_knee = has_any(
         normalized_message,
@@ -93,7 +122,7 @@ def identify_combined_health_need(
     )
     has_joint = has_any(
         normalized_message,
-        {"articulacion", "articulación", "su сустав", "сустав", "боль в суставе"},
+        {"articulacion", "articulación", "сустав", "боль в суставе"},
     )
     has_headache = has_any(
         normalized_message,
@@ -116,42 +145,42 @@ def identify_combined_health_need(
     if has_fever and has_knee:
         candidates.append(
             (
-                "Dolor de rodilla",
-                "Parece que tienes fiebre acompañada de dolor articular. Para orientarte mejor necesito hacer unas preguntas.",
+                "Knee pain",
+                "Parece que tienes fiebre acompañada de dolor de rodilla. Para orientarte mejor necesito hacer unas preguntas.",
             )
         )
     if has_fever and has_joint:
         candidates.append(
             (
-                "Dolor articular",
+                "Joint pain",
                 "Parece que tienes fiebre acompañada de dolor articular. Para orientarte mejor necesito hacer unas preguntas.",
             )
         )
     if has_fever and has_inflammation:
         candidates.append(
             (
-                "Inflamación articular",
+                "Joint pain",
                 "Parece que hay fiebre con inflamacion articular. Para orientarte mejor necesito hacer unas preguntas.",
             )
         )
     if has_fever and has_weakness:
         candidates.append(
             (
-                "Fiebre con debilidad",
+                "Weakness",
                 "Parece que tienes fiebre con debilidad. Para orientarte mejor necesito hacer unas preguntas.",
             )
         )
     if has_fever and has_headache:
         candidates.append(
             (
-                "Dolor de cabeza con fiebre",
+                "Headache with fever",
                 "Parece que tienes dolor de cabeza acompañado de fiebre. Para orientarte mejor necesito hacer unas preguntas.",
             )
         )
     if has_fever and has_body_pain:
         candidates.append(
             (
-                "Dolor muscular o corporal",
+                "Body pain",
                 "Parece que tienes dolor corporal acompañado de fiebre. Para orientarte mejor necesito hacer unas preguntas.",
             )
         )
@@ -165,7 +194,7 @@ def identify_combined_health_need(
     if has_body_pain and has_headache:
         candidates.append(
             (
-                "Dolor de cabeza",
+                "Headache",
                 "Parece que tienes dolor corporal y predominio de dolor de cabeza. Para orientarte mejor necesito hacer unas preguntas.",
             )
         )
@@ -176,7 +205,6 @@ def identify_combined_health_need(
             return need, message_text
 
     return None
-
 
 def identify_health_need(session: Session, message: str) -> HealthNeed | None:
     combined = identify_combined_health_need(session, message)

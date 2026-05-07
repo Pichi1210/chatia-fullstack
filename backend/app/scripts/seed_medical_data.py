@@ -30,6 +30,13 @@ def get_by_name(session: Session, model: type[Any], name: str):
     return session.exec(select(model).where(model.name == name)).first()
 
 
+def require_by_name(session: Session, model: type[Any], name: str):
+    obj = get_by_name(session, model, name)
+    if not obj:
+        raise ValueError(f"{model.__name__} not found in seed catalog: {name}")
+    return obj
+
+
 def create_if_missing(session: Session, model: type[Any], data: dict[str, Any]):
     existing = get_by_name(session, model, data["name"])
     if existing:
@@ -60,10 +67,14 @@ def seed_catalog(session: Session, data: dict[str, Any]) -> None:
 
 def seed_need_rules(session: Session, data: dict[str, Any]) -> None:
     for item in data["need_service_rules"]:
-        health_need = get_by_name(session, HealthNeed, item["health_need"])
-        service = get_by_name(session, MedicalService, item["recommended_service"])
-        specialty = get_by_name(session, MedicalSpecialty, item["recommended_specialty"])
-        institution_type = get_by_name(
+        health_need = require_by_name(session, HealthNeed, item["health_need"])
+        service = require_by_name(session, MedicalService, item["recommended_service"])
+        specialty = require_by_name(
+            session,
+            MedicalSpecialty,
+            item["recommended_specialty"],
+        )
+        institution_type = require_by_name(
             session,
             MedicalInstitutionType,
             item["recommended_institution_type"],
@@ -79,29 +90,88 @@ def seed_need_rules(session: Session, data: dict[str, Any]) -> None:
             )
         ).first()
         if existing:
-            continue
-        session.add(
-            NeedServiceRule(
-                health_need_id=health_need.id,
-                recommended_service_id=service.id,
-                recommended_specialty_id=specialty.id,
-                recommended_institution_type_id=institution_type.id,
-                priority=item["priority"],
-                urgency_required=item.get("urgency_required"),
-                explanation=item.get("explanation"),
+            existing.priority = item["priority"]
+            existing.urgency_required = item.get("urgency_required")
+            existing.explanation = item.get("explanation")
+            session.add(existing)
+        else:
+            session.add(
+                NeedServiceRule(
+                    health_need_id=health_need.id,
+                    recommended_service_id=service.id,
+                    recommended_specialty_id=specialty.id,
+                    recommended_institution_type_id=institution_type.id,
+                    priority=item["priority"],
+                    urgency_required=item.get("urgency_required"),
+                    explanation=item.get("explanation"),
+                )
             )
-        )
+    session.commit()
+
+
+def find_triage_question(
+    session: Session,
+    health_need_id: int,
+    item: dict[str, Any],
+) -> TriageQuestion | None:
+    question = session.exec(
+        select(TriageQuestion)
+        .where(TriageQuestion.health_need_id == health_need_id)
+        .where(TriageQuestion.question_text == item["question_text"])
+    ).first()
+    if question:
+        return question
+
+    legacy_text = item.get("legacy_question_text")
+    if not legacy_text:
+        return None
+
+    return session.exec(
+        select(TriageQuestion)
+        .where(TriageQuestion.health_need_id == health_need_id)
+        .where(TriageQuestion.question_text == legacy_text)
+    ).first()
+
+
+def upsert_triage_options(
+    session: Session,
+    question: TriageQuestion,
+    options: list[dict[str, Any]],
+) -> None:
+    desired_texts = {option_data["option_text"] for option_data in options}
+    existing_options = session.exec(
+        select(TriageAnswerOption).where(TriageAnswerOption.question_id == question.id)
+    ).all()
+    for existing_option in existing_options:
+        if existing_option.option_text not in desired_texts:
+            session.delete(existing_option)
+
+    for option_data in options:
+        existing_option = session.exec(
+            select(TriageAnswerOption)
+            .where(TriageAnswerOption.question_id == question.id)
+            .where(TriageAnswerOption.option_text == option_data["option_text"])
+        ).first()
+        if existing_option:
+            existing_option.risk_score = option_data["risk_score"]
+            existing_option.next_question_id = option_data.get("next_question_id")
+            session.add(existing_option)
+        else:
+            session.add(
+                TriageAnswerOption(
+                    question_id=question.id,
+                    option_text=option_data["option_text"],
+                    risk_score=option_data["risk_score"],
+                    next_question_id=option_data.get("next_question_id"),
+                )
+            )
     session.commit()
 
 
 def seed_triage(session: Session, data: dict[str, Any]) -> None:
     for item in data["triage_questions"]:
-        health_need = get_by_name(session, HealthNeed, item["health_need"])
-        question = session.exec(
-            select(TriageQuestion)
-            .where(TriageQuestion.health_need_id == health_need.id)
-            .where(TriageQuestion.question_text == item["question_text"])
-        ).first()
+        health_need = require_by_name(session, HealthNeed, item["health_need"])
+        question = find_triage_question(session, health_need.id, item)
         if not question:
             question = TriageQuestion(
                 health_need_id=health_need.id,
@@ -114,32 +184,28 @@ def seed_triage(session: Session, data: dict[str, Any]) -> None:
             session.commit()
             session.refresh(question)
             logger.info("Created triage question: %s", item["question_text"])
+        else:
+            question.question_text = item["question_text"]
+            question.answer_type = item["answer_type"]
+            question.priority = item["priority"]
+            question.is_required = item["is_required"]
+            session.add(question)
+            session.commit()
+            session.refresh(question)
 
-        for option_data in item["options"]:
-            existing_option = session.exec(
-                select(TriageAnswerOption)
-                .where(TriageAnswerOption.question_id == question.id)
-                .where(TriageAnswerOption.option_text == option_data["option_text"])
-            ).first()
-            if existing_option:
-                continue
-            session.add(
-                TriageAnswerOption(
-                    question_id=question.id,
-                    option_text=option_data["option_text"],
-                    risk_score=option_data["risk_score"],
-                    next_question_id=option_data.get("next_question_id"),
-                )
-            )
-    session.commit()
+        upsert_triage_options(session, question, item["options"])
 
 
 def seed_recommendation_rules(session: Session, data: dict[str, Any]) -> None:
     for item in data["recommendation_rules"]:
-        health_need = get_by_name(session, HealthNeed, item["health_need"])
-        service = get_by_name(session, MedicalService, item["recommended_service"])
-        specialty = get_by_name(session, MedicalSpecialty, item["recommended_specialty"])
-        institution_type = get_by_name(
+        health_need = require_by_name(session, HealthNeed, item["health_need"])
+        service = require_by_name(session, MedicalService, item["recommended_service"])
+        specialty = require_by_name(
+            session,
+            MedicalSpecialty,
+            item["recommended_specialty"],
+        )
+        institution_type = require_by_name(
             session,
             MedicalInstitutionType,
             item["recommended_institution_type"],
@@ -155,19 +221,24 @@ def seed_recommendation_rules(session: Session, data: dict[str, Any]) -> None:
             )
         ).first()
         if existing:
-            continue
-        session.add(
-            RecommendationRule(
-                health_need_id=health_need.id,
-                min_risk_score=item["min_risk_score"],
-                max_risk_score=item["max_risk_score"],
-                recommended_institution_type_id=institution_type.id,
-                recommended_service_id=service.id,
-                recommended_specialty_id=specialty.id,
-                message=item["message"],
-                priority=item["priority"],
+            existing.recommended_service_id = service.id
+            existing.recommended_specialty_id = specialty.id
+            existing.message = item["message"]
+            existing.priority = item["priority"]
+            session.add(existing)
+        else:
+            session.add(
+                RecommendationRule(
+                    health_need_id=health_need.id,
+                    min_risk_score=item["min_risk_score"],
+                    max_risk_score=item["max_risk_score"],
+                    recommended_institution_type_id=institution_type.id,
+                    recommended_service_id=service.id,
+                    recommended_specialty_id=specialty.id,
+                    message=item["message"],
+                    priority=item["priority"],
+                )
             )
-        )
     session.commit()
 
 
