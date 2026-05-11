@@ -47,6 +47,13 @@ PREFERRED_HEALTH_NEEDS = {
     "Cardiology consultation",
     "Ophthalmology consultation",
     "Pharmacy need",
+    "Prolonged menstrual bleeding",
+    "Irregular menstruation",
+    "Severe menstrual pain",
+    "Abnormal vaginal bleeding",
+    "Pelvic pain",
+    "Possible pregnancy",
+    "Pregnancy control",
 }
 
 
@@ -428,10 +435,16 @@ def handle_initial_chat(
 
     questions = get_triage_questions(session, health_need.id)
     if any(question.is_required for question in questions):
+        message_text = combined[1] if combined else None
+        if health_need.name == "Prolonged menstrual bleeding":
+            message_text = (
+                "Parece que describes un sangrado menstrual prolongado. "
+                "Para orientarte mejor necesito hacer unas preguntas."
+            )
         return build_triage_response(
             session,
             health_need,
-            message=combined[1] if combined else None,
+            message=message_text,
         )
 
     return build_recommendation_response(session, health_need, risk_score=0, city=city)

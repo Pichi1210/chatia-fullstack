@@ -186,6 +186,13 @@
       "category": "rehabilitation",
       "requires_appointment": true,
       "is_emergency_service": false
+    },
+    {
+      "name": "Consulta ginecológica",
+      "description": "Consulta ginecologica ambulatoria para menstruacion, sangrado, dolor pelvico, embarazo y salud femenina.",
+      "category": "consultation",
+      "requires_appointment": true,
+      "is_emergency_service": false
     }
   ],
   "specialties": [
@@ -236,6 +243,10 @@
     {
       "name": "Farmacéutico",
       "description": "Especialista en medicamentos y dispensacion farmaceutica."
+    },
+    {
+      "name": "Urgencias",
+      "description": "Equipo de atencion urgente para sintomas agudos o potencialmente graves."
     }
   ],
   "health_needs": [
@@ -1073,9 +1084,11 @@
         "consulta ginecologica",
         "consulta ginecológica",
         "salud femenina",
-        "embarazo",
+        "problema ginecologico",
+        "problema ginecológico",
         "гинеколог",
-        "женская консультация"
+        "женская консультация",
+        "гинекологическая консультация"
       ]
     },
     {
@@ -1124,6 +1137,140 @@
         "найти аптеку",
         "лекарства",
         "таблетки"
+      ]
+    },
+    {
+      "name": "Prolonged menstrual bleeding",
+      "description": "Sangrado menstrual prolongado, menstruacion que no se detiene o regla de muchos dias.",
+      "urgency_level": "medium",
+      "keywords": [
+        "menstruacion",
+        "menstruación",
+        "regla",
+        "periodo",
+        "período",
+        "sangrado",
+        "sangrado menstrual",
+        "menstruacion larga",
+        "menstruación larga",
+        "menstruacion prolongada",
+        "menstruación prolongada",
+        "10 dias con la regla",
+        "10 días con la regla",
+        "la menstruacion no para",
+        "la menstruación no para",
+        "mi menstruacion no ha parado",
+        "mi menstruación no ha parado",
+        "месячные",
+        "менструация",
+        "кровотечение",
+        "долго идут месячные",
+        "месячные 10 дней",
+        "обильные месячные"
+      ]
+    },
+    {
+      "name": "Irregular menstruation",
+      "description": "Ciclos menstruales irregulares, retrasos, adelantos o cambios importantes del periodo.",
+      "urgency_level": "low",
+      "keywords": [
+        "menstruacion irregular",
+        "menstruación irregular",
+        "regla irregular",
+        "periodo irregular",
+        "período irregular",
+        "retraso menstrual",
+        "se me retraso la regla",
+        "ciclo irregular",
+        "нерегулярные месячные",
+        "задержка месячных",
+        "сбой цикла"
+      ]
+    },
+    {
+      "name": "Severe menstrual pain",
+      "description": "Dolor menstrual fuerte o colicos intensos durante la regla.",
+      "urgency_level": "medium",
+      "keywords": [
+        "dolor menstrual fuerte",
+        "dolor de regla",
+        "colicos menstruales",
+        "cólicos menstruales",
+        "dolor fuerte con la regla",
+        "dolor durante la menstruacion",
+        "dolor durante la menstruación",
+        "сильная боль при месячных",
+        "болезненные месячные",
+        "спазмы при месячных"
+      ]
+    },
+    {
+      "name": "Abnormal vaginal bleeding",
+      "description": "Sangrado vaginal fuera de la menstruacion, muy abundante o con signos de alarma.",
+      "urgency_level": "high",
+      "keywords": [
+        "sangrado vaginal",
+        "sangrado fuera de la regla",
+        "sangrado entre periodos",
+        "sangrado anormal",
+        "hemorragia vaginal",
+        "sangrado muy abundante",
+        "sangro mucho",
+        "кровотечение",
+        "маточное кровотечение",
+        "кровь вне месячных",
+        "обильное кровотечение"
+      ]
+    },
+    {
+      "name": "Pelvic pain",
+      "description": "Dolor pelvico o dolor en la parte baja del abdomen.",
+      "urgency_level": "medium",
+      "keywords": [
+        "dolor pelvico",
+        "dolor pélvico",
+        "dolor bajo vientre",
+        "dolor en la pelvis",
+        "dolor en la parte baja del abdomen",
+        "dolor bajo abdomen",
+        "боль внизу живота",
+        "тазовая боль",
+        "болит низ живота"
+      ]
+    },
+    {
+      "name": "Possible pregnancy",
+      "description": "Posible embarazo, retraso menstrual o necesidad de confirmar embarazo.",
+      "urgency_level": "medium",
+      "keywords": [
+        "posible embarazo",
+        "creo que estoy embarazada",
+        "puedo estar embarazada",
+        "retraso menstrual",
+        "test de embarazo",
+        "prueba de embarazo",
+        "embarazo posible",
+        "возможна беременность",
+        "может быть беременна",
+        "тест на беременность",
+        "задержка месячных"
+      ]
+    },
+    {
+      "name": "Pregnancy control",
+      "description": "Control prenatal o seguimiento del embarazo.",
+      "urgency_level": "medium",
+      "keywords": [
+        "control embarazo",
+        "control de embarazo",
+        "control prenatal",
+        "seguimiento embarazo",
+        "embarazada control",
+        "consulta prenatal",
+        "контроль беременности",
+        "ведение беременности",
+        "беременность наблюдение",
+        "женская консультация беременность"
       ]
     }
   ],
@@ -1703,6 +1850,150 @@
       "priority": 10,
       "urgency_required": "low",
       "explanation": "Para medicamentos o productos de salud, una farmacia es la opcion adecuada."
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El sangrado menstrual prolongado requiere valoracion ginecologica; si hay debilidad intensa o sangrado muy abundante, puede requerir urgencias."
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Clínica ginecológica",
+      "priority": 20,
+      "urgency_required": "medium",
+      "explanation": "Una clinica ginecologica puede evaluar menstruacion prolongada, ecografia y analisis si corresponde."
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Urgencias",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Sangrado abundante con mareos, palidez, dolor fuerte o posible embarazo requiere hospital o urgencias."
+    },
+    {
+      "health_need": "Irregular menstruation",
+      "recommended_service": "Consulta ginecológica",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La menstruacion irregular se evalua en consulta ginecologica programada."
+    },
+    {
+      "health_need": "Severe menstrual pain",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El dolor menstrual fuerte puede iniciar por ginecologia en policlinico."
+    },
+    {
+      "health_need": "Severe menstrual pain",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Clínica ginecológica",
+      "priority": 20,
+      "urgency_required": "medium",
+      "explanation": "Una clinica ginecologica puede evaluar dolor menstrual fuerte y solicitar estudios."
+    },
+    {
+      "health_need": "Severe menstrual pain",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Urgencias",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Dolor menstrual intenso con sangrado abundante, fiebre, desmayo o posible embarazo requiere urgencias."
+    },
+    {
+      "health_need": "Abnormal vaginal bleeding",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Hospital",
+      "priority": 10,
+      "urgency_required": "high",
+      "explanation": "El sangrado vaginal anormal puede requerir valoracion ginecologica hospitalaria."
+    },
+    {
+      "health_need": "Abnormal vaginal bleeding",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Urgencias",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Sangrado vaginal abundante o con signos de alarma requiere urgencias."
+    },
+    {
+      "health_need": "Gynecological consultation",
+      "recommended_service": "Consulta ginecológica",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La consulta ginecologica puede realizarse en policlinico o clinica ginecologica."
+    },
+    {
+      "health_need": "Pelvic pain",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El dolor pelvico puede requerir evaluacion ginecologica."
+    },
+    {
+      "health_need": "Pelvic pain",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Urgencias",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Dolor pelvico fuerte con fiebre, sangrado o embarazo posible requiere urgencias."
+    },
+    {
+      "health_need": "Possible pregnancy",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Clínica ginecológica",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Para posible embarazo, consulta ginecologia para confirmacion y orientacion."
+    },
+    {
+      "health_need": "Possible pregnancy",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 20,
+      "urgency_required": "medium",
+      "explanation": "Un policlinico con ginecologia puede orientar y solicitar pruebas."
+    },
+    {
+      "health_need": "Pregnancy control",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Clínica ginecológica",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El control de embarazo corresponde a ginecologia o consulta prenatal."
+    },
+    {
+      "health_need": "Pregnancy control",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 20,
+      "urgency_required": "medium",
+      "explanation": "Un policlinico con ginecologia puede realizar seguimiento prenatal inicial."
     }
   ],
   "triage_questions": [
@@ -2332,6 +2623,111 @@
           "risk_score": 1
         }
       ]
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "question_text": "¿El sangrado es muy abundante?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Sí, más abundante de lo normal",
+          "risk_score": 2
+        },
+        {
+          "option_text": "Sí, empapo toallas/tampones con mucha frecuencia",
+          "risk_score": 5
+        }
+      ]
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "question_text": "¿Tienes mareos, debilidad o palidez?",
+      "answer_type": "single_choice",
+      "priority": 20,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Sí, un poco",
+          "risk_score": 2
+        },
+        {
+          "option_text": "Sí, intenso",
+          "risk_score": 5
+        }
+      ]
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "question_text": "¿Tienes dolor fuerte en la parte baja del abdomen?",
+      "answer_type": "single_choice",
+      "priority": 30,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Sí, dolor moderado",
+          "risk_score": 2
+        },
+        {
+          "option_text": "Sí, dolor fuerte o empeora",
+          "risk_score": 5
+        }
+      ]
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "question_text": "¿Existe posibilidad de embarazo?",
+      "answer_type": "single_choice",
+      "priority": 40,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "No estoy segura",
+          "risk_score": 3
+        },
+        {
+          "option_text": "Sí",
+          "risk_score": 5
+        }
+      ]
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "question_text": "¿Has tenido coágulos grandes?",
+      "answer_type": "single_choice",
+      "priority": 50,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Sí, algunos",
+          "risk_score": 2
+        },
+        {
+          "option_text": "Sí, grandes o repetidos",
+          "risk_score": 4
+        }
+      ]
     }
   ],
   "recommendation_rules": [
@@ -2944,6 +3340,86 @@
       "recommended_specialty": "Neurólogo",
       "message": "Dolor de cabeza con fiebre alta, confusion o rigidez de cuello requiere urgencias.",
       "priority": 1
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "min_risk_score": 0,
+      "max_risk_score": 4,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "message": "Según tus respuestas, te recomiendo consulta con ginecología en policlínico o clínica ginecológica.",
+      "priority": 10
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "min_risk_score": 5,
+      "max_risk_score": 9,
+      "recommended_institution_type": "Clínica ginecológica",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "message": "Por la duración y síntomas, te recomiendo ginecología prioritaria.",
+      "priority": 5
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "min_risk_score": 10,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Urgencias",
+      "message": "Por el sangrado y signos de alarma, te recomiendo hospital o urgencias.",
+      "priority": 1
+    },
+    {
+      "health_need": "Abnormal vaginal bleeding",
+      "min_risk_score": 0,
+      "max_risk_score": 6,
+      "recommended_institution_type": "Clínica ginecológica",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "message": "Te recomiendo valoracion ginecologica prioritaria.",
+      "priority": 5
+    },
+    {
+      "health_need": "Abnormal vaginal bleeding",
+      "min_risk_score": 7,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Urgencias",
+      "message": "Sangrado vaginal con signos de alarma requiere hospital o urgencias.",
+      "priority": 1
+    },
+    {
+      "health_need": "Severe menstrual pain",
+      "min_risk_score": 0,
+      "max_risk_score": 6,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "message": "Te recomiendo consulta con ginecologia.",
+      "priority": 10
+    },
+    {
+      "health_need": "Severe menstrual pain",
+      "min_risk_score": 7,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Atención urgente",
+      "recommended_specialty": "Urgencias",
+      "message": "Dolor menstrual fuerte con signos de alarma requiere urgencias.",
+      "priority": 1
+    },
+    {
+      "health_need": "Possible pregnancy",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Clínica ginecológica",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "message": "Te recomiendo consulta ginecologica para confirmar y orientar el posible embarazo.",
+      "priority": 10
     }
   ],
   "medical_centers": [
@@ -2969,14 +3445,19 @@
         "Traumatología",
         "Neurología",
         "Diagnóstico por imagen",
-        "Radiografía"
+        "Radiografía",
+        "Ginecología",
+        "Ecografía",
+        "Análisis de sangre"
       ],
       "specialties": [
         "Médico general",
         "Cardiólogo",
         "Traumatólogo",
         "Neurólogo",
-        "Enfermería"
+        "Enfermería",
+        "Ginecólogo",
+        "Urgencias"
       ]
     },
     {
@@ -3001,13 +3482,17 @@
         "Cardiología",
         "Traumatología",
         "Ecografía",
-        "Radiografía"
+        "Radiografía",
+        "Ginecología",
+        "Análisis de sangre"
       ],
       "specialties": [
         "Médico general",
         "Cardiólogo",
         "Traumatólogo",
-        "Enfermería"
+        "Enfermería",
+        "Ginecólogo",
+        "Urgencias"
       ]
     },
     {
@@ -3059,14 +3544,18 @@
         "Vacunación",
         "Cardiología",
         "Dermatología",
-        "Análisis de sangre"
+        "Análisis de sangre",
+        "Ginecología",
+        "Consulta ginecológica",
+        "Ecografía"
       ],
       "specialties": [
         "Médico general",
         "Enfermería",
         "Cardiólogo",
         "Dermatólogo",
-        "Técnico de laboratorio"
+        "Técnico de laboratorio",
+        "Ginecólogo"
       ]
     },
     {
@@ -3090,14 +3579,18 @@
         "Vacunación",
         "Traumatología",
         "Neurología",
-        "Análisis de sangre"
+        "Análisis de sangre",
+        "Ginecología",
+        "Consulta ginecológica",
+        "Ecografía"
       ],
       "specialties": [
         "Médico general",
         "Enfermería",
         "Traumatólogo",
         "Neurólogo",
-        "Técnico de laboratorio"
+        "Técnico de laboratorio",
+        "Ginecólogo"
       ]
     },
     {
@@ -3555,7 +4048,8 @@
       "services": [
         "Ginecología",
         "Ecografía",
-        "Análisis de sangre"
+        "Análisis de sangre",
+        "Consulta ginecológica"
       ],
       "specialties": [
         "Ginecólogo",
@@ -3581,7 +4075,9 @@
       "services": [
         "Ginecología",
         "Ecografía",
-        "Vacunación"
+        "Vacunación",
+        "Consulta ginecológica",
+        "Análisis de sangre"
       ],
       "specialties": [
         "Ginecólogo",
