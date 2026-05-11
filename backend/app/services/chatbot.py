@@ -427,7 +427,7 @@ def handle_initial_chat(
         )
 
     questions = get_triage_questions(session, health_need.id)
-    if questions:
+    if any(question.is_required for question in questions):
         return build_triage_response(
             session,
             health_need,
