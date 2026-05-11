@@ -30,11 +30,17 @@ interface MedicalCenter {
 
 interface MedicalCenterCardProps {
     center: MedicalCenter;
+    recommendedService?: string | null;
+    recommendedSpecialty?: string | null;
 }
 
 const booleanText = (value?: boolean | null) => (value ? 'Si' : 'No');
 
-export function MedicalCenterCard({ center }: MedicalCenterCardProps) {
+export function MedicalCenterCard({
+    center,
+    recommendedService,
+    recommendedSpecialty,
+}: MedicalCenterCardProps) {
     const services = center.main_services?.length
         ? center.main_services
         : center.description
@@ -42,7 +48,7 @@ export function MedicalCenterCard({ center }: MedicalCenterCardProps) {
           : [];
 
     return (
-        <Card className="h-full bg-background text-foreground">
+        <Card className="h-full border-border bg-card text-card-foreground shadow-sm">
             <CardHeader className="space-y-3">
                 <div className="flex items-start justify-between gap-3">
                     <CardTitle className="text-base leading-6">{center.name}</CardTitle>
@@ -88,25 +94,36 @@ export function MedicalCenterCard({ center }: MedicalCenterCardProps) {
                             Servicios principales
                         </p>
                         <div className="flex flex-wrap gap-2">
+                            {recommendedService && (
+                                <Badge variant="secondary">
+                                    Recomendado: {recommendedService}
+                                </Badge>
+                            )}
                             {services.length > 0 ? (
                                 services.map((service) => (
                                     <Badge key={service} variant="outline">
                                         {service}
                                     </Badge>
                                 ))
-                            ) : (
+                            ) : recommendedService ? null : (
                                 <span className="text-muted-foreground">No informado</span>
                             )}
                         </div>
                     </div>
 
-                    {center.main_specialties && center.main_specialties.length > 0 && (
+                    {((center.main_specialties && center.main_specialties.length > 0) ||
+                        recommendedSpecialty) && (
                         <div>
                             <p className="mb-2 text-xs uppercase text-muted-foreground">
                                 Especialidades
                             </p>
                             <div className="flex flex-wrap gap-2">
-                                {center.main_specialties.map((specialty) => (
+                                {recommendedSpecialty && (
+                                    <Badge variant="secondary">
+                                        Recomendada: {recommendedSpecialty}
+                                    </Badge>
+                                )}
+                                {center.main_specialties?.map((specialty) => (
                                     <Badge key={specialty} variant="secondary">
                                         {specialty}
                                     </Badge>

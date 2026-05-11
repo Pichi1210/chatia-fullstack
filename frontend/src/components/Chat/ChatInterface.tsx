@@ -112,8 +112,17 @@ const riskBadgeClasses: Record<RiskLevel, string> = {
     high: 'border-red-200 bg-red-50 text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300',
 };
 
+const initialMessages: Message[] = [
+    {
+        sender: 'bot',
+        text: 'Hola, soy VILPU. Cuentame que necesitas y te ayudare a elegir un centro medico en Kursk.',
+        questions: [],
+        recommendations: [],
+    },
+];
+
 export default function ChatInterface() {
-    const [messages, setMessages] = useState<Message[]>([]);
+    const [messages, setMessages] = useState<Message[]>(initialMessages);
     const [inputValue, setInputValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [selectedAnswers, setSelectedAnswers] = useState<
@@ -263,15 +272,18 @@ export default function ChatInterface() {
     };
 
     return (
-        <div className="mx-auto flex h-[78vh] w-full max-w-5xl flex-col">
+        <div className="mx-auto flex h-[78vh] w-full max-w-6xl flex-col">
             <div className="mb-4">
-                <h1 className="text-2xl font-semibold tracking-normal">Chat medico</h1>
-                <p className="text-sm text-muted-foreground">
-                    Orientacion inicial con datos locales de centros medicos en Kursk.
+                <h1 className="text-2xl font-semibold tracking-normal">
+                    Asistente para elegir un centro medico
+                </h1>
+                <p className="max-w-2xl text-sm text-muted-foreground">
+                    Describe tu necesidad medica y el sistema te orientara hacia el
+                    tipo de institucion adecuado.
                 </p>
             </div>
 
-            <div className="flex-grow overflow-y-auto rounded-md border bg-muted/20 p-4">
+            <div className="flex-grow overflow-y-auto rounded-md border bg-background p-4 shadow-sm">
                 {messages.length === 0 && (
                     <div className="flex h-full items-center justify-center text-center text-sm text-muted-foreground">
                         Escribe tu sintoma o necesidad medica para iniciar el triaje.
@@ -311,7 +323,7 @@ export default function ChatInterface() {
                                     className={`max-w-[82%] rounded-md px-4 py-3 text-sm leading-6 shadow-sm ${
                                         msg.sender === 'user'
                                             ? 'bg-primary text-primary-foreground'
-                                            : 'border bg-background text-foreground'
+                                            : 'border bg-card text-card-foreground'
                                     }`}
                                 >
                                     {msg.text}
@@ -339,7 +351,7 @@ export default function ChatInterface() {
                                         {questions.map((question, questionIndex) => (
                                             <div
                                                 key={question.id}
-                                                className="rounded-md border bg-background p-4 shadow-sm"
+                                                className="rounded-md border bg-card p-4 shadow-sm"
                                             >
                                                 <div className="mb-3 flex items-start justify-between gap-3">
                                                     <p className="text-sm font-medium">
@@ -399,7 +411,7 @@ export default function ChatInterface() {
                             )}
 
                             {hasFinalRecommendation && (
-                                <section className="ml-0 mt-4 rounded-md border bg-background p-4 shadow-sm md:ml-11">
+                                <section className="ml-0 mt-4 rounded-md border bg-card p-4 shadow-sm md:ml-11">
                                     <div className="mb-3 flex flex-wrap items-center gap-2">
                                         <Stethoscope className="h-4 w-4 text-primary" />
                                         <h2 className="text-sm font-semibold">
@@ -461,7 +473,12 @@ export default function ChatInterface() {
                                     </h2>
                                     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                                         {recommendations.map((center) => (
-                                            <MedicalCenterCard key={center.id} center={center} />
+                                            <MedicalCenterCard
+                                                key={center.id}
+                                                center={center}
+                                                recommendedService={msg.recommendedService}
+                                                recommendedSpecialty={msg.recommendedSpecialty}
+                                            />
                                         ))}
                                     </div>
                                 </section>

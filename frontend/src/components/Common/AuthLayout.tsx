@@ -9,8 +9,18 @@ interface AuthLayoutProps {
 export function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
-      <div className="bg-muted dark:bg-zinc-900 relative hidden lg:flex lg:items-center lg:justify-center">
-        <Logo variant="full" className="h-16" asLink={false} />
+      <div className="relative hidden bg-muted lg:flex lg:items-center lg:justify-center">
+        <div className="flex max-w-md flex-col items-center gap-6 text-center">
+          <Logo variant="full" className="h-20" asLink={false} />
+          <div className="space-y-2">
+            <p className="text-lg font-semibold text-foreground">
+              Asistente para seleccion de centros medicos
+            </p>
+            <p className="text-sm text-muted-foreground">
+              ВИЛПУ — подбор медицинского учреждения
+            </p>
+          </div>
+        </div>
       </div>
       <div className="flex flex-col gap-4 p-6 md:p-10">
         <div className="flex justify-end">

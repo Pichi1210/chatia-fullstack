@@ -51,7 +51,7 @@ export const Route = createFileRoute("/signup")({
   head: () => ({
     meta: [
       {
-        title: "Sign Up - Chapia Template",
+        title: "Crear cuenta - VILPU",
       },
     ],
   }),
@@ -87,7 +87,7 @@ function SignUp() {
           className="flex flex-col gap-6"
         >
           <div className="flex flex-col items-center gap-2 text-center">
-            <h1 className="text-2xl font-bold">Create an account</h1>
+            <h1 className="text-2xl font-bold">Crear cuenta VILPU</h1>
           </div>
 
           <div className="grid gap-4">
@@ -170,14 +170,14 @@ function SignUp() {
               className="w-full"
               loading={signUpMutation.isPending}
             >
-              Sign Up
+              Crear cuenta
             </LoadingButton>
           </div>
 
           <div className="text-center text-sm">
-            Already have an account?{" "}
+            Ya tienes una cuenta?{" "}
             <RouterLink to="/login" className="underline underline-offset-4">
-              Log in
+              Iniciar sesion
             </RouterLink>
           </div>
         </form>

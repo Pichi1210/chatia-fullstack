@@ -1,6 +1,7 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router"
 
 import { Footer } from "@/components/Common/Footer"
+import { Logo } from "@/components/Common/Logo"
 import AppSidebar from "@/components/Sidebar/AppSidebar"
 import {
   SidebarInset,
@@ -25,8 +26,17 @@ function Layout() {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 border-b px-4">
+        <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center justify-between gap-3 border-b bg-background/95 px-4 backdrop-blur">
           <SidebarTrigger className="-ml-1 text-muted-foreground" />
+          <div className="flex flex-1 items-center gap-3">
+            <Logo variant="icon" className="md:hidden" />
+            <div className="hidden md:block">
+              <p className="text-sm font-semibold text-foreground">VILPU</p>
+              <p className="text-xs text-muted-foreground">
+                Asistente para seleccion de centros medicos
+              </p>
+            </div>
+          </div>
         </header>
         <main className="flex-1 p-6 md:p-8">
           <div className="mx-auto max-w-7xl">

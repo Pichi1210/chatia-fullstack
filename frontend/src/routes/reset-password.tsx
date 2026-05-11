@@ -60,7 +60,7 @@ export const Route = createFileRoute("/reset-password")({
   head: () => ({
     meta: [
       {
-        title: "Reset Password - Chapia Template",
+        title: "Restablecer password - VILPU",
       },
     ],
   }),
@@ -104,7 +104,7 @@ function ResetPassword() {
           className="flex flex-col gap-6"
         >
           <div className="flex flex-col items-center gap-2 text-center">
-            <h1 className="text-2xl font-bold">Reset Password</h1>
+            <h1 className="text-2xl font-bold">Restablecer password</h1>
           </div>
 
           <div className="grid gap-4">
@@ -154,9 +154,9 @@ function ResetPassword() {
           </div>
 
           <div className="text-center text-sm">
-            Remember your password?{" "}
+            Recuerdas tu password?{" "}
             <RouterLink to="/login" className="underline underline-offset-4">
-              Log in
+              Iniciar sesion
             </RouterLink>
           </div>
         </form>

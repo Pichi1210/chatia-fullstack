@@ -16,9 +16,12 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
+import { Route as LayoutServicesRouteImport } from './routes/_layout/services'
+import { Route as LayoutMedicalCentersRouteImport } from './routes/_layout/medical-centers'
 import { Route as LayoutItemsRouteImport } from './routes/_layout/items'
 import { Route as LayoutChatRouteImport } from './routes/_layout/chat'
 import { Route as LayoutAdminRouteImport } from './routes/_layout/admin'
+import { Route as LayoutAboutRouteImport } from './routes/_layout/about'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -54,6 +57,16 @@ const LayoutSettingsRoute = LayoutSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutServicesRoute = LayoutServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutMedicalCentersRoute = LayoutMedicalCentersRouteImport.update({
+  id: '/medical-centers',
+  path: '/medical-centers',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutItemsRoute = LayoutItemsRouteImport.update({
   id: '/items',
   path: '/items',
@@ -69,6 +82,11 @@ const LayoutAdminRoute = LayoutAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutAboutRoute = LayoutAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => LayoutRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
@@ -76,9 +94,12 @@ export interface FileRoutesByFullPath {
   '/recover-password': typeof RecoverPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
+  '/about': typeof LayoutAboutRoute
   '/admin': typeof LayoutAdminRoute
   '/chat': typeof LayoutChatRoute
   '/items': typeof LayoutItemsRoute
+  '/medical-centers': typeof LayoutMedicalCentersRoute
+  '/services': typeof LayoutServicesRoute
   '/settings': typeof LayoutSettingsRoute
 }
 export interface FileRoutesByTo {
@@ -86,9 +107,12 @@ export interface FileRoutesByTo {
   '/recover-password': typeof RecoverPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
+  '/about': typeof LayoutAboutRoute
   '/admin': typeof LayoutAdminRoute
   '/chat': typeof LayoutChatRoute
   '/items': typeof LayoutItemsRoute
+  '/medical-centers': typeof LayoutMedicalCentersRoute
+  '/services': typeof LayoutServicesRoute
   '/settings': typeof LayoutSettingsRoute
   '/': typeof LayoutIndexRoute
 }
@@ -99,9 +123,12 @@ export interface FileRoutesById {
   '/recover-password': typeof RecoverPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
+  '/_layout/about': typeof LayoutAboutRoute
   '/_layout/admin': typeof LayoutAdminRoute
   '/_layout/chat': typeof LayoutChatRoute
   '/_layout/items': typeof LayoutItemsRoute
+  '/_layout/medical-centers': typeof LayoutMedicalCentersRoute
+  '/_layout/services': typeof LayoutServicesRoute
   '/_layout/settings': typeof LayoutSettingsRoute
   '/_layout/': typeof LayoutIndexRoute
 }
@@ -113,9 +140,12 @@ export interface FileRouteTypes {
     | '/recover-password'
     | '/reset-password'
     | '/signup'
+    | '/about'
     | '/admin'
     | '/chat'
     | '/items'
+    | '/medical-centers'
+    | '/services'
     | '/settings'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -123,9 +153,12 @@ export interface FileRouteTypes {
     | '/recover-password'
     | '/reset-password'
     | '/signup'
+    | '/about'
     | '/admin'
     | '/chat'
     | '/items'
+    | '/medical-centers'
+    | '/services'
     | '/settings'
     | '/'
   id:
@@ -135,9 +168,12 @@ export interface FileRouteTypes {
     | '/recover-password'
     | '/reset-password'
     | '/signup'
+    | '/_layout/about'
     | '/_layout/admin'
     | '/_layout/chat'
     | '/_layout/items'
+    | '/_layout/medical-centers'
+    | '/_layout/services'
     | '/_layout/settings'
     | '/_layout/'
   fileRoutesById: FileRoutesById
@@ -201,6 +237,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutSettingsRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/services': {
+      id: '/_layout/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof LayoutServicesRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/medical-centers': {
+      id: '/_layout/medical-centers'
+      path: '/medical-centers'
+      fullPath: '/medical-centers'
+      preLoaderRoute: typeof LayoutMedicalCentersRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/items': {
       id: '/_layout/items'
       path: '/items'
@@ -222,21 +272,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutAdminRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/about': {
+      id: '/_layout/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof LayoutAboutRouteImport
+      parentRoute: typeof LayoutRoute
+    }
   }
 }
 
 interface LayoutRouteChildren {
+  LayoutAboutRoute: typeof LayoutAboutRoute
   LayoutAdminRoute: typeof LayoutAdminRoute
   LayoutChatRoute: typeof LayoutChatRoute
   LayoutItemsRoute: typeof LayoutItemsRoute
+  LayoutMedicalCentersRoute: typeof LayoutMedicalCentersRoute
+  LayoutServicesRoute: typeof LayoutServicesRoute
   LayoutSettingsRoute: typeof LayoutSettingsRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutAboutRoute: LayoutAboutRoute,
   LayoutAdminRoute: LayoutAdminRoute,
   LayoutChatRoute: LayoutChatRoute,
   LayoutItemsRoute: LayoutItemsRoute,
+  LayoutMedicalCentersRoute: LayoutMedicalCentersRoute,
+  LayoutServicesRoute: LayoutServicesRoute,
   LayoutSettingsRoute: LayoutSettingsRoute,
   LayoutIndexRoute: LayoutIndexRoute,
 }

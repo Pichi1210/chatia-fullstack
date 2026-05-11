@@ -1,36 +1,40 @@
-# Casos de prueba del chatbot medico
+# Validacion formal del chatbot medico
 
-Estos casos validan identificacion de necesidad, preguntas de triaje y recomendacion final con base local de Kursk.
+Este documento define casos de prueba funcionales para validar que el chatbot identifica necesidades medicas, genera preguntas de triaje y orienta al usuario hacia el tipo de institucion medica adecuada en Kursk. El objetivo de la validacion no es comprobar diagnosticos, sino verificar la coherencia de la orientacion y de las recomendaciones.
 
-| Caso | Mensaje de prueba | Necesidad esperada | Preguntas esperadas | Servicio esperado | Institucion esperada | Resultado esperado |
-| --- | --- | --- | --- | --- | --- | --- |
-| Dolor dental | Me duele mucho una muela desde ayer y tengo la encia inflamada. | Dolor dental | Intensidad del dolor o hinchazon facial; fiebre; dificultad para abrir la boca o tragar. | Odontologia o Atencion urgente si el riesgo es alto | Clinica dental o hospital/urgencias si hay signos de alarma | Devuelve preguntas de triaje; al analizar respuestas muestra riesgo bajo/medio/alto, dentista, clinica dental y centros dentales de Kursk. |
-| Dolor de rodilla | Me duele la rodilla y esta un poco hinchada, puedo caminar. | Knee pain | Rodilla hinchada; capacidad para caminar; golpe o lesion; fiebre. | Traumatologia | Policlinico o hospital si el riesgo es alto | Recomienda traumatologo; para riesgo medio explica acudir a policlinico y urgencias si no puede caminar, aparece fiebre o empeora. |
-| Fiebre y debilidad | Tengo fiebre, debilidad y mucho cansancio desde la noche. | Weakness o General fever | Temperatura alta; duracion; dificultad para respirar; dolor intenso u otros signos de alarma. | Medicina general o Atencion urgente segun riesgo | Policlinico u hospital/urgencias | Identifica fiebre con debilidad, pregunta signos de gravedad y recomienda institucion acorde al riesgo. |
-| Dolor en el pecho | Tengo dolor en el pecho y me cuesta respirar. | Dolor en el pecho | Signos de alarma como falta de aire, sudor frio, mareo o dolor hacia brazo/mandibula; duracion; intensidad. | Atencion urgente | Hospital o urgencias | Debe clasificar como riesgo alto o derivar a atencion urgente con explicacion clara de alarma. |
-| Vacunacion infantil / tetanos | Mi hijo necesita vacuna y quiero revisar si toca tetanos. | Child vaccination o Tetanus vaccination | Edad; tipo de vacuna; herida reciente si aplica; fiebre o reaccion previa. | Vacunacion | Policlinico o centro de vacunacion | Recomienda vacunacion en institucion publica/local, indicando que tetanos con herida reciente puede requerir atencion prioritaria. |
-| Analisis de sangre | Necesito hacerme un analisis de sangre general. | Analisis de laboratorio o necesidad equivalente | Ayuno; indicacion medica; urgencia; tipo de analisis si estan configuradas. | Laboratorio | Laboratorio o policlinico | Devuelve recomendacion de laboratorio con centros que ofrezcan analisis y horario/direccion. |
-| Problemas de vision | Veo borroso y me duelen los ojos al leer. | Vision problems | Vision borrosa; dolor ocular; ojo rojo; perdida repentina de vision. | Oftalmologia | Centro oftalmologico | Recomienda oftalmologo en centro oftalmologico; riesgo alto si hay perdida repentina de vision o dolor intenso. |
-| Sangrado menstrual prolongado | Llevo muchos dias con sangrado menstrual y me siento debil. | Prolonged menstrual bleeding | Sangrado abundante; mareos/debilidad/palidez; dolor bajo abdominal; posibilidad de embarazo; coagulos grandes. | Ginecologia o Atencion urgente si riesgo alto | Policlinico, clinica ginecologica u hospital/urgencias | Debe mostrar triaje completo y explicar que sangrado abundante con debilidad o embarazo posible requiere urgencias. |
-| Dolor abdominal | Me duele el abdomen desde esta manana y tengo nauseas. | Abdominal pain | Intensidad; localizacion; fiebre; vomitos; embarazo posible; duracion. | Medicina general o Atencion urgente segun riesgo | Policlinico u hospital/urgencias | Recomienda evaluacion medica; riesgo alto si dolor fuerte, fiebre, vomitos persistentes o empeoramiento. |
-| Compra de medicamentos | Necesito comprar medicamentos para la gripe cerca de Kursk. | Pharmacy need | Medicamento requerido; receta si aplica; signos de alarma si se describe enfermedad. | Farmacia | Farmacia | Recomienda farmacias locales, muestra publico/privado, direccion, telefono, horario, rating y urgencias no si no aplica. |
+## Casos de prueba
 
-## Validacion comun
+| Caso | Mensaje de usuario | Necesidad medica esperada | Preguntas de triaje esperadas | Servicio recomendado esperado | Especialidad recomendada esperada | Tipo de institucion esperada | Nivel de riesgo esperado | Resultado esperado |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Dolor dental | Me duele mucho una muela desde ayer y tengo la encia inflamada. | Dolor dental | Intensidad del dolor o hinchazon facial; fiebre; dificultad para abrir la boca o tragar. | Odontologia; Atencion urgente si hay signos de alarma. | Dentista; Urgencias si el riesgo es alto. | Clinica dental; Hospital si hay fiebre, hinchazon importante o dificultad para tragar. | Medio por defecto; alto si hay fiebre, hinchazon facial intensa o dificultad para tragar. | El sistema debe identificar dolor dental, solicitar triaje y recomendar clinica dental o urgencias segun respuestas. Debe mostrar centros dentales locales con datos completos. |
+| Dolor de rodilla | Me duele la rodilla y esta un poco hinchada, puedo caminar. | Knee pain | Rodilla hinchada; capacidad para caminar; golpe o lesion; fiebre. | Traumatologia; Atencion urgente si no puede caminar o hay fiebre. | Traumatologo. | Policlinico; Hospital si el riesgo es alto. | Medio si hay hinchazon pero puede caminar; alto si no puede caminar, hubo trauma grave o hay fiebre. | El sistema debe orientar a traumatologia y explicar que debe acudir a urgencias si aumenta el dolor, aparece fiebre o no puede caminar. |
+| Fiebre y debilidad | Tengo fiebre, debilidad y mucho cansancio desde la noche. | Weakness o General fever | Temperatura alta; duracion; dificultad para respirar; confusion; dolor intenso; otros signos de alarma. | Medicina general; Atencion urgente si hay dificultad respiratoria, confusion o debilidad intensa. | Medico general; Urgencias si el riesgo es alto. | Policlinico; Hospital o urgencias si hay signos de gravedad. | Medio; alto si existen signos de alarma. | El sistema debe detectar fiebre con debilidad, calcular riesgo segun respuestas y recomendar policlinico u hospital de forma coherente. |
+| Dolor en el pecho | Tengo dolor en el pecho y me cuesta respirar. | Dolor en el pecho | Falta de aire; sudor frio; mareo; dolor hacia brazo o mandibula; duracion e intensidad del dolor. | Atencion urgente. | Cardiologo o Urgencias. | Hospital o servicio de urgencias. | Alto. | El sistema debe priorizar urgencias y explicar que el dolor toracico con dificultad para respirar requiere atencion inmediata. |
+| Vacunacion infantil / tetanos | Mi hijo necesita vacuna y quiero revisar si toca tetanos. | Child vaccination o Tetanus vaccination | Edad del menor; vacuna requerida; herida reciente si aplica tetanos; fiebre actual; reaccion previa a vacunas. | Vacunacion. | Pediatra o Medico general. | Policlinico o centro de vacunacion. | Bajo si es consulta programada; medio si existe herida reciente; alto si hay herida grave o signos de infeccion. | El sistema debe orientar a vacunacion en institucion local y advertir que tetanos asociado a herida reciente puede requerir atencion prioritaria. |
+| Analisis de sangre | Necesito hacerme un analisis de sangre general. | Analisis de laboratorio o necesidad equivalente de laboratorio. | Tipo de analisis; si tiene indicacion medica; ayuno; urgencia del resultado; sintomas asociados si los menciona. | Laboratorio. | Medico general o Laboratorio clinico. | Laboratorio o policlinico. | Bajo si es control rutinario; medio si hay sintomas relevantes. | El sistema debe recomendar laboratorio o policlinico con servicio de analisis y mostrar centros locales con direccion, horario y telefono. |
+| Problemas de vision | Veo borroso y me duelen los ojos al leer. | Vision problems. | Vision borrosa; dolor ocular; ojo rojo; perdida repentina de vision; traumatismo ocular. | Oftalmologia. | Oftalmologo. | Centro oftalmologico. | Bajo o medio si es vision borrosa progresiva; alto si hay perdida repentina de vision, trauma o dolor intenso. | El sistema debe recomendar oftalmologia y mostrar centros oftalmologicos locales. Debe derivar a urgencias si se seleccionan signos de alarma. |
+| Sangrado menstrual prolongado | Llevo muchos dias con sangrado menstrual y me siento debil. | Prolonged menstrual bleeding. | Sangrado abundante; mareos, debilidad o palidez; dolor fuerte bajo abdominal; posibilidad de embarazo; coagulos grandes. | Ginecologia; Atencion urgente si el riesgo es alto. | Ginecologo; Urgencias si hay signos de gravedad. | Policlinico o clinica ginecologica; Hospital si hay sangrado abundante, debilidad marcada o embarazo posible. | Medio por duracion y debilidad; alto si hay sangrado abundante, mareos, palidez o embarazo posible. | El sistema debe mostrar triaje completo y explicar claramente cuando corresponde acudir a urgencias. |
+| Dolor abdominal | Me duele el abdomen desde esta manana y tengo nauseas. | Abdominal pain. | Intensidad; localizacion; fiebre; vomitos persistentes; embarazo posible; duracion; empeoramiento. | Medicina general; Atencion urgente si hay signos de alarma. | Medico general; Urgencias si el riesgo es alto. | Policlinico; Hospital o urgencias si hay dolor fuerte, fiebre o empeoramiento rapido. | Medio; alto si hay dolor intenso, fiebre, vomitos persistentes o signos de abdomen agudo. | El sistema debe orientar a evaluacion medica y ajustar la institucion recomendada segun el riesgo calculado. |
+| Compra de medicamentos | Necesito comprar medicamentos para la gripe cerca de Kursk. | Pharmacy need. | Medicamento o producto requerido; si necesita receta; sintomas de alarma si describe enfermedad; edad del paciente si aplica. | Farmacia. | Farmaceutico. | Farmacia. | Bajo si solo necesita compra de medicamentos; medio si describe sintomas persistentes o relevantes. | El sistema debe recomendar farmacias locales y mostrar nombre, tipo de institucion, direccion, distrito, telefono, horario, rating, publico/privado y urgencias si/no. |
 
-Para cada respuesta final debe verificarse que el JSON incluya:
+## Criterios de validacion
 
-```json
-{
-  "message": "string",
-  "risk_level": "low | medium | high",
-  "risk_score": 0,
-  "recommended_service": "string",
-  "recommended_specialty": "string",
-  "recommended_institution_type": "string",
-  "explanation": "string",
-  "questions": [],
-  "recommendations": []
-}
-```
+- Deteccion correcta de necesidad medica: el sistema debe asociar el mensaje del usuario con la necesidad medica esperada o con una necesidad equivalente del catalogo local.
+- Generacion correcta de preguntas: si la necesidad requiere triaje, el sistema debe devolver preguntas relevantes y opciones de respuesta coherentes con el caso.
+- Calculo coherente de riesgo: el nivel `low`, `medium` o `high` debe corresponder a la suma de respuestas seleccionadas y a las reglas de urgencia configuradas.
+- Recomendacion coherente del servicio: el servicio recomendado debe responder a la necesidad identificada y al nivel de riesgo.
+- Recomendacion coherente del tipo de institucion: el tipo de institucion debe cambiar de policlinico, clinica, laboratorio, farmacia u hospital segun el caso y los signos de alarma.
+- Visualizacion correcta de centros medicos: las tarjetas deben mostrar nombre, tipo de institucion, servicios principales, direccion, distrito, telefono, horario, rating, publico/privado y urgencias si/no.
 
-Cada tarjeta de centro medico debe mostrar nombre, tipo de institucion, servicios principales, direccion, distrito, telefono, horario, rating, publico/privado y urgencias si/no.
+## Limitaciones conocidas
+
+- El sistema no reemplaza diagnostico medico ni evaluacion profesional.
+- El sistema solo trabaja con datos locales de Kursk cargados en la base PostgreSQL.
+- La deteccion depende de palabras clave, reglas de triaje y reglas de recomendacion.
+- Rasa queda como mejora futura para mejorar la comprension del lenguaje natural y manejar frases mas ambiguas.
+
+## Resultados esperados
+
+El sistema debe orientar al usuario hacia el tipo de institucion medica adecuada segun su necesidad y el riesgo estimado. La respuesta final debe presentar el nivel de riesgo, servicio recomendado, especialidad recomendada, tipo de institucion y una explicacion humana de la recomendacion.
+
+El chatbot no debe diagnosticar enfermedades. Su funcion esperada es guiar la decision inicial: por ejemplo, indicar si corresponde una farmacia, laboratorio, policlinico, clinica especializada u hospital/urgencias, y mostrar centros medicos locales que coincidan con esa recomendacion.
