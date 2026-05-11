@@ -1,8 +1,20 @@
+import {
+    Building2,
+    Clock,
+    MapPin,
+    Phone,
+    ShieldCheck,
+    Star,
+} from 'lucide-react';
 import { Badge } from '../ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 
 interface MedicalCenter {
     name: string;
+    institution_type_name?: string | null;
+    main_services?: string[];
+    main_specialties?: string[];
+    recommendation_reason?: string | null;
     address?: string | null;
     city?: string | null;
     district?: string | null;
@@ -20,30 +32,143 @@ interface MedicalCenterCardProps {
     center: MedicalCenter;
 }
 
+const booleanText = (value?: boolean | null) => (value ? 'Si' : 'No');
+
 export function MedicalCenterCard({ center }: MedicalCenterCardProps) {
+    const services = center.main_services?.length
+        ? center.main_services
+        : center.description
+          ? [center.description]
+          : [];
+
     return (
-        <Card className="bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
-            <CardHeader>
-                <CardTitle>{center.name}</CardTitle>
+        <Card className="h-full bg-background text-foreground">
+            <CardHeader className="space-y-3">
+                <div className="flex items-start justify-between gap-3">
+                    <CardTitle className="text-base leading-6">{center.name}</CardTitle>
+                    {center.rating != null && (
+                        <Badge variant="outline" className="shrink-0">
+                            <Star className="mr-1 h-3 w-3 fill-current" />
+                            {center.rating.toFixed(1)}
+                        </Badge>
+                    )}
+                </div>
                 <div className="flex flex-wrap gap-2">
-                    {center.has_emergency && <Badge variant="destructive">Urgencias</Badge>}
-                    {center.is_public && <Badge variant="secondary">Publico</Badge>}
-                    {center.price_level && <Badge variant="outline">{center.price_level}</Badge>}
+                    <Badge variant={center.has_emergency ? 'destructive' : 'outline'}>
+                        Urgencias: {booleanText(center.has_emergency)}
+                    </Badge>
+                    <Badge variant="secondary">
+                        {center.is_public ? 'Publico' : 'Privado'}
+                    </Badge>
+                    {center.institution_type_name && (
+                        <Badge variant="outline">{center.institution_type_name}</Badge>
+                    )}
                 </div>
             </CardHeader>
-            <CardContent className="space-y-1 text-sm">
-                {center.description && <p>{center.description}</p>}
-                {center.address && <p>{center.address}</p>}
-                {center.district && <p>Distrito: {center.district}</p>}
-                {center.phone && <p>Tel: {center.phone}</p>}
-                {center.working_hours && <p>Horario: {center.working_hours}</p>}
-                {center.rating && <p>Rating: {center.rating} / 5</p>}
+            <CardContent className="space-y-4 text-sm">
+                {center.recommendation_reason && (
+                    <p className="rounded-md bg-muted p-3 leading-6 text-muted-foreground">
+                        {center.recommendation_reason}
+                    </p>
+                )}
+
+                <div className="grid gap-3">
+                    <div className="flex gap-2">
+                        <Building2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                        <div>
+                            <p className="text-xs uppercase text-muted-foreground">
+                                Tipo de institucion
+                            </p>
+                            <p>{center.institution_type_name || 'No informado'}</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p className="mb-2 text-xs uppercase text-muted-foreground">
+                            Servicios principales
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                            {services.length > 0 ? (
+                                services.map((service) => (
+                                    <Badge key={service} variant="outline">
+                                        {service}
+                                    </Badge>
+                                ))
+                            ) : (
+                                <span className="text-muted-foreground">No informado</span>
+                            )}
+                        </div>
+                    </div>
+
+                    {center.main_specialties && center.main_specialties.length > 0 && (
+                        <div>
+                            <p className="mb-2 text-xs uppercase text-muted-foreground">
+                                Especialidades
+                            </p>
+                            <div className="flex flex-wrap gap-2">
+                                {center.main_specialties.map((specialty) => (
+                                    <Badge key={specialty} variant="secondary">
+                                        {specialty}
+                                    </Badge>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    <div className="flex gap-2">
+                        <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                        <div>
+                            <p className="text-xs uppercase text-muted-foreground">
+                                Direccion
+                            </p>
+                            <p>{center.address || 'No informada'}</p>
+                            <p className="text-muted-foreground">
+                                Distrito: {center.district || 'No informado'}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="grid gap-3 sm:grid-cols-2">
+                        <div className="flex gap-2">
+                            <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                            <div>
+                                <p className="text-xs uppercase text-muted-foreground">
+                                    Telefono
+                                </p>
+                                <p>{center.phone || 'No informado'}</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-2">
+                            <Clock className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                            <div>
+                                <p className="text-xs uppercase text-muted-foreground">
+                                    Horario
+                                </p>
+                                <p>{center.working_hours || 'No informado'}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="flex gap-2">
+                        <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                        <div>
+                            <p className="text-xs uppercase text-muted-foreground">
+                                Titularidad y atencion urgente
+                            </p>
+                            <p>
+                                {center.is_public ? 'Publico' : 'Privado'} | Urgencias:{' '}
+                                {booleanText(center.has_emergency)}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
                 {center.website && (
                     <a
                         href={center.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline dark:text-blue-400"
+                        className="inline-flex text-primary hover:underline"
                     >
                         Sitio web
                     </a>

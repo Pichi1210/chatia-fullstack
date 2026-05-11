@@ -281,6 +281,34 @@ def calculate_risk_score(session: Session, selected_option_ids: list[int]) -> in
     return sum(option.risk_score for option in options)
 
 
+def get_risk_level(risk_score: int) -> str:
+    if risk_score >= 10:
+        return "high"
+    if risk_score >= 5:
+        return "medium"
+    return "low"
+
+
+def risk_level_label(risk_level: str) -> str:
+    return {
+        "low": "bajo",
+        "medium": "medio",
+        "high": "alto",
+    }.get(risk_level, "bajo")
+
+
+def resolve_risk_level(
+    risk_score: int,
+    service: MedicalService | None,
+    institution_type: MedicalInstitutionType | None,
+) -> str:
+    if (service and service.is_emergency_service) or (
+        institution_type and institution_type.is_emergency_capable
+    ):
+        return "high"
+    return get_risk_level(risk_score)
+
+
 def select_recommendation_rule(
     session: Session,
     health_need_id: int,
@@ -347,6 +375,89 @@ def find_matching_centers(
     return centers[:10]
 
 
+def build_human_explanation(
+    risk_level: str,
+    service: MedicalService | None,
+    specialty: MedicalSpecialty | None,
+    institution_type: MedicalInstitutionType | None,
+    default_explanation: str | None,
+) -> str:
+    service_text = service.name if service else "el servicio medico adecuado"
+    specialty_text = specialty.name if specialty else "la especialidad correspondiente"
+    institution_text = (
+        institution_type.name if institution_type else "una institucion medica adecuada"
+    )
+    warning = (
+        " Si los sintomas aumentan, aparece fiebre, dolor intenso, dificultad para respirar, "
+        "sangrado abundante o empeoramiento rapido, acude a urgencias."
+    )
+    base = (
+        f"Segun tus respuestas, el caso parece de riesgo {risk_level_label(risk_level)}. "
+        f"Se recomienda {service_text} con {specialty_text} en {institution_text}."
+    )
+    if default_explanation:
+        base = f"{base} {default_explanation}"
+    return f"{base}{warning}"
+
+
+def build_center_reason(
+    center: MedicalCenter,
+    service: MedicalService | None,
+    specialty: MedicalSpecialty | None,
+    institution_type: MedicalInstitutionType | None,
+) -> str:
+    parts = [f"{center.name} coincide con el tipo de atencion recomendado"]
+    if institution_type:
+        parts.append(f"tipo {institution_type.name}")
+    if service:
+        parts.append(f"servicio {service.name}")
+    if specialty:
+        parts.append(f"especialidad {specialty.name}")
+    if center.has_emergency:
+        parts.append("cuenta con urgencias")
+    return ", ".join(parts) + "."
+
+
+def serialize_medical_center(
+    session: Session,
+    center: MedicalCenter,
+    service: MedicalService | None,
+    specialty: MedicalSpecialty | None,
+    institution_type: MedicalInstitutionType | None,
+) -> MedicalCenterPublic:
+    services = session.exec(
+        select(MedicalService.name)
+        .join(MedicalCenterService)
+        .where(MedicalCenterService.medical_center_id == center.id)
+        .where(MedicalCenterService.available == True)  # noqa: E712
+        .order_by(MedicalService.name)
+    ).all()
+    specialties = session.exec(
+        select(MedicalSpecialty.name)
+        .join(MedicalCenterSpecialty)
+        .where(MedicalCenterSpecialty.medical_center_id == center.id)
+        .where(MedicalCenterSpecialty.available == True)  # noqa: E712
+        .order_by(MedicalSpecialty.name)
+    ).all()
+    public_center = MedicalCenterPublic.model_validate(center)
+    public_center.institution_type_name = (
+        institution_type.name
+        if institution_type and center.institution_type_id == institution_type.id
+        else center.institution_type.name
+        if center.institution_type
+        else None
+    )
+    public_center.main_services = list(services)
+    public_center.main_specialties = list(specialties)
+    public_center.recommendation_reason = build_center_reason(
+        center,
+        service,
+        specialty,
+        institution_type,
+    )
+    return public_center
+
+
 def build_recommendation_response(
     session: Session,
     health_need: HealthNeed,
@@ -393,6 +504,14 @@ def build_recommendation_response(
         city=city,
     )
 
+    risk_level = resolve_risk_level(risk_score, service, institution_type)
+    explanation = build_human_explanation(
+        risk_level=risk_level,
+        service=service,
+        specialty=specialty,
+        institution_type=institution_type,
+        default_explanation=default_rule.explanation if default_rule else None,
+    )
     message = (
         recommendation_rule.message
         if recommendation_rule
@@ -404,13 +523,21 @@ def build_recommendation_response(
         health_need_id=health_need.id,
         health_need_name=health_need.name,
         risk_score=risk_score,
+        risk_level=risk_level,
         recommended_institution_type=institution_type.name if institution_type else None,
         recommended_service=service.name if service else None,
         recommended_specialty=specialty.name if specialty else None,
-        explanation=default_rule.explanation if default_rule else None,
+        explanation=explanation,
         questions=[],
         recommendations=[
-            MedicalCenterPublic.model_validate(center) for center in centers
+            serialize_medical_center(
+                session=session,
+                center=center,
+                service=service,
+                specialty=specialty,
+                institution_type=institution_type,
+            )
+            for center in centers
         ],
     )
 

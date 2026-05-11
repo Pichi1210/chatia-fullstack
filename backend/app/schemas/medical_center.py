@@ -1,6 +1,6 @@
 from typing import Any
 
-from sqlmodel import SQLModel
+from sqlmodel import Field, SQLModel
 
 
 class MedicalCenterBase(SQLModel):
@@ -47,6 +47,10 @@ class MedicalCenterUpdate(SQLModel):
 
 class MedicalCenterPublic(MedicalCenterBase):
     id: int
+    institution_type_name: str | None = None
+    main_services: list[str] = Field(default_factory=list)
+    main_specialties: list[str] = Field(default_factory=list)
+    recommendation_reason: str | None = None
 
 
 class MedicalCentersPublic(SQLModel):

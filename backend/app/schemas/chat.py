@@ -30,6 +30,7 @@ class ChatResponse(SQLModel):
     recommended_specialty: str | None = None
     recommended_institution_type: str | None = None
     explanation: str | None = None
+    risk_level: str = "low"
     risk_score: int = 0
     questions: list[TriageQuestionPublic] = Field(default_factory=list)
     recommendations: list[MedicalCenterPublic] = Field(default_factory=list)
