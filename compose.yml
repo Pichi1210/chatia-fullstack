@@ -75,11 +75,42 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       SENTRY_DSN: ${SENTRY_DSN}
       YANDEX_API_KEY: ${YANDEX_API_KEY}
+      RASA_URL: ${RASA_URL:-http://rasa:5005}
+      RASA_ENABLED: ${RASA_ENABLED:-false}
+      RASA_CONFIDENCE_THRESHOLD: ${RASA_CONFIDENCE_THRESHOLD:-0.55}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/utils/health-check/"]
       interval: 10s
       timeout: 5s
       retries: 5
+
+  rasa:
+    image: rasa/rasa:3.6.20-full
+    profiles:
+      - rasa
+    working_dir: /app
+    volumes:
+      - ./rasa:/app
+    command: >
+      run
+      --enable-api
+      --cors "*"
+      --debug
+      --model /app/models
+    expose:
+      - "5005"
+    depends_on:
+      - backend
+
+  rasa-actions:
+    image: rasa/rasa-sdk:3.6.2
+    profiles:
+      - rasa-actions
+    working_dir: /app
+    volumes:
+      - ./rasa/actions:/app/actions
+    expose:
+      - "5055"
 
   frontend:
     build:

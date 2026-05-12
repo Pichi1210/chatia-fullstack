@@ -1,0 +1,3 @@
+# Optional action server. Start the rasa-actions service only if custom actions are added.
+# action_endpoint:
+#   url: "http://rasa-actions:5055/webhook"

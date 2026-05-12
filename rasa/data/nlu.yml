@@ -1,0 +1,229 @@
+version: "3.1"
+
+nlu:
+  - intent: greet
+    examples: |
+      - hola
+      - buenos dias
+      - buenas tardes
+      - привет
+      - здравствуйте
+
+  - intent: goodbye
+    examples: |
+      - adios
+      - hasta luego
+      - gracias, adios
+      - пока
+      - до свидания
+
+  - intent: fallback
+    examples: |
+      - no se
+      - no entiendo
+      - otra cosa
+      - не знаю
+
+  - intent: describe_symptom
+    examples: |
+      - me duele una [muela](body_part)
+      - me duele el [diente](body_part)
+      - tengo [dolor dental](symptom)
+      - tengo la [encia inflamada](symptom)
+      - [болит зуб](symptom)
+      - [зубная боль](symptom)
+      - [болит десна](symptom)
+      - me duele la [rodilla](body_part)
+      - tengo [dolor en la rodilla](symptom)
+      - no puedo caminar bien por dolor en la [rodilla](body_part)
+      - la [rodilla](body_part) esta [hinchada](risk_signal)
+      - [болит колено](symptom)
+      - [боль в колене](symptom)
+      - [опухло колено](symptom)
+      - tengo [fiebre](symptom)
+      - me siento [debil](symptom)
+      - tengo [fiebre](symptom) y me siento [debil](symptom)
+      - tengo [temperatura alta](symptom)
+      - [температура](symptom)
+      - у меня [жар](symptom)
+      - [слабость](symptom)
+      - [высокая температура](symptom)
+      - tengo dolor en el [pecho](body_part)
+      - me duele el [pecho](body_part) y me cuesta respirar
+      - dolor en el [pecho](body_part) que va al brazo
+      - [боль в груди](symptom)
+      - [тяжело дышать](urgency_indicator)
+      - [боль отдает в руку](risk_signal)
+      - estoy con la menstruacion ya [10 dias](duration)
+      - mi menstruacion no ha parado
+      - tengo sangrado menstrual desde hace [muchos dias](duration)
+      - [месячные идут уже 10 дней](symptom)
+      - [долго идут месячные](symptom)
+      - [обильные месячные](symptom)
+      - me duele el [abdomen](body_part)
+      - dolor en la [barriga](body_part)
+      - dolor [fuerte](intensity) en el [estomago](body_part)
+      - [болит живот](symptom)
+      - [боль в животе](symptom)
+      - [сильно болит живот](symptom)
+
+  - intent: request_emergency
+    examples: |
+      - tengo dolor en el [pecho](body_part) y no puedo respirar
+      - me cuesta respirar
+      - dolor en el pecho que va al brazo
+      - tengo dolor muy [fuerte](intensity)
+      - [тяжело дышать](urgency_indicator)
+      - [боль в груди](symptom)
+      - [боль отдает в руку](risk_signal)
+
+  - intent: request_vaccination
+    examples: |
+      - mi [hijo](patient_type) necesita [vacuna contra el tetanos](service)
+      - necesito ponerle [vacunas](service) a mi [hijo](patient_type)
+      - [vacuna contra tetanos](service)
+      - [vacuna contra tétanos](service)
+      - [ребенку](patient_type) нужна [прививка](service)
+      - [прививка от столбняка](service)
+      - [вакцина от столбняка](service)
+
+  - intent: request_blood_test
+    examples: |
+      - necesito [analisis de sangre](service)
+      - quiero hacerme [analisis](service)
+      - donde puedo hacer [analisis de sangre](service)
+      - [анализ крови](service)
+      - нужно [сдать кровь](service)
+      - [лаборатория](service)
+
+  - intent: request_eye_check
+    examples: |
+      - quiero revisar mi [vista](service)
+      - veo [borroso](symptom)
+      - me duelen los [ojos](body_part)
+      - [плохо вижу](symptom)
+      - [проверить зрение](service)
+      - [болят глаза](symptom)
+
+  - intent: request_pharmacy
+    examples: |
+      - necesito comprar [medicamentos](medication)
+      - donde hay una [farmacia](service)
+      - necesito una [farmacia](service) cerca
+      - [аптека](service)
+      - нужна [аптека](service)
+      - купить [лекарства](medication)
+
+  - intent: request_medication
+    examples: |
+      - necesito [medicamentos](medication)
+      - quiero comprar [medicina](medication)
+      - comprar [лекарства](medication)
+      - нужны [лекарства](medication)
+
+  - intent: request_specialist
+    examples: |
+      - necesito consulta con [especialista](specialty)
+      - busco un [cardiologo](specialty)
+      - necesito [ginecologo](specialty)
+      - нужен [специалист](specialty)
+      - нужен [кардиолог](specialty)
+
+  - intent: answer_triage
+    examples: |
+      - si
+      - no
+      - desde hace [10 dias](duration)
+      - dolor [fuerte](intensity)
+      - puedo caminar
+      - не могу ходить
+      - уже [два часа](duration)
+
+  - synonym: tooth_pain
+    examples: |
+      - dolor dental
+      - muela
+      - diente
+      - зуб
+      - зубная боль
+      - болит зуб
+
+  - synonym: knee_pain
+    examples: |
+      - rodilla
+      - dolor de rodilla
+      - dolor en la rodilla
+      - колено
+      - боль в колене
+      - болит колено
+
+  - synonym: general_fever
+    examples: |
+      - fiebre
+      - temperatura alta
+      - temperatura
+      - жар
+      - высокая температура
+
+  - synonym: chest_pain
+    examples: |
+      - dolor en el pecho
+      - pecho
+      - боль в груди
+      - тяжело дышать
+      - боль отдает в руку
+
+  - synonym: child_vaccination
+    examples: |
+      - vacuna infantil
+      - vacunas para mi hijo
+      - vacuna contra tetanos
+      - vacuna contra tétanos
+      - прививка ребенку
+      - вакцина ребенку
+      - прививка от столбняка
+
+  - synonym: blood_analysis
+    examples: |
+      - analisis de sangre
+      - análisis de sangre
+      - analisis
+      - анализ крови
+      - сдать кровь
+      - laboratorio
+      - лаборатория
+
+  - synonym: vision_problem
+    examples: |
+      - vista
+      - revisar mi vista
+      - veo borroso
+      - ojos
+      - проверить зрение
+      - плохо вижу
+      - болят глаза
+
+  - synonym: prolonged_menstrual_bleeding
+    examples: |
+      - menstruacion no ha parado
+      - menstruación no ha parado
+      - sangrado menstrual
+      - месячные идут уже 10 дней
+      - долго идут месячные
+      - обильные месячные
+
+  - synonym: abdominal_pain
+    examples: |
+      - abdomen
+      - barriga
+      - estomago
+      - dolor abdominal
+      - живот
+      - боль в животе
+
+  - synonym: pharmacy_need
+    examples: |
+      - farmacia
+      - medicamentos
+      - аптека
+      - лекарства

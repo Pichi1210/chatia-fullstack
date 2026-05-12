@@ -1,8 +1,10 @@
 import re
 import unicodedata
+from typing import Any
 
-from sqlmodel import Session, select
+from sqlmodel import Session, col, select
 
+from app.core.config import settings
 from app.models import (
     HealthNeed,
     MedicalCenter,
@@ -22,6 +24,29 @@ from app.schemas.medical_catalog import (
     TriageQuestionPublic,
 )
 from app.schemas.medical_center import MedicalCenterPublic
+from app.services.rasa_nlu import parse_message_with_rasa
+
+RASA_HEALTH_NEED_ALIASES = {
+    "tooth_pain": ["Tooth pain", "Dolor dental"],
+    "knee_pain": ["Knee pain"],
+    "general_fever": ["General fever", "Fiebre con debilidad"],
+    "chest_pain": ["Chest pain", "Dolor en el pecho"],
+    "child_vaccination": ["Child vaccination"],
+    "blood_analysis": ["Blood analysis", "Análisis de sangre"],
+    "vision_problem": ["Vision problems"],
+    "prolonged_menstrual_bleeding": ["Prolonged menstrual bleeding"],
+    "abdominal_pain": ["Abdominal pain"],
+    "pharmacy_need": ["Pharmacy need"],
+}
+
+RASA_INTENT_HEALTH_NEED_MAP = {
+    "request_vaccination": "child_vaccination",
+    "request_blood_test": "blood_analysis",
+    "request_eye_check": "vision_problem",
+    "request_pharmacy": "pharmacy_need",
+    "request_medication": "pharmacy_need",
+    "request_emergency": "chest_pain",
+}
 
 PREFERRED_HEALTH_NEEDS = {
     "Knee pain",
@@ -108,6 +133,76 @@ def score_health_needs(
 
 def get_need_by_name(session: Session, name: str) -> HealthNeed | None:
     return session.exec(select(HealthNeed).where(HealthNeed.name == name)).first()
+
+
+def get_need_by_alias(session: Session, alias: str) -> HealthNeed | None:
+    for need_name in RASA_HEALTH_NEED_ALIASES.get(alias, [alias]):
+        need = get_need_by_name(session, need_name)
+        if need:
+            return need
+    return None
+
+
+def map_rasa_to_health_need(
+    rasa_result: dict[str, Any],
+    session: Session,
+) -> HealthNeed | None:
+    entities = rasa_result.get("entities", [])
+    if isinstance(entities, list):
+        for entity in entities:
+            if not isinstance(entity, dict):
+                continue
+            value = entity.get("value")
+            if not isinstance(value, str):
+                continue
+            normalized_value = normalize_text(value).replace(" ", "_")
+            need = get_need_by_alias(session, normalized_value)
+            if need:
+                return need
+
+    intent = rasa_result.get("intent")
+    intent_name = intent.get("name") if isinstance(intent, dict) else None
+    if not isinstance(intent_name, str):
+        return None
+
+    mapped_alias = RASA_INTENT_HEALTH_NEED_MAP.get(intent_name)
+    if mapped_alias:
+        return get_need_by_alias(session, mapped_alias)
+
+    return None
+
+
+async def identify_health_need_with_optional_rasa(
+    session: Session,
+    message: str,
+) -> tuple[HealthNeed | None, dict[str, Any] | None]:
+    if settings.RASA_ENABLED:
+        rasa_result = await parse_message_with_rasa(message)
+        if rasa_result:
+            health_need = map_rasa_to_health_need(rasa_result, session)
+            if health_need:
+                return health_need, rasa_result
+
+    return identify_health_need(session, message), None
+
+
+async def build_nlu_debug_response(session: Session, message: str) -> dict[str, Any]:
+    rasa_result = await parse_message_with_rasa(message) if settings.RASA_ENABLED else None
+    rasa_health_need = (
+        map_rasa_to_health_need(rasa_result, session) if rasa_result else None
+    )
+    keyword_health_need = identify_health_need(session, message)
+    final_health_need = rasa_health_need or keyword_health_need
+
+    return {
+        "rasa_enabled": settings.RASA_ENABLED,
+        "rasa_result": rasa_result,
+        "rasa_health_need": rasa_health_need.name if rasa_health_need else None,
+        "keyword_result": {
+            "health_need": keyword_health_need.name if keyword_health_need else None,
+        },
+        "final_health_need": final_health_need.name if final_health_need else None,
+    }
 
 
 def identify_combined_health_need(
@@ -226,7 +321,7 @@ def get_triage_questions(session: Session, health_need_id: int) -> list[TriageQu
     statement = (
         select(TriageQuestion)
         .where(TriageQuestion.health_need_id == health_need_id)
-        .order_by(TriageQuestion.priority)
+        .order_by(col(TriageQuestion.priority))
     )
     return list(session.exec(statement).all())
 
@@ -236,12 +331,14 @@ def build_triage_response(
     health_need: HealthNeed,
     message: str | None = None,
 ) -> ChatResponse:
+    assert health_need.id is not None
     questions = []
     for question in get_triage_questions(session, health_need.id):
+        assert question.id is not None
         options = session.exec(
             select(TriageAnswerOption)
             .where(TriageAnswerOption.question_id == question.id)
-            .order_by(TriageAnswerOption.id)
+            .order_by(col(TriageAnswerOption.id))
         ).all()
         questions.append(
             TriageQuestionPublic(
@@ -276,7 +373,9 @@ def calculate_risk_score(session: Session, selected_option_ids: list[int]) -> in
     if not selected_option_ids:
         return 0
     options = session.exec(
-        select(TriageAnswerOption).where(TriageAnswerOption.id.in_(selected_option_ids))
+        select(TriageAnswerOption).where(
+            col(TriageAnswerOption.id).in_(selected_option_ids)
+        )
     ).all()
     return sum(option.risk_score for option in options)
 
@@ -319,7 +418,7 @@ def select_recommendation_rule(
         .where(RecommendationRule.health_need_id == health_need_id)
         .where(RecommendationRule.min_risk_score <= risk_score)
         .where(RecommendationRule.max_risk_score >= risk_score)
-        .order_by(RecommendationRule.priority)
+        .order_by(col(RecommendationRule.priority))
     )
     return session.exec(statement).first()
 
@@ -331,7 +430,7 @@ def select_default_need_rule(
     statement = (
         select(NeedServiceRule)
         .where(NeedServiceRule.health_need_id == health_need_id)
-        .order_by(NeedServiceRule.priority)
+        .order_by(col(NeedServiceRule.priority))
     )
     return session.exec(statement).first()
 
@@ -464,6 +563,7 @@ def build_recommendation_response(
     risk_score: int,
     city: str | None = None,
 ) -> ChatResponse:
+    assert health_need.id is not None
     recommendation_rule = select_recommendation_rule(session, health_need.id, risk_score)
     default_rule = select_default_need_rule(session, health_need.id)
 
@@ -542,16 +642,26 @@ def build_recommendation_response(
     )
 
 
-def handle_initial_chat(
+async def handle_initial_chat(
     session: Session,
     message: str,
     city: str | None = None,
 ) -> ChatResponse:
-    combined = identify_combined_health_need(session, message)
-    health_need = combined[0] if combined else identify_health_need(session, message)
+    health_need = None
+    message_text = None
+    if settings.RASA_ENABLED:
+        health_need, _rasa_result = await identify_health_need_with_optional_rasa(
+            session,
+            message,
+        )
+    if not health_need:
+        combined = identify_combined_health_need(session, message)
+        health_need = combined[0] if combined else identify_health_need(session, message)
+        message_text = combined[1] if combined else None
     if not health_need:
         supported_needs = [
-            need.name for need in session.exec(select(HealthNeed).order_by(HealthNeed.name))
+            need.name
+            for need in session.exec(select(HealthNeed).order_by(col(HealthNeed.name)))
         ]
         return ChatResponse(
             message="No pude identificar la necesidad con suficiente seguridad. Puedes describir el sintoma principal, duracion, intensidad y si estas en Kursk.",
@@ -560,9 +670,9 @@ def handle_initial_chat(
             supported_needs=supported_needs,
         )
 
+    assert health_need.id is not None
     questions = get_triage_questions(session, health_need.id)
     if any(question.is_required for question in questions):
-        message_text = combined[1] if combined else None
         if health_need.name == "Prolonged menstrual bleeding":
             message_text = (
                 "Parece que describes un sangrado menstrual prolongado. "

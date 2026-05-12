@@ -15,6 +15,7 @@ from app.models import (
 )
 from app.schemas.chat import (
     ChatAnswerRequest,
+    ChatNluDebugRequest,
     ChatRequest,
     ChatResponse,
     ChatSessionCreate,
@@ -23,6 +24,7 @@ from app.schemas.chat import (
     ChatSessionsPublic,
 )
 from app.services.chatbot import (
+    build_nlu_debug_response,
     build_recommendation_response,
     handle_initial_chat,
 )
@@ -189,7 +191,7 @@ async def chat_with_bot(
             city=request.city,
         )
     )
-    response = handle_initial_chat(
+    response = await handle_initial_chat(
         session=session,
         message=request.message,
         city=request.city,
@@ -200,6 +202,15 @@ async def chat_with_bot(
         user_text=request.message,
         response=response,
     )
+
+
+@router.post("/nlu-debug")
+async def nlu_debug(
+    request: ChatNluDebugRequest,
+    session: SessionDep,
+    _current_user: CurrentUser,
+):
+    return await build_nlu_debug_response(session=session, message=request.message)
 
 
 @router.post("/answer", response_model=ChatResponse)

@@ -230,6 +230,72 @@ YANDEX_API_KEY=your_api_key_here
 
 If you don't provide an API key, the chatbot will return mock data.
 
+## Integración opcional con Rasa
+
+Rasa se usa solo como capa NLU opcional. FastAPI sigue siendo responsable de
+consultar PostgreSQL, aplicar reglas de triaje, calcular `risk_score` y
+recomendar instituciones y centros médicos. Si Rasa no está disponible, falla o
+devuelve baja confianza, el chatbot conserva el sistema actual basado en
+keywords.
+
+### Entrenar Rasa
+
+El proyecto incluye la configuración en `rasa/`. Entrena el modelo con:
+
+```bash
+docker compose run --rm rasa train
+```
+
+En un servidor o entorno ya levantado:
+
+```bash
+docker compose exec rasa rasa train
+```
+
+El modelo entrenado queda en:
+
+```txt
+rasa/models/
+```
+
+### Habilitar o deshabilitar Rasa
+
+Por defecto Rasa está deshabilitado:
+
+```env
+RASA_ENABLED=false
+RASA_URL=http://rasa:5005
+RASA_CONFIDENCE_THRESHOLD=0.55
+```
+
+Para probar Rasa como NLU, entrena el modelo, levanta el servicio `rasa` y
+habilita:
+
+```env
+COMPOSE_PROFILES=rasa
+RASA_ENABLED=true
+```
+
+Para volver completamente al flujo por keywords:
+
+```env
+RASA_ENABLED=false
+```
+
+### Diagnóstico NLU
+
+Con sesión autenticada puedes probar:
+
+```bash
+curl -X POST http://localhost:8000/api/v1/chat/nlu-debug \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"message":"me duele la rodilla"}'
+```
+
+La respuesta incluye `rasa_result`, `keyword_result` y `final_health_need` para
+ver si FastAPI usó Rasa o el fallback por keywords.
+
 ## Backend Development
 
 

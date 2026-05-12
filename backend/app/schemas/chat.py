@@ -13,6 +13,10 @@ class ChatRequest(SQLModel):
     city: str | None = None
 
 
+class ChatNluDebugRequest(SQLModel):
+    message: str
+
+
 class ChatAnswer(SQLModel):
     question_id: int
     answer_option_id: int

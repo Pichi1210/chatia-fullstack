@@ -1,0 +1,14 @@
+version: "3.1"
+
+stories:
+  - story: Usuario describe sintoma
+    steps:
+      - intent: describe_symptom
+
+  - story: Usuario solicita servicio
+    steps:
+      - intent: request_blood_test
+
+  - story: Usuario solicita farmacia
+    steps:
+      - intent: request_pharmacy

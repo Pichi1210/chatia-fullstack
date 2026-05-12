@@ -1,0 +1,40 @@
+version: "3.1"
+
+intents:
+  - describe_symptom
+  - request_vaccination
+  - request_blood_test
+  - request_eye_check
+  - request_pharmacy
+  - request_medication
+  - request_emergency
+  - request_specialist
+  - answer_triage
+  - greet
+  - goodbye
+  - fallback
+
+entities:
+  - symptom
+  - body_part
+  - city
+  - patient_type
+  - service
+  - specialty
+  - duration
+  - intensity
+  - urgency_indicator
+  - risk_signal
+  - medication
+
+responses:
+  utter_greet:
+    - text: "Hola. Describe tu necesidad medica."
+  utter_goodbye:
+    - text: "Hasta luego."
+  utter_fallback:
+    - text: "No pude entenderlo con seguridad."
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
