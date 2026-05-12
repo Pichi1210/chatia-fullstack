@@ -8,14 +8,14 @@ import {
   Info,
   Loader2,
   Mic,
-  Plus,
   Send,
-  Settings2,
   Shield,
   Stethoscope,
   User,
   UserRound,
 } from "lucide-react"
+import { useQueryClient } from "@tanstack/react-query"
+import { useNavigate } from "@tanstack/react-router"
 import { useEffect, useRef, useState } from "react"
 
 import { OpenAPI } from "@/client"
@@ -66,6 +66,7 @@ interface TriageQuestion {
 }
 
 interface ChatResponse {
+  chat_session_id?: string | null
   message: string
   health_need_id: number | null
   health_need_name: string | null
@@ -95,6 +96,24 @@ interface Message {
   recommendations?: MedicalCenter[]
 }
 
+interface ChatHistoryMessage {
+  id: string
+  sender: "user" | "bot"
+  text: string
+  response_payload?: Partial<ChatResponse> | null
+  created_at: string
+}
+
+interface ChatSessionDetail {
+  id: string
+  messages: ChatHistoryMessage[]
+}
+
+interface ChatInterfaceProps {
+  chatId?: string
+  newChatKey?: string
+}
+
 interface ChatInputProps {
   onSubmit: (message: string) => void
   isLoading?: boolean
@@ -113,6 +132,7 @@ const suggestions = [
 ]
 
 const normalizeChatResponse = (response: Partial<ChatResponse>): ChatResponse => ({
+  chat_session_id: response.chat_session_id ?? null,
   message: response.message || "",
   health_need_id: response.health_need_id ?? null,
   health_need_name: response.health_need_name ?? null,
@@ -127,6 +147,40 @@ const normalizeChatResponse = (response: Partial<ChatResponse>): ChatResponse =>
     ? response.recommendations
     : [],
 })
+
+const authHeaders = () => ({
+  Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
+})
+
+const mapStoredMessage = (message: ChatHistoryMessage): Message => {
+  if (message.sender === "user") {
+    return {
+      id: message.id,
+      sender: "user",
+      text: message.text,
+    }
+  }
+
+  const response = normalizeChatResponse(
+    message.response_payload || { message: message.text },
+  )
+
+  return {
+    id: message.id,
+    sender: "bot",
+    text: response.message || message.text,
+    healthNeedId: response.health_need_id,
+    healthNeedName: response.health_need_name,
+    recommendedService: response.recommended_service,
+    recommendedSpecialty: response.recommended_specialty,
+    recommendedInstitutionType: response.recommended_institution_type,
+    explanation: response.explanation,
+    riskLevel: response.risk_level,
+    riskScore: response.risk_score,
+    questions: response.questions,
+    recommendations: response.recommendations,
+  }
+}
 
 const riskConfig: Record<
   RiskLevel,
@@ -222,29 +276,6 @@ function ChatInput({
             centered ? "shadow-lg" : "shadow-sm",
           )}
         >
-          {showTools && (
-            <div className="flex items-center gap-1 pb-3 pl-3">
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                className="h-8 w-8 rounded-full text-muted-foreground hover:text-foreground"
-              >
-                <Plus className="h-4 w-4" />
-                <span className="sr-only">Agregar archivo</span>
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                className="h-8 w-8 rounded-full text-muted-foreground hover:text-foreground"
-              >
-                <Settings2 className="h-4 w-4" />
-                <span className="sr-only">Herramientas</span>
-              </Button>
-            </div>
-          )}
-
           <textarea
             ref={textareaRef}
             value={message}
@@ -634,9 +665,13 @@ function ErrorState({ message, onRetry }: { message: string; onRetry: () => void
   )
 }
 
-export default function ChatInterface() {
+export default function ChatInterface({ chatId, newChatKey }: ChatInterfaceProps) {
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const [messages, setMessages] = useState<Message[]>([])
+  const [activeChatId, setActiveChatId] = useState<string | null>(chatId || null)
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [selectedAnswers, setSelectedAnswers] = useState<
     Record<number, Record<number, TriageAnswerOption>>
@@ -649,6 +684,78 @@ export default function ChatInterface() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages, selectedAnswers])
+
+  useEffect(() => {
+    const resetChat = () => {
+      setActiveChatId(null)
+      setMessages([])
+      setError(null)
+      setSelectedAnswers({})
+      setSubmittedTriageMessages({})
+    }
+
+    if (newChatKey || !chatId) {
+      resetChat()
+      return
+    }
+
+    let isCurrent = true
+
+    const loadChatSession = async () => {
+      setIsLoadingHistory(true)
+      setError(null)
+
+      try {
+        const response = await fetch(
+          `${OpenAPI.BASE}/api/v1/chat/sessions/${chatId}`,
+          {
+            headers: authHeaders(),
+          },
+        )
+
+        if (!response.ok) {
+          throw new Error("No se pudo cargar el historial")
+        }
+
+        const chatSession = (await response.json()) as ChatSessionDetail
+        if (!isCurrent) return
+
+        const restoredMessages = chatSession.messages.map(mapStoredMessage)
+        const submittedMessages: Record<number, boolean> = {}
+
+        restoredMessages.forEach((message, index) => {
+          if (!message.questions?.length) return
+
+          submittedMessages[index] = restoredMessages
+            .slice(index + 1)
+            .some(
+              (nextMessage) =>
+                nextMessage.sender === "user" &&
+                nextMessage.text === "Respuestas de triaje enviadas",
+            )
+        })
+
+        setActiveChatId(chatSession.id)
+        setMessages(restoredMessages)
+        setSelectedAnswers({})
+        setSubmittedTriageMessages(submittedMessages)
+      } catch (_error) {
+        if (isCurrent) {
+          setError("No pude cargar el historial de este chat.")
+        }
+      } finally {
+        if (isCurrent) {
+          setIsLoadingHistory(false)
+        }
+      }
+    }
+
+    loadChatSession()
+
+    return () => {
+      isCurrent = false
+    }
+  }, [chatId, newChatKey])
 
   const appendBotResponse = (response: ChatResponse) => {
     setMessages((prev) => [
@@ -676,7 +783,7 @@ export default function ChatInterface() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
+        ...authHeaders(),
       },
       body: JSON.stringify(body),
     })
@@ -688,6 +795,21 @@ export default function ChatInterface() {
     return normalizeChatResponse(await response.json())
   }
 
+  const syncActiveChat = (response: ChatResponse) => {
+    if (!response.chat_session_id) return
+
+    setActiveChatId(response.chat_session_id)
+    queryClient.invalidateQueries({ queryKey: ["chatSessions"] })
+
+    if (response.chat_session_id !== activeChatId) {
+      navigate({
+        to: "/chat",
+        search: { chat: response.chat_session_id },
+        replace: true,
+      })
+    }
+  }
+
   const handleSendMessage = async (messageText: string) => {
     setError(null)
     setMessages((prev) => [
@@ -697,7 +819,11 @@ export default function ChatInterface() {
     setIsLoading(true)
 
     try {
-      const response = await requestChat({ message: messageText })
+      const response = await requestChat({
+        message: messageText,
+        chat_session_id: activeChatId,
+      })
+      syncActiveChat(response)
       appendBotResponse(response)
     } catch (_error) {
       setError(
@@ -755,6 +881,7 @@ export default function ChatInterface() {
     try {
       const response = await requestChat(
         {
+          chat_session_id: activeChatId,
           health_need_id: healthNeedId,
           answers: questions
             .filter((question) => answersByQuestion[question.id])
@@ -771,6 +898,7 @@ export default function ChatInterface() {
         "/api/v1/chat/answer",
       )
 
+      syncActiveChat(response)
       appendBotResponse(response)
       setSubmittedTriageMessages((prev) => ({
         ...prev,
@@ -783,12 +911,17 @@ export default function ChatInterface() {
     }
   }
 
-  const showWelcomeScreen = messages.length === 0
+  const showWelcomeScreen = !isLoadingHistory && messages.length === 0
 
   return (
     <div className="flex h-full min-h-[calc(100vh-4rem)] flex-col bg-background">
       <div className="flex-1 overflow-y-auto">
-        {showWelcomeScreen ? (
+        {isLoadingHistory ? (
+          <div className="flex h-full min-h-[calc(100vh-4rem)] items-center justify-center text-sm text-muted-foreground">
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Cargando historial...
+          </div>
+        ) : showWelcomeScreen ? (
           <div className="relative flex h-full min-h-[calc(100vh-4rem)] flex-col items-center justify-center px-4 animate-in fade-in duration-500">
             <div className="mb-10 text-center">
               <p className="mb-1 text-lg text-muted-foreground animate-in fade-in slide-in-from-bottom-2 duration-500 delay-100">
@@ -803,6 +936,7 @@ export default function ChatInterface() {
               <ChatInput
                 onSubmit={handleSendMessage}
                 isLoading={isLoading}
+                disabled={isLoadingHistory}
                 placeholder="Describe tu necesidad medica..."
                 centered
                 showTools
@@ -904,7 +1038,7 @@ export default function ChatInterface() {
           <ChatInput
             onSubmit={handleSendMessage}
             isLoading={isLoading}
-            disabled={isLoading}
+            disabled={isLoading || isLoadingHistory}
             placeholder="Describe tu necesidad medica..."
           />
         </>

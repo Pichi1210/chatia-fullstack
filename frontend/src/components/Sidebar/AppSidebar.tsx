@@ -5,10 +5,12 @@ import {
   Plus,
   Stethoscope,
 } from "lucide-react"
-import { Link } from "@tanstack/react-router"
+import { useQuery } from "@tanstack/react-query"
+import { Link, useRouterState } from "@tanstack/react-router"
 
 import { SidebarAppearance } from "@/components/Common/Appearance"
 import { Logo } from "@/components/Common/Logo"
+import { OpenAPI } from "@/client"
 import { Button } from "@/components/ui/button"
 import {
   Sidebar,
@@ -27,8 +29,48 @@ const baseItems: Item[] = [
   { icon: CircleHelp, title: "Acerca del sistema", path: "/about" },
 ]
 
+interface ChatSessionSummary {
+  id: string
+  title: string
+  updated_at: string
+}
+
+interface ChatSessionsResponse {
+  data: ChatSessionSummary[]
+  count: number
+}
+
+const fetchChatSessions = async () => {
+  const response = await fetch(`${OpenAPI.BASE}/api/v1/chat/sessions?limit=8`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
+    },
+  })
+
+  if (!response.ok) {
+    throw new Error("No se pudo cargar el historial de chats")
+  }
+
+  return (await response.json()) as ChatSessionsResponse
+}
+
 export function AppSidebar() {
   const { user: currentUser } = useAuth()
+  const router = useRouterState()
+  const activeChatId =
+    typeof router.location.search.chat === "string"
+      ? router.location.search.chat
+      : undefined
+  const {
+    data: chatSessions,
+    isLoading: isLoadingChatSessions,
+    isError: hasChatSessionsError,
+  } = useQuery({
+    queryKey: ["chatSessions"],
+    queryFn: fetchChatSessions,
+    retry: false,
+    refetchOnWindowFocus: false,
+  })
 
   return (
     <Sidebar
@@ -56,7 +98,7 @@ export function AppSidebar() {
             className="w-full justify-start gap-2 rounded-xl border-sidebar-border bg-sidebar-accent/50 text-sidebar-foreground hover:bg-sidebar-accent group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0"
             asChild
           >
-            <Link to="/chat">
+            <Link to="/chat" search={{ new: Date.now().toString() }}>
               <Plus className="h-4 w-4" />
               <span className="group-data-[collapsible=icon]:hidden">
                 Nueva consulta
@@ -65,6 +107,42 @@ export function AppSidebar() {
           </Button>
         </div>
         <Main items={baseItems} />
+        <div className="mt-2 px-2 group-data-[collapsible=icon]:hidden">
+          <p className="px-2 pb-2 text-[10px] font-medium uppercase tracking-normal text-sidebar-foreground/50">
+            Historial
+          </p>
+          {isLoadingChatSessions ? (
+            <p className="px-2 py-1.5 text-xs text-sidebar-foreground/50">
+              Cargando chats...
+            </p>
+          ) : hasChatSessionsError ? (
+            <p className="px-2 py-1.5 text-xs text-sidebar-foreground/50">
+              No se pudo cargar el historial
+            </p>
+          ) : chatSessions?.data.length ? (
+            <div className="flex flex-col gap-1">
+              {chatSessions.data.map((chatSession) => (
+                <Link
+                  key={chatSession.id}
+                  to="/chat"
+                  search={{ chat: chatSession.id }}
+                  className={`flex min-h-8 items-center gap-2 rounded-lg px-2 py-1.5 text-sm text-sidebar-foreground/75 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground ${
+                    activeChatId === chatSession.id
+                      ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                      : ""
+                  }`}
+                >
+                  <MessageSquare className="h-4 w-4 shrink-0" />
+                  <span className="truncate">{chatSession.title}</span>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <p className="px-2 py-1.5 text-xs text-sidebar-foreground/50">
+              Sin chats guardados
+            </p>
+          )}
+        </div>
       </SidebarContent>
 
       <SidebarFooter className="p-4">

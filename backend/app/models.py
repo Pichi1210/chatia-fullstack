@@ -1,7 +1,7 @@
-
 import uuid
 from datetime import datetime, timezone
 from typing import Any
+
 from pydantic import EmailStr
 from sqlalchemy import Column, DateTime, func
 from sqlalchemy.dialects.postgresql import JSONB
@@ -56,6 +56,10 @@ class User(UserBase, table=True):
         sa_type=DateTime(timezone=True),  # type: ignore
     )
     items: list["Item"] = Relationship(back_populates="owner", cascade_delete=True)
+    chat_sessions: list["ChatSession"] = Relationship(
+        back_populates="owner",
+        cascade_delete=True,
+    )
 
 
 # Properties to return via API, id is always required
@@ -108,6 +112,54 @@ class ItemPublic(ItemBase):
 class ItemsPublic(SQLModel):
     data: list[ItemPublic]
     count: int
+
+
+class ChatSession(SQLModel, table=True):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    title: str = Field(default="Nueva consulta", max_length=120)
+    city: str | None = Field(default=None, max_length=120)
+    created_at: datetime = Field(
+        default_factory=get_datetime_utc,
+        sa_type=DateTime(timezone=True),  # type: ignore
+    )
+    updated_at: datetime = Field(
+        default_factory=get_datetime_utc,
+        sa_type=DateTime(timezone=True),  # type: ignore
+    )
+    owner_id: uuid.UUID = Field(
+        foreign_key="user.id",
+        nullable=False,
+        ondelete="CASCADE",
+        index=True,
+    )
+
+    owner: User | None = Relationship(back_populates="chat_sessions")
+    messages: list["ChatMessage"] = Relationship(
+        back_populates="chat_session",
+        cascade_delete=True,
+    )
+
+
+class ChatMessage(SQLModel, table=True):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    chat_session_id: uuid.UUID = Field(
+        foreign_key="chatsession.id",
+        nullable=False,
+        ondelete="CASCADE",
+        index=True,
+    )
+    sender: str = Field(max_length=20)
+    text: str
+    response_payload: dict[str, Any] | None = Field(
+        default=None,
+        sa_column=Column(JSONB, nullable=True),
+    )
+    created_at: datetime = Field(
+        default_factory=get_datetime_utc,
+        sa_type=DateTime(timezone=True),  # type: ignore
+    )
+
+    chat_session: ChatSession | None = Relationship(back_populates="messages")
 
 
 # Generic message
