@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router"
 
 import { cn } from "@/lib/utils"
-import logo from "@/assets/logo.svg"
+
+const logo = "/assets/images/vilpu-logo.png"
 
 interface LogoProps {
   variant?: "full" | "icon" | "responsive"
@@ -21,7 +22,7 @@ export function Logo({
           src={logo}
           alt="VILPU"
           className={cn(
-            "h-11 w-auto group-data-[collapsible=icon]:hidden",
+            "h-7 w-auto shrink-0 group-data-[collapsible=icon]:hidden",
             className,
           )}
         />
@@ -29,7 +30,7 @@ export function Logo({
           src={logo}
           alt="VILPU"
           className={cn(
-            "size-9 hidden rounded-md object-cover object-left group-data-[collapsible=icon]:block",
+            "hidden h-7 w-auto shrink-0 object-contain group-data-[collapsible=icon]:block",
             className,
           )}
         />
@@ -40,8 +41,8 @@ export function Logo({
         alt="VILPU"
         className={cn(
           variant === "full"
-            ? "h-12 w-auto"
-            : "size-9 rounded-md object-cover object-left",
+            ? "h-8 w-auto"
+            : "h-8 w-auto rounded-md object-contain",
           className,
         )}
       />

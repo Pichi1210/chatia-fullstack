@@ -1,7 +1,11 @@
-import { createFileRoute, Outlet, redirect } from "@tanstack/react-router"
+import {
+  createFileRoute,
+  Outlet,
+  redirect,
+  useRouterState,
+} from "@tanstack/react-router"
+import { Menu } from "lucide-react"
 
-import { Footer } from "@/components/Common/Footer"
-import { Logo } from "@/components/Common/Logo"
 import AppSidebar from "@/components/Sidebar/AppSidebar"
 import {
   SidebarInset,
@@ -22,28 +26,26 @@ export const Route = createFileRoute("/_layout")({
 })
 
 function Layout() {
+  const router = useRouterState()
+  const isChatRoute = router.location.pathname === "/chat"
+
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={false}>
       <AppSidebar />
-      <SidebarInset>
-        <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center justify-between gap-3 border-b bg-background/95 px-4 backdrop-blur">
-          <SidebarTrigger className="-ml-1 text-muted-foreground" />
-          <div className="flex flex-1 items-center gap-3">
-            <Logo variant="icon" className="md:hidden" />
-            <div className="hidden md:block">
-              <p className="text-sm font-semibold text-foreground">VILPU</p>
-              <p className="text-xs text-muted-foreground">
-                Asistente para seleccion de centros medicos
-              </p>
+      <SidebarInset className={isChatRoute ? "h-screen" : undefined}>
+        <div className="relative flex h-full flex-col">
+          <div className="absolute left-4 top-4 z-20">
+            <SidebarTrigger className="h-10 w-10 rounded-full border border-border bg-card/80 shadow-sm backdrop-blur-sm transition-all duration-200 hover:bg-card">
+              <Menu className="h-4 w-4" />
+              <span className="sr-only">Alternar menu lateral</span>
+            </SidebarTrigger>
+          </div>
+          <main className={isChatRoute ? "flex-1" : "flex-1 p-6 pt-20 md:p-8 md:pt-20"}>
+            <div className={isChatRoute ? "h-full" : "mx-auto max-w-7xl"}>
+              <Outlet />
             </div>
-          </div>
-        </header>
-        <main className="flex-1 p-6 md:p-8">
-          <div className="mx-auto max-w-7xl">
-            <Outlet />
-          </div>
-        </main>
-        <Footer />
+          </main>
+        </div>
       </SidebarInset>
     </SidebarProvider>
   )

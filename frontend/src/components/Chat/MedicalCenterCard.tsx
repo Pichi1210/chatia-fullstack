@@ -1,196 +1,159 @@
 import {
-    Building2,
-    Clock,
-    MapPin,
-    Phone,
-    ShieldCheck,
-    Star,
-} from 'lucide-react';
-import { Badge } from '../ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+  AlertCircle,
+  Building,
+  Clock,
+  ExternalLink,
+  MapPin,
+  Phone,
+  Star,
+} from "lucide-react"
+
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 
 interface MedicalCenter {
-    name: string;
-    institution_type_name?: string | null;
-    main_services?: string[];
-    main_specialties?: string[];
-    recommendation_reason?: string | null;
-    address?: string | null;
-    city?: string | null;
-    district?: string | null;
-    phone?: string | null;
-    website?: string | null;
-    working_hours?: string | null;
-    rating?: number | null;
-    price_level?: string | null;
-    has_emergency?: boolean | null;
-    is_public?: boolean | null;
-    description?: string | null;
+  name: string
+  institution_type_name?: string | null
+  main_services?: string[]
+  main_specialties?: string[]
+  recommendation_reason?: string | null
+  address?: string | null
+  city?: string | null
+  district?: string | null
+  phone?: string | null
+  website?: string | null
+  working_hours?: string | null
+  rating?: number | null
+  price_level?: string | null
+  has_emergency?: boolean | null
+  is_public?: boolean | null
+  description?: string | null
 }
 
 interface MedicalCenterCardProps {
-    center: MedicalCenter;
-    recommendedService?: string | null;
-    recommendedSpecialty?: string | null;
+  center: MedicalCenter
+  recommendedService?: string | null
+  recommendedSpecialty?: string | null
 }
 
-const booleanText = (value?: boolean | null) => (value ? 'Si' : 'No');
-
 export function MedicalCenterCard({
-    center,
-    recommendedService,
-    recommendedSpecialty,
+  center,
+  recommendedService,
+  recommendedSpecialty,
 }: MedicalCenterCardProps) {
-    const services = center.main_services?.length
-        ? center.main_services
-        : center.description
-          ? [center.description]
-          : [];
+  const services = center.main_services?.length ? center.main_services : []
+  const specialties = center.main_specialties?.length ? center.main_specialties : []
+  const typeLabel = center.institution_type_name || "Centro medico"
+  const hasRecommendedService =
+    recommendedService && services.includes(recommendedService)
+  const hasRecommendedSpecialty =
+    recommendedSpecialty && specialties.includes(recommendedSpecialty)
 
-    return (
-        <Card className="h-full border-border bg-card text-card-foreground shadow-sm">
-            <CardHeader className="space-y-3">
-                <div className="flex items-start justify-between gap-3">
-                    <CardTitle className="text-base leading-6">{center.name}</CardTitle>
-                    {center.rating != null && (
-                        <Badge variant="outline" className="shrink-0">
-                            <Star className="mr-1 h-3 w-3 fill-current" />
-                            {center.rating.toFixed(1)}
-                        </Badge>
-                    )}
-                </div>
-                <div className="flex flex-wrap gap-2">
-                    <Badge variant={center.has_emergency ? 'destructive' : 'outline'}>
-                        Urgencias: {booleanText(center.has_emergency)}
-                    </Badge>
-                    <Badge variant="secondary">
-                        {center.is_public ? 'Publico' : 'Privado'}
-                    </Badge>
-                    {center.institution_type_name && (
-                        <Badge variant="outline">{center.institution_type_name}</Badge>
-                    )}
-                </div>
-            </CardHeader>
-            <CardContent className="space-y-4 text-sm">
-                {center.recommendation_reason && (
-                    <p className="rounded-md bg-muted p-3 leading-6 text-muted-foreground">
-                        {center.recommendation_reason}
-                    </p>
-                )}
+  return (
+    <div className="h-full overflow-hidden rounded-xl border border-border bg-card transition-all hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5">
+      <div className="p-4">
+        <div className="mb-3 flex items-start justify-between gap-2">
+          <div className="flex items-start gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+              <Building className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <h4 className="font-semibold leading-tight text-card-foreground">
+                {center.name}
+              </h4>
+              <p className="text-sm text-muted-foreground">{typeLabel}</p>
+            </div>
+          </div>
+          {center.rating != null && (
+            <div className="flex items-center gap-1 rounded-md bg-secondary px-2 py-1">
+              <Star className="h-3.5 w-3.5 fill-risk-medium text-risk-medium" />
+              <span className="text-sm font-medium text-card-foreground">
+                {center.rating.toFixed(1)}
+              </span>
+            </div>
+          )}
+        </div>
 
-                <div className="grid gap-3">
-                    <div className="flex gap-2">
-                        <Building2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                        <div>
-                            <p className="text-xs uppercase text-muted-foreground">
-                                Tipo de institucion
-                            </p>
-                            <p>{center.institution_type_name || 'No informado'}</p>
-                        </div>
-                    </div>
+        <div className="mb-3 flex flex-wrap gap-1.5">
+          <Badge variant={center.is_public ? "secondary" : "outline"}>
+            {center.is_public ? "Publico" : "Privado"}
+          </Badge>
+          {center.has_emergency && (
+            <Badge variant="destructive" className="gap-1">
+              <AlertCircle className="h-3 w-3" />
+              Urgencias
+            </Badge>
+          )}
+          {hasRecommendedService && (
+            <Badge className="gap-1 bg-accent text-accent-foreground">
+              {recommendedService}
+            </Badge>
+          )}
+          {hasRecommendedSpecialty && (
+            <Badge className="gap-1 bg-primary/10 text-primary">
+              {recommendedSpecialty}
+            </Badge>
+          )}
+        </div>
 
-                    <div>
-                        <p className="mb-2 text-xs uppercase text-muted-foreground">
-                            Servicios principales
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                            {recommendedService && (
-                                <Badge variant="secondary">
-                                    Recomendado: {recommendedService}
-                                </Badge>
-                            )}
-                            {services.length > 0 ? (
-                                services.map((service) => (
-                                    <Badge key={service} variant="outline">
-                                        {service}
-                                    </Badge>
-                                ))
-                            ) : recommendedService ? null : (
-                                <span className="text-muted-foreground">No informado</span>
-                            )}
-                        </div>
-                    </div>
+        {(center.recommendation_reason || center.description) && (
+          <p className="mb-4 line-clamp-3 text-sm text-muted-foreground">
+            {center.recommendation_reason || center.description}
+          </p>
+        )}
 
-                    {((center.main_specialties && center.main_specialties.length > 0) ||
-                        recommendedSpecialty) && (
-                        <div>
-                            <p className="mb-2 text-xs uppercase text-muted-foreground">
-                                Especialidades
-                            </p>
-                            <div className="flex flex-wrap gap-2">
-                                {recommendedSpecialty && (
-                                    <Badge variant="secondary">
-                                        Recomendada: {recommendedSpecialty}
-                                    </Badge>
-                                )}
-                                {center.main_specialties?.map((specialty) => (
-                                    <Badge key={specialty} variant="secondary">
-                                        {specialty}
-                                    </Badge>
-                                ))}
-                            </div>
-                        </div>
-                    )}
+        {(services.length > 0 || specialties.length > 0) && (
+          <div className="mb-4 space-y-2">
+            {services.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {services.slice(0, 3).map((service) => (
+                  <Badge key={service} variant="outline">
+                    {service}
+                  </Badge>
+                ))}
+              </div>
+            )}
+            {specialties.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {specialties.slice(0, 3).map((specialty) => (
+                  <Badge key={specialty} variant="secondary">
+                    {specialty}
+                  </Badge>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
 
-                    <div className="flex gap-2">
-                        <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                        <div>
-                            <p className="text-xs uppercase text-muted-foreground">
-                                Direccion
-                            </p>
-                            <p>{center.address || 'No informada'}</p>
-                            <p className="text-muted-foreground">
-                                Distrito: {center.district || 'No informado'}
-                            </p>
-                        </div>
-                    </div>
+        <div className="space-y-2 text-sm">
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <MapPin className="h-4 w-4 shrink-0" />
+            <span>
+              {center.address || "Direccion no informada"}
+              {center.district ? `, ${center.district}` : ""}
+            </span>
+          </div>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Phone className="h-4 w-4 shrink-0" />
+            <span>{center.phone || "Telefono no informado"}</span>
+          </div>
+          <div className="flex items-center gap-2 text-muted-foreground">
+            <Clock className="h-4 w-4 shrink-0" />
+            <span>{center.working_hours || "Horario no informado"}</span>
+          </div>
+        </div>
+      </div>
 
-                    <div className="grid gap-3 sm:grid-cols-2">
-                        <div className="flex gap-2">
-                            <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                            <div>
-                                <p className="text-xs uppercase text-muted-foreground">
-                                    Telefono
-                                </p>
-                                <p>{center.phone || 'No informado'}</p>
-                            </div>
-                        </div>
-                        <div className="flex gap-2">
-                            <Clock className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                            <div>
-                                <p className="text-xs uppercase text-muted-foreground">
-                                    Horario
-                                </p>
-                                <p>{center.working_hours || 'No informado'}</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="flex gap-2">
-                        <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                        <div>
-                            <p className="text-xs uppercase text-muted-foreground">
-                                Titularidad y atencion urgente
-                            </p>
-                            <p>
-                                {center.is_public ? 'Publico' : 'Privado'} | Urgencias:{' '}
-                                {booleanText(center.has_emergency)}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                {center.website && (
-                    <a
-                        href={center.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex text-primary hover:underline"
-                    >
-                        Sitio web
-                    </a>
-                )}
-            </CardContent>
-        </Card>
-    );
+      {center.website && (
+        <div className="border-t border-border bg-secondary/30 px-4 py-3">
+          <Button variant="outline" size="sm" className="w-full gap-2" asChild>
+            <a href={center.website} target="_blank" rel="noopener noreferrer">
+              <ExternalLink className="h-4 w-4" />
+              Ver sitio web
+            </a>
+          </Button>
+        </div>
+      )}
+    </div>
+  )
 }
