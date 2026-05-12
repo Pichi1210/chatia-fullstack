@@ -325,7 +325,7 @@ function ChatMessage({ message }: { message: Message }) {
   return (
     <div
       className={cn(
-        "mx-auto flex max-w-3xl gap-3 px-4 py-3",
+        "flex  gap-3 px-4 py-3",
         isUser ? "flex-row-reverse" : "flex-row",
       )}
     >
@@ -451,7 +451,7 @@ function TriageQuestionCard({
           ))}
         </div>
 
-        <div className="border-t border-border bg-secondary/30 px-4 py-3">
+        <div className="border- border-border bg-secondary/30 px-4 py-3">
           <Button
             type="button"
             onClick={onSubmit}
@@ -574,7 +574,7 @@ function MedicalCentersGrid({
   recommendedSpecialty?: string | null
 }) {
   return (
-    <div className="mx-4 my-3 max-w-4xl animate-in fade-in slide-in-from-bottom-4 duration-300">
+    <div className="mx-4 my-3 w-full animate-in fade-in slide-in-from-bottom-4 duration-300">
       <div className="mb-4 flex items-center gap-3">
         <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-accent/10">
           <Building2 className="h-4 w-4 text-accent" />
@@ -589,7 +589,7 @@ function MedicalCentersGrid({
         </div>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-2 grid-cols-2">
         {centers.map((center) => (
           <MedicalCenterCard
             key={center.id}
@@ -605,7 +605,7 @@ function MedicalCentersGrid({
 
 function DisclaimerBanner() {
   return (
-    <div className="border-t border-border bg-secondary/30 px-4 py-2">
+    <div className="px-4 py-2">
       <div className="mx-auto flex max-w-3xl items-start gap-2">
         <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
         <p className="text-xs leading-relaxed text-muted-foreground">
@@ -821,7 +821,7 @@ export default function ChatInterface() {
             </div>
           </div>
         ) : (
-          <div className="py-4">
+          <div className="p-7 flex flex-col items-between overflow-hidden max-w-5xl mx-auto">
             {messages.map((message, index) => {
               const questions = Array.isArray(message.questions)
                 ? message.questions
@@ -845,7 +845,7 @@ export default function ChatInterface() {
               return (
                 <div
                   key={message.id}
-                  className="animate-in fade-in slide-in-from-bottom-2 duration-300"
+                  className="animate-in fade-in slide-in-from-bottom-2 duration-300 "
                   style={{ animationDelay: `${index * 50}ms` }}
                 >
                   <ChatMessage message={message} />
