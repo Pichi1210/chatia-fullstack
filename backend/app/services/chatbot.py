@@ -25,7 +25,7 @@ from app.schemas.medical_catalog import (
     TriageQuestionPublic,
 )
 from app.schemas.medical_center import MedicalCenterPublic
-from app.services.rasa_nlu import parse_message_with_rasa
+from app.services.rasa_nlu import is_rasa_error, parse_message_with_rasa
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +41,48 @@ RASA_HEALTH_NEED_ALIASES = {
     "prolonged_menstrual_bleeding": ["Prolonged menstrual bleeding"],
     "abdominal_pain": ["Abdominal pain"],
     "pharmacy_need": ["Pharmacy need"],
+    "emergency_care": ["Emergency care", "Chest pain", "Dolor en el pecho"],
+}
+
+RASA_VALUE_TO_HEALTH_NEED_NAMES = {
+    **RASA_HEALTH_NEED_ALIASES,
+    "knee_pain": ["Knee pain", "Dolor de rodilla"],
+    "rodilla": ["Knee pain", "Dolor de rodilla"],
+    "dolor_de_rodilla": ["Knee pain", "Dolor de rodilla"],
+    "dolor_en_la_rodilla": ["Knee pain", "Dolor de rodilla"],
+    "tooth_pain": ["Tooth pain", "Dolor dental"],
+    "muela": ["Tooth pain", "Dolor dental"],
+    "diente": ["Tooth pain", "Dolor dental"],
+    "dolor_dental": ["Tooth pain", "Dolor dental"],
+    "chest_pain": ["Chest pain", "Dolor en el pecho"],
+    "pecho": ["Chest pain", "Dolor en el pecho"],
+    "dolor_en_el_pecho": ["Chest pain", "Dolor en el pecho"],
+    "general_fever": ["General fever", "Fiebre general", "Fiebre con debilidad"],
+    "fiebre": ["General fever", "Fiebre general", "Fiebre con debilidad"],
+    "temperatura": ["General fever", "Fiebre general", "Fiebre con debilidad"],
+    "temperatura_alta": ["General fever", "Fiebre general", "Fiebre con debilidad"],
+    "child_fever": ["Child fever", "Fiebre infantil"],
+    "child_vaccination": ["Child vaccination", "Vacunación infantil"],
+    "vacuna_infantil": ["Child vaccination", "Vacunación infantil"],
+    "vacunas_para_mi_hijo": ["Child vaccination", "Vacunación infantil"],
+    "blood_analysis": ["Blood analysis", "Análisis de sangre"],
+    "analisis": ["Blood analysis", "Análisis de sangre"],
+    "analisis_de_sangre": ["Blood analysis", "Análisis de sangre"],
+    "vision_problem": ["Vision problems", "Problemas de visión"],
+    "vista": ["Vision problems", "Problemas de visión"],
+    "ojos": ["Vision problems", "Problemas de visión"],
+    "veo_borroso": ["Vision problems", "Problemas de visión"],
+    "prolonged_menstrual_bleeding": ["Prolonged menstrual bleeding"],
+    "sangrado_menstrual": ["Prolonged menstrual bleeding"],
+    "menstruacion_no_ha_parado": ["Prolonged menstrual bleeding"],
+    "abdominal_pain": ["Abdominal pain", "Dolor abdominal"],
+    "abdomen": ["Abdominal pain", "Dolor abdominal"],
+    "barriga": ["Abdominal pain", "Dolor abdominal"],
+    "estomago": ["Abdominal pain", "Dolor abdominal"],
+    "dolor_abdominal": ["Abdominal pain", "Dolor abdominal"],
+    "pharmacy_need": ["Pharmacy need", "Necesidad de farmacia", "Compra de medicamentos"],
+    "farmacia": ["Pharmacy need", "Necesidad de farmacia", "Compra de medicamentos"],
+    "medicamentos": ["Pharmacy need", "Necesidad de farmacia", "Compra de medicamentos"],
     "emergency_care": ["Emergency care", "Chest pain", "Dolor en el pecho"],
 }
 
@@ -137,11 +179,24 @@ def score_health_needs(
 
 
 def get_need_by_name(session: Session, name: str) -> HealthNeed | None:
-    return session.exec(select(HealthNeed).where(HealthNeed.name == name)).first()
+    need = session.exec(select(HealthNeed).where(HealthNeed.name == name)).first()
+    if need:
+        return need
+
+    normalized_name = normalize_text(name)
+    for candidate in session.exec(select(HealthNeed)).all():
+        if normalize_text(candidate.name) == normalized_name:
+            return candidate
+
+    return None
 
 
 def get_need_by_alias(session: Session, alias: str) -> HealthNeed | None:
-    for need_name in RASA_HEALTH_NEED_ALIASES.get(alias, [alias]):
+    normalized_alias = normalize_text(alias).replace(" ", "_")
+    for need_name in RASA_VALUE_TO_HEALTH_NEED_NAMES.get(
+        normalized_alias,
+        [alias],
+    ):
         need = get_need_by_name(session, need_name)
         if need:
             return need
@@ -214,7 +269,7 @@ async def identify_health_need_with_optional_rasa(
     logger.info("RASA_ENABLED: %s", settings.RASA_ENABLED)
     if settings.RASA_ENABLED:
         rasa_result = await parse_message_with_rasa(message)
-        if rasa_result:
+        if rasa_result and not is_rasa_error(rasa_result):
             intent_name, confidence = get_rasa_intent(rasa_result)
             logger.info("Rasa intent: %s confidence=%s", intent_name, confidence)
             health_need = (
@@ -234,13 +289,24 @@ async def identify_health_need_with_optional_rasa(
 
 async def build_nlu_debug_response(session: Session, message: str) -> dict[str, Any]:
     logger.info("RASA_ENABLED: %s", settings.RASA_ENABLED)
-    rasa_result = await parse_message_with_rasa(message) if settings.RASA_ENABLED else None
-    intent_name, confidence = get_rasa_intent(rasa_result)
-    if rasa_result:
+    rasa_call_result = (
+        await parse_message_with_rasa(message) if settings.RASA_ENABLED else None
+    )
+    rasa_error = rasa_call_result if is_rasa_error(rasa_call_result) else None
+    rasa_raw_result = (
+        rasa_call_result
+        if rasa_call_result and not is_rasa_error(rasa_call_result)
+        else {}
+    )
+    intent_name, confidence = get_rasa_intent(rasa_raw_result)
+    entities = rasa_raw_result.get("entities", [])
+    rasa_entities = entities if isinstance(entities, list) else []
+
+    if rasa_raw_result:
         logger.info("Rasa intent: %s confidence=%s", intent_name, confidence)
     rasa_health_need = None
-    if rasa_result and is_rasa_result_confident(rasa_result):
-        rasa_health_need = map_rasa_result_to_health_need(rasa_result, session)
+    if rasa_raw_result and is_rasa_result_confident(rasa_raw_result):
+        rasa_health_need = map_rasa_result_to_health_need(rasa_raw_result, session)
     logger.info(
         "Rasa mapped HealthNeed: %s",
         rasa_health_need.name if rasa_health_need else None,
@@ -250,12 +316,17 @@ async def build_nlu_debug_response(session: Session, message: str) -> dict[str, 
 
     return {
         "rasa_enabled": settings.RASA_ENABLED,
-        "rasa_result": rasa_result,
+        "rasa_url": settings.RASA_URL,
+        "rasa_raw_result": rasa_raw_result,
+        "rasa_intent": intent_name,
+        "rasa_confidence": confidence if intent_name else None,
+        "rasa_entities": rasa_entities,
         "rasa_detected_health_need": rasa_health_need.name if rasa_health_need else None,
         "keyword_detected_health_need": (
             keyword_health_need.name if keyword_health_need else None
         ),
         "final_health_need": final_health_need.name if final_health_need else None,
+        "rasa_error": rasa_error,
     }
 
 

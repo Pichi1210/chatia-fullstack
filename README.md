@@ -46,6 +46,169 @@
 
 [![API docs](img/docs.png)](https://github.com/fastapi/full-stack-fastapi-template)
 
+## Arranque local de Chatia
+
+Esta seccion resume como inicializar los servicios para usar la aplicacion en
+local. Hay dos formas de trabajo:
+
+- **Nativa en Windows**: usa PostgreSQL instalado en Windows, el backend desde
+  `.venv` y el frontend con Bun. Es la configuracion que quedo preparada en
+  esta maquina.
+- **Docker Compose**: levanta base de datos, backend, frontend y servicios de
+  desarrollo en contenedores. Requiere Docker Desktop con WSL2 funcionando.
+
+Para mas detalles de la preparacion local ya realizada, revisa
+[`docs/local_setup.md`](./docs/local_setup.md).
+
+### Opcion recomendada en esta maquina: arranque nativo
+
+Abre una terminal de PowerShell en la raiz del proyecto:
+
+```powershell
+cd C:\Users\Trabajo\Desktop\diploma-t\proyecto-practico\chatia-fullstack
+```
+
+1. Verifica que PostgreSQL este activo.
+
+```powershell
+Get-Service postgresql-x64-17
+```
+
+Si el servicio aparece detenido, inicialo desde una PowerShell con permisos de
+administrador:
+
+```powershell
+Start-Service postgresql-x64-17
+```
+
+2. Si es la primera vez que inicializas la base de datos, aplica migraciones y
+   datos iniciales.
+
+```powershell
+cd backend
+..\.venv\Scripts\python.exe -m app.backend_pre_start
+..\.venv\Scripts\alembic.exe upgrade head
+..\.venv\Scripts\python.exe -m app.initial_data
+cd ..
+```
+
+3. Arranca el backend en una terminal.
+
+```powershell
+cd C:\Users\Trabajo\Desktop\diploma-t\proyecto-practico\chatia-fullstack\backend
+..\.venv\Scripts\python.exe -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+```
+
+4. Arranca el frontend en otra terminal.
+
+```powershell
+cd C:\Users\Trabajo\Desktop\diploma-t\proyecto-practico\chatia-fullstack\frontend
+bun run dev --host 127.0.0.1 --port 5173
+```
+
+5. Abre la aplicacion y los servicios locales.
+
+```text
+Frontend: http://localhost:5173
+Backend:  http://localhost:8000
+Swagger:  http://localhost:8000/docs
+Health:   http://localhost:8000/api/v1/utils/health-check/
+```
+
+Usuario local inicial:
+
+```text
+Email: admin@example.com
+Password: changethis
+```
+
+En modo nativo, si no vas a levantar Rasa aparte, deja `RASA_ENABLED=false` en
+`.env`. Si quieres usar Rasa localmente, arranca Rasa en el puerto `5005` y usa
+`RASA_URL=http://localhost:5005` para el backend nativo.
+
+### Opcion Docker Compose
+
+Usa esta opcion cuando Docker Desktop y WSL2 esten disponibles.
+
+1. Revisa `.env` antes de iniciar. Para desarrollo local pueden usarse los
+   valores por defecto, pero en cualquier entorno compartido cambia al menos:
+   `SECRET_KEY`, `POSTGRES_PASSWORD` y `FIRST_SUPERUSER_PASSWORD`.
+
+2. Arranca el stack desde la raiz del proyecto.
+
+```powershell
+docker compose watch
+```
+
+Docker Compose carga automaticamente `compose.yml` y `compose.override.yml`.
+Los servicios principales quedan disponibles en:
+
+```text
+Frontend:    http://localhost:5173
+Backend:     http://localhost:8000
+Swagger:     http://localhost:8000/docs
+Adminer:     http://localhost:8080
+Mailcatcher: http://localhost:1080
+Traefik:     http://localhost:8090
+```
+
+3. Para ver logs:
+
+```powershell
+docker compose logs -f backend
+docker compose logs -f frontend
+```
+
+4. Para detener los servicios:
+
+```powershell
+docker compose down
+```
+
+5. Para detener y borrar tambien los datos locales de PostgreSQL:
+
+```powershell
+docker compose down -v
+```
+
+### Servicios opcionales
+
+#### Rasa
+
+Rasa se usa como capa NLU opcional. Antes de habilitarlo, entrena el modelo:
+
+```powershell
+docker compose run --rm rasa train
+```
+
+Despues, habilita Rasa en `.env`:
+
+```env
+COMPOSE_PROFILES=rasa
+RASA_ENABLED=true
+RASA_URL=http://rasa:5005
+```
+
+Y levanta el stack:
+
+```powershell
+docker compose --profile rasa watch
+```
+
+Si Rasa no esta disponible o responde con baja confianza, el backend conserva
+el flujo de fallback por keywords.
+
+#### Yandex Maps
+
+Para usar busquedas reales de centros medicos, agrega la clave en `.env` y
+reinicia el backend:
+
+```env
+YANDEX_API_KEY=tu_api_key
+```
+
+Sin esa clave, el chatbot usa datos simulados o datos locales.
+
 ## How To Use It
 
 You can **just fork or clone** this repository and use it as is.

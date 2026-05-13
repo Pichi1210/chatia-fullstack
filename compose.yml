@@ -50,6 +50,8 @@ services:
       context: .
       dockerfile: backend/Dockerfile
     restart: always
+    env_file:
+      - .env
     depends_on:
       db:
         condition: service_healthy
@@ -58,28 +60,28 @@ services:
     expose:
       - "8000"
     environment:
-      PROJECT_NAME: ${PROJECT_NAME}
-      DOMAIN: ${DOMAIN}
-      FRONTEND_HOST: ${FRONTEND_HOST}
-      ENVIRONMENT: ${ENVIRONMENT:-production}
-      BACKEND_CORS_ORIGINS: ${BACKEND_CORS_ORIGINS}
-      SECRET_KEY: ${SECRET_KEY}
-      FIRST_SUPERUSER: ${FIRST_SUPERUSER}
-      FIRST_SUPERUSER_PASSWORD: ${FIRST_SUPERUSER_PASSWORD}
-      SMTP_HOST: ${SMTP_HOST}
-      SMTP_USER: ${SMTP_USER}
-      SMTP_PASSWORD: ${SMTP_PASSWORD}
-      EMAILS_FROM_EMAIL: ${EMAILS_FROM_EMAIL}
-      POSTGRES_SERVER: db
-      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      SENTRY_DSN: ${SENTRY_DSN}
-      YANDEX_API_KEY: ${YANDEX_API_KEY}
-      RASA_URL: ${RASA_URL:-http://rasa:5005}
-      RASA_ENABLED: ${RASA_ENABLED:-false}
-      RASA_CONFIDENCE_THRESHOLD: ${RASA_CONFIDENCE_THRESHOLD:-0.55}
+      - PROJECT_NAME=${PROJECT_NAME}
+      - DOMAIN=${DOMAIN}
+      - FRONTEND_HOST=${FRONTEND_HOST}
+      - ENVIRONMENT=${ENVIRONMENT:-production}
+      - BACKEND_CORS_ORIGINS=${BACKEND_CORS_ORIGINS}
+      - SECRET_KEY=${SECRET_KEY}
+      - FIRST_SUPERUSER=${FIRST_SUPERUSER}
+      - FIRST_SUPERUSER_PASSWORD=${FIRST_SUPERUSER_PASSWORD}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_USER=${SMTP_USER}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - EMAILS_FROM_EMAIL=${EMAILS_FROM_EMAIL}
+      - POSTGRES_SERVER=db
+      - POSTGRES_PORT=${POSTGRES_PORT:-5432}
+      - POSTGRES_DB=${POSTGRES_DB:-app}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - SENTRY_DSN=${SENTRY_DSN}
+      - YANDEX_API_KEY=${YANDEX_API_KEY}
+      - RASA_ENABLED=${RASA_ENABLED:-false}
+      - RASA_URL=${RASA_URL:-http://rasa:5005}
+      - RASA_CONFIDENCE_THRESHOLD=${RASA_CONFIDENCE_THRESHOLD:-0.55}
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/utils/health-check/"]
       interval: 10s
