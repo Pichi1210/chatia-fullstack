@@ -1,0 +1,71 @@
+﻿**********************
+Inicio de la transcripción de Windows PowerShell
+Hora de inicio: 20260513134350
+Nombre de usuario: DESKTOP-5ERECET\Jonathan
+Usuario RunAs: DESKTOP-5ERECET\Jonathan
+Nombre de la configuración: 
+Máquina: DESKTOP-5ERECET (Microsoft Windows NT 10.0.26200.0)
+Aplicación host: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\Trabajo\Desktop\diploma-t\proyecto-practico\chatia-fullstack\scripts\setup-docker-desktop.ps1
+Id. de proceso: 25780
+PSVersion: 5.1.26100.8115
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.8115
+BuildVersion: 10.0.26100.8115
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+La transcripción ha comenzado. El archivo de salida es C:\Users\Trabajo\Desktop\diploma-t\proyecto-practico\chatia-fullstack\docker-setup.log
+== Docker Desktop setup started ==
+User: desktop-5erecet\jonathan
+Is elevated: True
+== Enabling Windows features ==
+
+Herramienta Administración y mantenimiento de imágenes de implementación
+Versión: 10.0.26100.5074
+
+Versión de imagen: 10.0.26200.8246
+
+Habilitando características
+[==========================100.0%==========================]
+La operación se completó correctamente.
+
+Herramienta Administración y mantenimiento de imágenes de implementación
+Versión: 10.0.26100.5074
+
+Versión de imagen: 10.0.26200.8246
+
+Habilitando características
+[==========================100.0%==========================]
+La operación se completó correctamente.
+== WSL status before Docker install ==
+Versión predeterminada: 2
+Para obtener información sobre las diferencias clave con WSL 2, visita https://aka.ms/wsl2
+
+La operación se completó correctamente.
+== Repairing winget sources ==
+Redefinindo todas as fontes...Concluído
+Atualizando todas as fontes...
+Atualizando fonte: msstore...
+Concluído
+Atualizando fonte: winget...
+                                  0%
+Cancelado
+Atualizando fonte: winget-font...
+                                  0%
+Cancelado
+Nome        Argumento                                     Explícito
+-------------------------------------------------------------------
+msstore     https://storeedgefd.dsx.mp.microsoft.com/v9.0 false
+winget      https://cdn.winget.microsoft.com/cache        false
+winget-font https://cdn.winget.microsoft.com/fonts        true
+Using cached installer: C:\Users\Trabajo\AppData\Local\Temp\WinGet\Docker.DockerDesktop.4.71.0\Docker%20Desktop%20Installer.exe
+Installer exit code: 0
+== Docker checks ==
+False
+== Docker Desktop setup finished ==
+**********************
+Fin de la transcripción de Windows PowerShell
+Hora de finalización: 20260513134420
+**********************

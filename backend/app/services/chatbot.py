@@ -1,3 +1,4 @@
+import logging
 import re
 import unicodedata
 from typing import Any
@@ -26,17 +27,21 @@ from app.schemas.medical_catalog import (
 from app.schemas.medical_center import MedicalCenterPublic
 from app.services.rasa_nlu import parse_message_with_rasa
 
+logger = logging.getLogger(__name__)
+
 RASA_HEALTH_NEED_ALIASES = {
-    "tooth_pain": ["Tooth pain", "Dolor dental"],
     "knee_pain": ["Knee pain"],
-    "general_fever": ["General fever", "Fiebre con debilidad"],
+    "tooth_pain": ["Tooth pain", "Dolor dental"],
     "chest_pain": ["Chest pain", "Dolor en el pecho"],
+    "general_fever": ["General fever", "Fiebre con debilidad"],
+    "child_fever": ["Child fever", "Fiebre infantil"],
     "child_vaccination": ["Child vaccination"],
     "blood_analysis": ["Blood analysis", "Análisis de sangre"],
     "vision_problem": ["Vision problems"],
     "prolonged_menstrual_bleeding": ["Prolonged menstrual bleeding"],
     "abdominal_pain": ["Abdominal pain"],
     "pharmacy_need": ["Pharmacy need"],
+    "emergency_care": ["Emergency care", "Chest pain", "Dolor en el pecho"],
 }
 
 RASA_INTENT_HEALTH_NEED_MAP = {
@@ -143,7 +148,30 @@ def get_need_by_alias(session: Session, alias: str) -> HealthNeed | None:
     return None
 
 
-def map_rasa_to_health_need(
+def get_rasa_intent(rasa_result: dict[str, Any] | None) -> tuple[str | None, float]:
+    if not rasa_result:
+        return None, 0.0
+
+    intent = rasa_result.get("intent")
+    if not isinstance(intent, dict):
+        return None, 0.0
+
+    intent_name = intent.get("name")
+    confidence = intent.get("confidence", 0.0)
+    if not isinstance(intent_name, str):
+        intent_name = None
+    if not isinstance(confidence, (int, float)):
+        confidence = 0.0
+
+    return intent_name, float(confidence)
+
+
+def is_rasa_result_confident(rasa_result: dict[str, Any] | None) -> bool:
+    _intent_name, confidence = get_rasa_intent(rasa_result)
+    return confidence >= settings.RASA_CONFIDENCE_THRESHOLD
+
+
+def map_rasa_result_to_health_need(
     rasa_result: dict[str, Any],
     session: Session,
 ) -> HealthNeed | None:
@@ -172,24 +200,50 @@ def map_rasa_to_health_need(
     return None
 
 
+def map_rasa_to_health_need(
+    rasa_result: dict[str, Any],
+    session: Session,
+) -> HealthNeed | None:
+    return map_rasa_result_to_health_need(rasa_result, session)
+
+
 async def identify_health_need_with_optional_rasa(
     session: Session,
     message: str,
 ) -> tuple[HealthNeed | None, dict[str, Any] | None]:
+    logger.info("RASA_ENABLED: %s", settings.RASA_ENABLED)
     if settings.RASA_ENABLED:
         rasa_result = await parse_message_with_rasa(message)
         if rasa_result:
-            health_need = map_rasa_to_health_need(rasa_result, session)
+            intent_name, confidence = get_rasa_intent(rasa_result)
+            logger.info("Rasa intent: %s confidence=%s", intent_name, confidence)
+            health_need = (
+                map_rasa_result_to_health_need(rasa_result, session)
+                if is_rasa_result_confident(rasa_result)
+                else None
+            )
+            logger.info(
+                "Rasa mapped HealthNeed: %s",
+                health_need.name if health_need else None,
+            )
             if health_need:
                 return health_need, rasa_result
 
-    return identify_health_need(session, message), None
+    return None, None
 
 
 async def build_nlu_debug_response(session: Session, message: str) -> dict[str, Any]:
+    logger.info("RASA_ENABLED: %s", settings.RASA_ENABLED)
     rasa_result = await parse_message_with_rasa(message) if settings.RASA_ENABLED else None
-    rasa_health_need = (
-        map_rasa_to_health_need(rasa_result, session) if rasa_result else None
+    intent_name, confidence = get_rasa_intent(rasa_result)
+    if rasa_result:
+        logger.info("Rasa intent: %s confidence=%s", intent_name, confidence)
+    rasa_health_need = None
+    if rasa_result and is_rasa_result_confident(rasa_result):
+        rasa_health_need = map_rasa_result_to_health_need(rasa_result, session)
+    logger.info(
+        "Rasa mapped HealthNeed: %s",
+        rasa_health_need.name if rasa_health_need else None,
     )
     keyword_health_need = identify_health_need(session, message)
     final_health_need = rasa_health_need or keyword_health_need
@@ -197,10 +251,10 @@ async def build_nlu_debug_response(session: Session, message: str) -> dict[str, 
     return {
         "rasa_enabled": settings.RASA_ENABLED,
         "rasa_result": rasa_result,
-        "rasa_health_need": rasa_health_need.name if rasa_health_need else None,
-        "keyword_result": {
-            "health_need": keyword_health_need.name if keyword_health_need else None,
-        },
+        "rasa_detected_health_need": rasa_health_need.name if rasa_health_need else None,
+        "keyword_detected_health_need": (
+            keyword_health_need.name if keyword_health_need else None
+        ),
         "final_health_need": final_health_need.name if final_health_need else None,
     }
 

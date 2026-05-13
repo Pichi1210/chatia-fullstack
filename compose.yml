@@ -30,6 +30,7 @@ services:
     labels:
       - "coolify.managed=false"
     environment:
+      PROJECT_NAME: ${PROJECT_NAME}
       DOMAIN: ${DOMAIN}
       FRONTEND_HOST: ${FRONTEND_HOST}
       ENVIRONMENT: ${ENVIRONMENT:-production}
@@ -57,6 +58,7 @@ services:
     expose:
       - "8000"
     environment:
+      PROJECT_NAME: ${PROJECT_NAME}
       DOMAIN: ${DOMAIN}
       FRONTEND_HOST: ${FRONTEND_HOST}
       ENVIRONMENT: ${ENVIRONMENT:-production}
@@ -99,6 +101,8 @@ services:
       --model /app/models
     expose:
       - "5005"
+    ports:
+      - "5005:5005"
     depends_on:
       - backend
 

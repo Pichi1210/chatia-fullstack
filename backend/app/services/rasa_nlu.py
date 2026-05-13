@@ -21,14 +21,12 @@ async def parse_message_with_rasa(message: str) -> RasaResult | None:
     if response.status_code != 200:
         return None
 
-    data = response.json()
-    intent = data.get("intent") if isinstance(data, dict) else None
-    confidence = intent.get("confidence", 0) if isinstance(intent, dict) else 0
-
-    if not isinstance(confidence, int | float):
+    try:
+        data = response.json()
+    except ValueError:
         return None
 
-    if confidence < settings.RASA_CONFIDENCE_THRESHOLD:
+    if not isinstance(data, dict):
         return None
 
     return data
