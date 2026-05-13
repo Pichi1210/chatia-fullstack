@@ -171,36 +171,15 @@ async def read_session(
 async def chat_with_bot(
     request: ChatRequest,
     session: SessionDep,
-    current_user: CurrentUser,
 ):
     """
     Identify the user's health need and either ask triage questions or return a
     local PostgreSQL-based recommendation.
     """
-    chat_session = (
-        get_owned_chat_session(
-            session=session,
-            chat_session_id=request.chat_session_id,
-            owner_id=current_user.id,
-        )
-        if request.chat_session_id
-        else create_chat_session(
-            session=session,
-            owner_id=current_user.id,
-            title=build_chat_title(request.message),
-            city=request.city,
-        )
-    )
-    response = await handle_initial_chat(
+    return await handle_initial_chat(
         session=session,
         message=request.message,
         city=request.city,
-    )
-    return persist_chat_exchange(
-        session=session,
-        chat_session=chat_session,
-        user_text=request.message,
-        response=response,
     )
 
 
@@ -208,7 +187,6 @@ async def chat_with_bot(
 async def nlu_debug(
     request: ChatNluDebugRequest,
     session: SessionDep,
-    _current_user: CurrentUser,
 ):
     return await build_nlu_debug_response(session=session, message=request.message)
 
@@ -217,7 +195,6 @@ async def nlu_debug(
 async def answer_triage(
     request: ChatAnswerRequest,
     session: SessionDep,
-    current_user: CurrentUser,
 ):
     """
     Receive all required triage answers, calculate the total risk score, and
@@ -269,30 +246,9 @@ async def answer_triage(
 
         total_risk_score += risk_score
 
-    response = build_recommendation_response(
+    return build_recommendation_response(
         session=session,
         health_need=health_need,
         risk_score=total_risk_score,
         city=request.city,
-    )
-
-    chat_session = (
-        get_owned_chat_session(
-            session=session,
-            chat_session_id=request.chat_session_id,
-            owner_id=current_user.id,
-        )
-        if request.chat_session_id
-        else create_chat_session(
-            session=session,
-            owner_id=current_user.id,
-            title=f"Triaje: {health_need.name}",
-            city=request.city,
-        )
-    )
-    return persist_chat_exchange(
-        session=session,
-        chat_session=chat_session,
-        user_text="Respuestas de triaje enviadas",
-        response=response,
     )
