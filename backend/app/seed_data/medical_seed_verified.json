@@ -1,0 +1,4368 @@
+{
+  "institution_types": [
+    {
+      "name": "Hospital",
+      "description": "Hospital general para atención especializada, internacion y urgencias.",
+      "urgency_level": "high",
+      "is_emergency_capable": true
+    },
+    {
+      "name": "Policlínico",
+      "description": "Centro ambulatorio publico para consulta general, vacunación y especialistas.",
+      "urgency_level": "medium",
+      "is_emergency_capable": false
+    },
+    {
+      "name": "Clínica privada",
+      "description": "Centro médico privado para consultas programadas y diagnóstico basico.",
+      "urgency_level": "medium",
+      "is_emergency_capable": false
+    },
+    {
+      "name": "Clínica dental",
+      "description": "Institucion especializada en odontologia.",
+      "urgency_level": "low",
+      "is_emergency_capable": false
+    },
+    {
+      "name": "Centro pediátrico",
+      "description": "Centro especializado en salud infantil.",
+      "urgency_level": "medium",
+      "is_emergency_capable": false
+    },
+    {
+      "name": "Laboratorio",
+      "description": "Centro para toma de muestras y análisis clinicos.",
+      "urgency_level": "low",
+      "is_emergency_capable": false
+    },
+    {
+      "name": "Centro diagnóstico",
+      "description": "Centro para imagenologia, ecografía, radiografia y diagnóstico instrumental.",
+      "urgency_level": "medium",
+      "is_emergency_capable": false
+    },
+    {
+      "name": "Centro oftalmológico",
+      "description": "Centro especializado en visión y enfermedades oculares.",
+      "urgency_level": "low",
+      "is_emergency_capable": false
+    },
+    {
+      "name": "Clínica ginecológica",
+      "description": "Centro especializado en salud ginecológica y embarazo.",
+      "urgency_level": "medium",
+      "is_emergency_capable": false
+    },
+    {
+      "name": "Farmacia",
+      "description": "Institucion para compra de médicamentos y orientacion farmaceutica basica.",
+      "urgency_level": "low",
+      "is_emergency_capable": false
+    },
+    {
+      "name": "Centro de urgencias",
+      "description": "Centro para atención rápida de síntomas agudos y lesiones.",
+      "urgency_level": "high",
+      "is_emergency_capable": true
+    }
+  ],
+  "services": [
+    {
+      "name": "Medicina general",
+      "description": "Consulta médica inicial y seguimiento de problemas frecuentes.",
+      "category": "consultation",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Atención urgente",
+      "description": "Evaluacion rápida de síntomas agudos o potencialmente graves.",
+      "category": "urgent",
+      "requires_appointment": false,
+      "is_emergency_service": true
+    },
+    {
+      "name": "Odontología",
+      "description": "Consulta, tratamiento y prevencion dental.",
+      "category": "dental",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Pediatría",
+      "description": "Consulta médica para niños.",
+      "category": "consultation",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Vacunación",
+      "description": "Aplicacion de vacunas infantiles y generales.",
+      "category": "prevention",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Cardiología",
+      "description": "Consulta y seguimiento cardiovascular.",
+      "category": "consultation",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Ginecología",
+      "description": "Consulta ginecológica y control de embarazo.",
+      "category": "consultation",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Oftalmología",
+      "description": "Evaluacion de visión y enfermedades oculares.",
+      "category": "consultation",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Dermatología",
+      "description": "Consulta por piel, lunares, erupciones y alergias cutaneas.",
+      "category": "consultation",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Traumatología",
+      "description": "Consulta por golpes, fracturas, articulaciones y lesiones.",
+      "category": "consultation",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Neurología",
+      "description": "Consulta por cefaleas, mareos y problemas neurológicos.",
+      "category": "consultation",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Análisis de sangre",
+      "description": "Extraccion y procesamiento de sangre.",
+      "category": "laboratory",
+      "requires_appointment": false,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Diagnóstico por imagen",
+      "description": "Estudios de imagen para apoyo diagnóstico.",
+      "category": "imaging",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Ecografía",
+      "description": "Diagnostico por ultrasonido.",
+      "category": "imaging",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Radiografía",
+      "description": "Estudios radiográficos.",
+      "category": "imaging",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Farmacia",
+      "description": "Venta de médicamentos y productos de salud.",
+      "category": "pharmacy",
+      "requires_appointment": false,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Rehabilitación",
+      "description": "Fisioterapia y recuperacion funcional.",
+      "category": "rehabilitation",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    },
+    {
+      "name": "Consulta ginecológica",
+      "description": "Consulta ginecológica ambulatoria para menstruación, sangrado, dolor pélvico, embarazo y salud femenina.",
+      "category": "consultation",
+      "requires_appointment": true,
+      "is_emergency_service": false
+    }
+  ],
+  "specialties": [
+    {
+      "name": "Médico general",
+      "description": "Atencion médica primaria y orientacion inicial."
+    },
+    {
+      "name": "Dentista",
+      "description": "Especialista en salud dental."
+    },
+    {
+      "name": "Pediatra",
+      "description": "Especialista en salud infantil."
+    },
+    {
+      "name": "Cardiólogo",
+      "description": "Especialista en corazón y sistema cardiovascular."
+    },
+    {
+      "name": "Ginecólogo",
+      "description": "Especialista en salud ginecológica y embarazo."
+    },
+    {
+      "name": "Oftalmólogo",
+      "description": "Especialista en visión y ojos."
+    },
+    {
+      "name": "Dermatólogo",
+      "description": "Especialista en piel."
+    },
+    {
+      "name": "Traumatólogo",
+      "description": "Especialista en lesiones y aparato locomotor."
+    },
+    {
+      "name": "Neurólogo",
+      "description": "Especialista en sistema nervioso."
+    },
+    {
+      "name": "Enfermería",
+      "description": "Personal de enfermeria para procedimientos, control y vacunación."
+    },
+    {
+      "name": "Técnico de laboratorio",
+      "description": "Personal especializado en toma y procesamiento de muestras."
+    },
+    {
+      "name": "Farmacéutico",
+      "description": "Especialista en médicamentos y dispensacion farmaceutica."
+    },
+    {
+      "name": "Urgencias",
+      "description": "Equipo de atención urgente para síntomas agudos o potencialmente graves."
+    }
+  ],
+  "health_needs": [
+    {
+      "name": "Dolor dental",
+      "description": "Dolor en muela, diente, encia o mandibula.",
+      "urgency_level": "medium",
+      "keywords": [
+        "dolor dental",
+        "muela",
+        "me duele una muela",
+        "diente",
+        "encia",
+        "dentista",
+        "зуб болит",
+        "болит зуб",
+        "зубная боль",
+        "стоматолог"
+      ]
+    },
+    {
+      "name": "Vacunación infantil",
+      "description": "Vacunas para niños o calendario infantil.",
+      "urgency_level": "low",
+      "keywords": [
+        "vacuna infantil",
+        "vacunación infantil",
+        "vacunar a mi hijo",
+        "vacuna niño",
+        "прививка ребенку",
+        "детская вакцинация",
+        "вакцина ребенку"
+      ]
+    },
+    {
+      "name": "Vacunación general",
+      "description": "Vacunacion preventiva para adultos.",
+      "urgency_level": "low",
+      "keywords": [
+        "vacuna",
+        "vacunación",
+        "vacunarme",
+        "прививка",
+        "вакцинация",
+        "вакцина"
+      ]
+    },
+    {
+      "name": "Herida con riesgo de tétanos",
+      "description": "Herida sucia, mordedura, corte profundo o riesgo de tétanos.",
+      "urgency_level": "high",
+      "keywords": [
+        "tétanos",
+        "herida oxidada",
+        "corte profundo",
+        "mordedura",
+        "herida sucia",
+        "столбняк",
+        "грязная рана",
+        "укус",
+        "порез"
+      ]
+    },
+    {
+      "name": "Dolor en el pecho",
+      "description": "Dolor, presion u opresión en el pecho.",
+      "urgency_level": "high",
+      "keywords": [
+        "dolor en el pecho",
+        "pecho",
+        "opresión",
+        "corazón",
+        "cardíaco",
+        "боль в груди",
+        "сердце",
+        "давит в груди"
+      ]
+    },
+    {
+      "name": "Fiebre infantil",
+      "description": "Fiebre en un niño o bebé.",
+      "urgency_level": "medium",
+      "keywords": [
+        "fiebre infantil",
+        "mi hijo tiene fiebre",
+        "niño fiebre",
+        "bebé fiebre",
+        "температура у ребенка",
+        "лихорадка ребенок",
+        "у ребенка жар"
+      ]
+    },
+    {
+      "name": "Análisis de sangre",
+      "description": "Necesidad de analitica o extracción de sangre.",
+      "urgency_level": "low",
+      "keywords": [
+        "análisis de sangre",
+        "sangre",
+        "hemograma",
+        "laboratorio",
+        "анализ крови",
+        "сдать кровь",
+        "лаборатория"
+      ]
+    },
+    {
+      "name": "Control de embarazo",
+      "description": "Seguimiento del embarazo o consulta prenatal.",
+      "urgency_level": "medium",
+      "keywords": [
+        "embarazo",
+        "control embarazo",
+        "prenatal",
+        "estoy embarazada",
+        "беременность",
+        "ведение беременности",
+        "гинеколог беременность"
+      ]
+    },
+    {
+      "name": "Dolor abdominal",
+      "description": "Dolor de abdomen, estomago o vientre.",
+      "urgency_level": "medium",
+      "keywords": [
+        "dolor abdominal",
+        "dolor de barriga",
+        "dolor de estomago",
+        "abdomen",
+        "боль в животе",
+        "живот болит",
+        "желудок"
+      ]
+    },
+    {
+      "name": "Dolor de cabeza",
+      "description": "Cefalea, migraña o dolor intenso de cabeza.",
+      "urgency_level": "medium",
+      "keywords": [
+        "мигрень",
+        "cefalea",
+        "migraña",
+        "me duele la cabeza",
+        "болит голова",
+        "cabeza",
+        "головная боль",
+        "dolor de cabeza"
+      ]
+    },
+    {
+      "name": "Problemas de visión",
+      "description": "Vision borrosa, dolor ocular o necesidad de revisar la vista.",
+      "urgency_level": "low",
+      "keywords": [
+        "visión",
+        "vista",
+        "veo borroso",
+        "ojos",
+        "oftalmologo",
+        "зрение",
+        "плохо вижу",
+        "глаза",
+        "офтальмолог"
+      ]
+    },
+    {
+      "name": "Dolor de espalda",
+      "description": "Dolor lumbar, dorsal o cervical.",
+      "urgency_level": "low",
+      "keywords": [
+        "dolor de espalda",
+        "lumbalgia",
+        "espalda",
+        "columna",
+        "болит спина",
+        "поясница",
+        "спина"
+      ]
+    },
+    {
+      "name": "Problemas dermatológicos",
+      "description": "Erupcion, alergia, manchas, acne o lesiones de piel.",
+      "urgency_level": "low",
+      "keywords": [
+        "piel",
+        "dermatologico",
+        "erupcion",
+        "alergia en la piel",
+        "acne",
+        "dermatologo",
+        "кожа",
+        "сыпь",
+        "дерматолог",
+        "акне"
+      ]
+    },
+    {
+      "name": "Dolor de oído",
+      "description": "Dolor de oido o molestia auditiva.",
+      "urgency_level": "low",
+      "keywords": [
+        "dolor de oido",
+        "oido",
+        "otitis",
+        "me duele el oido",
+        "болит ухо",
+        "отит",
+        "ухо"
+      ]
+    },
+    {
+      "name": "Control de presión arterial",
+      "description": "Control o seguimiento de hipertension.",
+      "urgency_level": "low",
+      "keywords": [
+        "presion arterial",
+        "hipertension",
+        "control presion",
+        "tension alta",
+        "давление",
+        "гипертония",
+        "измерить давление"
+      ]
+    },
+    {
+      "name": "Control de diabetes",
+      "description": "Seguimiento de glucosa o diabetes.",
+      "urgency_level": "low",
+      "keywords": [
+        "diabetes",
+        "glucosa",
+        "azucar",
+        "control diabetes",
+        "диабет",
+        "сахар",
+        "глюкоза"
+      ]
+    },
+    {
+      "name": "Consulta pediátrica",
+      "description": "Consulta general para niños.",
+      "urgency_level": "low",
+      "keywords": [
+        "pediatra",
+        "consulta pediatrica",
+        "mi hijo necesita médico",
+        "niño médico",
+        "педиатр",
+        "детский врач",
+        "ребенку врач"
+      ]
+    },
+    {
+      "name": "Consulta ginecológica",
+      "description": "Consulta ginecológica general.",
+      "urgency_level": "low",
+      "keywords": [
+        "ginecologo",
+        "consulta ginecológica",
+        "salud femenina",
+        "гинеколог",
+        "женская консультация"
+      ]
+    },
+    {
+      "name": "Consulta cardiológica",
+      "description": "Consulta cardiovascular programada.",
+      "urgency_level": "low",
+      "keywords": [
+        "cardiologo",
+        "consulta cardiologica",
+        "revisión corazón",
+        "кардиолог",
+        "сердце консультация"
+      ]
+    },
+    {
+      "name": "Consulta oftalmológica",
+      "description": "Consulta programada de oftalmologia.",
+      "urgency_level": "low",
+      "keywords": [
+        "oftalmologo",
+        "consulta oftalmologica",
+        "revisar vista",
+        "окулист",
+        "офтальмолог консультация"
+      ]
+    },
+    {
+      "name": "Compra de médicamentos",
+      "description": "Necesidad de comprar médicamentos.",
+      "urgency_level": "low",
+      "keywords": [
+        "comprar médicamentos",
+        "médicamentos",
+        "pastillas",
+        "receta",
+        "купить лекарства",
+        "лекарства",
+        "таблетки"
+      ]
+    },
+    {
+      "name": "Necesidad de farmacia",
+      "description": "Buscar una farmacia cercana.",
+      "urgency_level": "low",
+      "keywords": [
+        "farmacia",
+        "necesito farmacia",
+        "botica",
+        "аптека",
+        "найти аптеку"
+      ]
+    },
+    {
+      "name": "Fiebre general",
+      "description": "Fiebre o temperatura elevada en adulto sin especificar otro foco.",
+      "urgency_level": "medium",
+      "keywords": [
+        "fiebre",
+        "temperatura",
+        "calentura",
+        "febril",
+        "tengo fiebre",
+        "???"
+      ]
+    },
+    {
+      "name": "Fiebre con debilidad",
+      "description": "Fiebre asociada a debilidad, cansancio intenso o falta de fuerzas.",
+      "urgency_level": "medium",
+      "keywords": [
+        "fiebre y debilidad",
+        "tengo fiebre y me siento debil",
+        "debilidad",
+        "débil",
+        "cansancio",
+        "sin fuerzas",
+        "malestar con fiebre"
+      ]
+    },
+    {
+      "name": "Dolor articular",
+      "description": "Dolor en articulaciones como rodilla, hombro, codo o tobillo.",
+      "urgency_level": "medium",
+      "keywords": [
+        "dolor articular",
+        "articulacion",
+        "articulación",
+        "dolor en articulacion",
+        "su articulacion"
+      ]
+    },
+    {
+      "name": "Dolor de rodilla",
+      "description": "Dolor localizado en rodilla, con o sin lesion o inflamación.",
+      "urgency_level": "medium",
+      "keywords": [
+        "rodilla",
+        "dolor en la rodilla",
+        "me duele la rodilla",
+        "dolor de rodilla"
+      ]
+    },
+    {
+      "name": "Dolor muscular o corporal",
+      "description": "Dolor muscular, dolor corporal general o sensacion de cuerpo cortado.",
+      "urgency_level": "medium",
+      "keywords": [
+        "me duele el cuerpo",
+        "dolor muscular",
+        "cuerpo cortado",
+        "dolor corporal",
+        "me duele todo el cuerpo",
+        "mialgia"
+      ]
+    },
+    {
+      "name": "Dolor de cabeza con fiebre",
+      "description": "Dolor de cabeza asociado a fiebre o síntomas infecciosos.",
+      "urgency_level": "medium",
+      "keywords": [
+        "dolor de cabeza y fiebre",
+        "fiebre y dolor de cabeza",
+        "cabeza y fiebre",
+        "me duele la cabeza y tengo fiebre"
+      ]
+    },
+    {
+      "name": "Síntomas respiratorios",
+      "description": "Tos, dificultad respiratoria, congestión o dolor de garganta con síntomas respiratorios.",
+      "urgency_level": "medium",
+      "keywords": [
+        "tos",
+        "dificultad para respirar",
+        "me falta el aire",
+        "respirar",
+        "congestión",
+        "congestión"
+      ]
+    },
+    {
+      "name": "Malestar general",
+      "description": "Sensacion inespecifica de malestar, cansancio o debilidad sin foco claro.",
+      "urgency_level": "low",
+      "keywords": [
+        "malestar",
+        "me siento mal",
+        "decaido",
+        "decaída",
+        "cansancio",
+        "sin energia"
+      ]
+    },
+    {
+      "name": "Dolor de garganta",
+      "description": "Dolor o irritacion de garganta, con o sin fiebre.",
+      "urgency_level": "low",
+      "keywords": [
+        "dolor de garganta",
+        "garganta",
+        "me duele la garganta",
+        "anginas"
+      ]
+    },
+    {
+      "name": "Sospecha de infección",
+      "description": "Síntomas compatibles con infeccion, como fiebre, malestar, dolor localizado o inflamación.",
+      "urgency_level": "medium",
+      "keywords": [
+        "infeccion",
+        "infección",
+        "pus",
+        "inflamado",
+        "fiebre con dolor"
+      ]
+    },
+    {
+      "name": "Inflamación articular",
+      "description": "Articulacion hinchada, caliente o dolorosa, especialmente con fiebre.",
+      "urgency_level": "high",
+      "keywords": [
+        "inflamación articular",
+        "articulacion inflamada",
+        "rodilla hinchada",
+        "rodilla inflamada",
+        "hinchazon en la rodilla"
+      ]
+    },
+    {
+      "name": "Knee pain",
+      "description": "Dolor localizado en la rodilla, con o sin hinchazon, lesion o fiebre asociada.",
+      "urgency_level": "medium",
+      "keywords": [
+        "rodilla",
+        "me duele la rodilla",
+        "dolor de rodilla",
+        "dolor en la rodilla",
+        "dolor articular",
+        "articulación",
+        "articulacion",
+        "hinchazón de rodilla",
+        "hinchazon de rodilla",
+        "no puedo caminar",
+        "колено",
+        "болит колено",
+        "боль в колене",
+        "сустав"
+      ]
+    },
+    {
+      "name": "Joint pain",
+      "description": "Dolor en articulaciones como rodilla, hombro, codo, muñeca o tobillo.",
+      "urgency_level": "medium",
+      "keywords": [
+        "dolor articular",
+        "articulación",
+        "articulacion",
+        "dolor en articulacion",
+        "dolor en las articulaciones",
+        "hombro",
+        "codo",
+        "tobillo",
+        "muñeca",
+        "сустав",
+        "боль в суставе",
+        "болят суставы"
+      ]
+    },
+    {
+      "name": "General fever",
+      "description": "Fiebre o temperatura elevada sin foco especifico.",
+      "urgency_level": "medium",
+      "keywords": [
+        "fiebre",
+        "temperatura",
+        "calentura",
+        "temperatura alta",
+        "tengo fiebre",
+        "febril",
+        "температура",
+        "жар",
+        "лихорадка"
+      ]
+    },
+    {
+      "name": "Weakness",
+      "description": "Debilidad, cansancio intenso o sensacion de falta de fuerzas.",
+      "urgency_level": "medium",
+      "keywords": [
+        "debil",
+        "débil",
+        "debilidad",
+        "me siento debil",
+        "me siento débil",
+        "cansancio",
+        "sin fuerzas",
+        "слабость",
+        "усталость",
+        "нет сил"
+      ]
+    },
+    {
+      "name": "General malaise",
+      "description": "Malestar general, decaimiento o sensacion inespecifica de enfermedad.",
+      "urgency_level": "low",
+      "keywords": [
+        "malestar",
+        "malestar general",
+        "me siento mal",
+        "decaido",
+        "decaída",
+        "sin energia",
+        "me encuentro mal",
+        "плохо себя чувствую",
+        "недомогание",
+        "слабость"
+      ]
+    },
+    {
+      "name": "Body pain",
+      "description": "Dolor corporal general, dolor muscular o sensacion de cuerpo cortado.",
+      "urgency_level": "medium",
+      "keywords": [
+        "me duele el cuerpo",
+        "dolor corporal",
+        "dolor muscular",
+        "dolor en el cuerpo",
+        "cuerpo cortado",
+        "ломота",
+        "болит тело",
+        "мышцы"
+      ]
+    },
+    {
+      "name": "Headache",
+      "description": "Dolor de cabeza, cefalea o migraña.",
+      "urgency_level": "medium",
+      "keywords": [
+        "dolor de cabeza",
+        "me duele la cabeza",
+        "cabeza",
+        "cefalea",
+        "migraña",
+        "migrena",
+        "болит голова",
+        "головная боль",
+        "мигрень"
+      ]
+    },
+    {
+      "name": "Headache with fever",
+      "description": "Dolor de cabeza acompañado de fiebre o síntomas infecciosos.",
+      "urgency_level": "high",
+      "keywords": [
+        "dolor de cabeza y fiebre",
+        "fiebre y dolor de cabeza",
+        "me duele la cabeza y tengo fiebre",
+        "cabeza y fiebre",
+        "головная боль и температура",
+        "болит голова и температура",
+        "жар и голова"
+      ]
+    },
+    {
+      "name": "Wound or trauma",
+      "description": "Herida, golpe, caida, corte, mordedura o lesion reciente.",
+      "urgency_level": "medium",
+      "keywords": [
+        "herida",
+        "golpe",
+        "lesion",
+        "lesión",
+        "trauma",
+        "corte",
+        "caida",
+        "caída",
+        "mordedura",
+        "sangrado",
+        "рана",
+        "травма",
+        "ушиб",
+        "порез",
+        "укус",
+        "кровь"
+      ]
+    },
+    {
+      "name": "Tetanus vaccination",
+      "description": "Vacuna antitetánica preventiva o posterior a herida con riesgo.",
+      "urgency_level": "medium",
+      "keywords": [
+        "tétanos",
+        "tétanos",
+        "vacuna tétanos",
+        "vacuna contra el tétanos",
+        "antitetánica",
+        "antitetánica",
+        "herida oxidada",
+        "столбняк",
+        "прививка от столбняка",
+        "вакцина от столбняка"
+      ]
+    },
+    {
+      "name": "Child vaccination",
+      "description": "Vacunacion infantil preventiva o consulta pediatrica por vacunas.",
+      "urgency_level": "low",
+      "keywords": [
+        "vacuna",
+        "vacunas",
+        "vacunación",
+        "vacunación",
+        "inmunizacion",
+        "inmunización",
+        "tétanos",
+        "tétanos",
+        "hijo",
+        "niño",
+        "pediatra",
+        "прививка",
+        "вакцина",
+        "столбняк",
+        "ребенок",
+        "дети",
+        "педиатр"
+      ]
+    },
+    {
+      "name": "Vision problems",
+      "description": "Vision borrosa, dolor ocular, ojo rojo o necesidad de revisar la vista.",
+      "urgency_level": "low",
+      "keywords": [
+        "visión",
+        "visión",
+        "vista",
+        "veo borroso",
+        "ojos",
+        "dolor de ojo",
+        "oftalmologo",
+        "oftalmólogo",
+        "зрение",
+        "плохо вижу",
+        "глаза",
+        "офтальмолог"
+      ]
+    },
+    {
+      "name": "Abdominal pain",
+      "description": "Dolor de abdomen, estomago, vientre o barriga.",
+      "urgency_level": "medium",
+      "keywords": [
+        "dolor abdominal",
+        "dolor de barriga",
+        "dolor de estomago",
+        "dolor de estómago",
+        "abdomen",
+        "vientre",
+        "боль в животе",
+        "живот болит",
+        "желудок"
+      ]
+    },
+    {
+      "name": "Back pain",
+      "description": "Dolor lumbar, dorsal, cervical o de columna.",
+      "urgency_level": "low",
+      "keywords": [
+        "dolor de espalda",
+        "lumbalgia",
+        "espalda",
+        "columna",
+        "cuello",
+        "lumbar",
+        "болит спина",
+        "поясница",
+        "спина"
+      ]
+    },
+    {
+      "name": "Dermatological problem",
+      "description": "Problemas de piel como erupcion, alergia, manchas, acne o lesiones cutaneas.",
+      "urgency_level": "low",
+      "keywords": [
+        "piel",
+        "dermatologico",
+        "dermatológico",
+        "erupcion",
+        "erupción",
+        "alergia en la piel",
+        "acne",
+        "acné",
+        "dermatologo",
+        "dermatólogo",
+        "кожа",
+        "сыпь",
+        "дерматолог",
+        "акне"
+      ]
+    },
+    {
+      "name": "Ear pain",
+      "description": "Dolor de oido, otitis o molestia auditiva.",
+      "urgency_level": "low",
+      "keywords": [
+        "dolor de oido",
+        "dolor de oído",
+        "oido",
+        "oído",
+        "otitis",
+        "me duele el oido",
+        "me duele el oído",
+        "болит ухо",
+        "отит",
+        "ухо"
+      ]
+    },
+    {
+      "name": "Blood pressure control",
+      "description": "Control o seguimiento de presion arterial o hipertension.",
+      "urgency_level": "low",
+      "keywords": [
+        "presion arterial",
+        "presión arterial",
+        "hipertension",
+        "hipertensión",
+        "control presion",
+        "control presión",
+        "tension alta",
+        "tensión alta",
+        "давление",
+        "гипертония",
+        "измерить давление"
+      ]
+    },
+    {
+      "name": "Diabetes control",
+      "description": "Control de diabetes, glucosa o azucar en sangre.",
+      "urgency_level": "low",
+      "keywords": [
+        "diabetes",
+        "glucosa",
+        "azucar",
+        "azúcar",
+        "control diabetes",
+        "diabetico",
+        "diabético",
+        "диабет",
+        "сахар",
+        "глюкоза"
+      ]
+    },
+    {
+      "name": "Pediatric consultation",
+      "description": "Consulta médica general para niños o adolescentes.",
+      "urgency_level": "low",
+      "keywords": [
+        "pediatra",
+        "consulta pediatrica",
+        "consulta pediátrica",
+        "mi hijo necesita médico",
+        "mi hijo necesita médico",
+        "niño médico",
+        "niño médico",
+        "ребенку врач",
+        "педиатр",
+        "детский врач"
+      ]
+    },
+    {
+      "name": "Gynecological consultation",
+      "description": "Consulta ginecológica general o salud femenina.",
+      "urgency_level": "low",
+      "keywords": [
+        "ginecologo",
+        "ginecólogo",
+        "consulta ginecológica",
+        "consulta ginecológica",
+        "salud femenina",
+        "problema ginecológico",
+        "problema ginecológico",
+        "гинеколог",
+        "женская консультация",
+        "гинекологическая консультация"
+      ]
+    },
+    {
+      "name": "Cardiology consultation",
+      "description": "Consulta programada de cardiologia o control cardiovascular.",
+      "urgency_level": "low",
+      "keywords": [
+        "cardiologo",
+        "cardiólogo",
+        "consulta cardiologica",
+        "consulta cardiológica",
+        "revisión corazón",
+        "revisión corazón",
+        "кардиолог",
+        "сердце консультация"
+      ]
+    },
+    {
+      "name": "Ophthalmology consultation",
+      "description": "Consulta programada de oftalmologia o revisión de vista.",
+      "urgency_level": "low",
+      "keywords": [
+        "oftalmologo",
+        "oftalmólogo",
+        "consulta oftalmologica",
+        "consulta oftalmológica",
+        "revisar vista",
+        "oculista",
+        "окулист",
+        "офтальмолог консультация"
+      ]
+    },
+    {
+      "name": "Pharmacy need",
+      "description": "Necesidad de farmacia, médicamentos o productos de salud.",
+      "urgency_level": "low",
+      "keywords": [
+        "farmacia",
+        "necesito farmacia",
+        "botica",
+        "comprar médicamentos",
+        "médicamentos",
+        "pastillas",
+        "receta",
+        "аптека",
+        "найти аптеку",
+        "лекарства",
+        "таблетки"
+      ]
+    },
+    {
+      "name": "Prolonged menstrual bleeding",
+      "description": "Sangrado menstrual prolongado, menstruación que no se detiene o regla de muchos dias.",
+      "urgency_level": "medium",
+      "keywords": [
+        "menstruación",
+        "menstruación",
+        "regla",
+        "periodo",
+        "período",
+        "sangrado",
+        "sangrado menstrual",
+        "menstruación larga",
+        "menstruación larga",
+        "menstruación prolongada",
+        "menstruación prolongada",
+        "10 dias con la regla",
+        "10 días con la regla",
+        "la menstruación no para",
+        "la menstruación no para",
+        "mi menstruación no ha parado",
+        "mi menstruación no ha parado",
+        "месячные",
+        "менструация",
+        "кровотечение",
+        "долго идут месячные",
+        "месячные 10 дней",
+        "обильные месячные"
+      ]
+    },
+    {
+      "name": "Irregular menstruation",
+      "description": "Ciclos menstruales irregulares, retrasos, adelantos o cambios importantes del periodo.",
+      "urgency_level": "low",
+      "keywords": [
+        "menstruación irregular",
+        "menstruación irregular",
+        "regla irregular",
+        "periodo irregular",
+        "período irregular",
+        "retraso menstrual",
+        "se me retraso la regla",
+        "ciclo irregular",
+        "нерегулярные месячные",
+        "задержка месячных",
+        "сбой цикла"
+      ]
+    },
+    {
+      "name": "Severe menstrual pain",
+      "description": "Dolor menstrual fuerte o colicos intensos durante la regla.",
+      "urgency_level": "medium",
+      "keywords": [
+        "dolor menstrual fuerte",
+        "dolor de regla",
+        "colicos menstruales",
+        "cólicos menstruales",
+        "dolor fuerte con la regla",
+        "dolor durante la menstruación",
+        "dolor durante la menstruación",
+        "сильная боль при месячных",
+        "болезненные месячные",
+        "спазмы при месячных"
+      ]
+    },
+    {
+      "name": "Abnormal vaginal bleeding",
+      "description": "Sangrado vaginal fuera de la menstruación, muy abundante o con signos de alarma.",
+      "urgency_level": "high",
+      "keywords": [
+        "sangrado vaginal",
+        "sangrado fuera de la regla",
+        "sangrado entre periodos",
+        "sangrado anormal",
+        "hemorragia vaginal",
+        "sangrado muy abundante",
+        "sangro mucho",
+        "кровотечение",
+        "маточное кровотечение",
+        "кровь вне месячных",
+        "обильное кровотечение"
+      ]
+    },
+    {
+      "name": "Pelvic pain",
+      "description": "Dolor pélvico o dolor en la parte baja del abdomen.",
+      "urgency_level": "medium",
+      "keywords": [
+        "dolor pélvico",
+        "dolor pélvico",
+        "dolor bajo vientre",
+        "dolor en la pelvis",
+        "dolor en la parte baja del abdomen",
+        "dolor bajo abdomen",
+        "боль внизу живота",
+        "тазовая боль",
+        "болит низ живота"
+      ]
+    },
+    {
+      "name": "Possible pregnancy",
+      "description": "Posible embarazo, retraso menstrual o necesidad de confirmar embarazo.",
+      "urgency_level": "medium",
+      "keywords": [
+        "posible embarazo",
+        "creo que estoy embarazada",
+        "puedo estar embarazada",
+        "retraso menstrual",
+        "test de embarazo",
+        "prueba de embarazo",
+        "embarazo posible",
+        "возможна беременность",
+        "может быть беременна",
+        "тест на беременность",
+        "задержка месячных"
+      ]
+    },
+    {
+      "name": "Pregnancy control",
+      "description": "Control prenatal o seguimiento del embarazo.",
+      "urgency_level": "medium",
+      "keywords": [
+        "control embarazo",
+        "control de embarazo",
+        "control prenatal",
+        "seguimiento embarazo",
+        "embarazada control",
+        "consulta prenatal",
+        "контроль беременности",
+        "ведение беременности",
+        "беременность наблюдение",
+        "женская консультация беременность"
+      ]
+    }
+  ],
+  "need_service_rules": [
+    {
+      "health_need": "Abdominal pain",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El dolor abdominal sin signos de alarma puede iniciar por medicina general."
+    },
+    {
+      "health_need": "Abnormal vaginal bleeding",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Sangrado vaginal abundante o con signos de alarma requiere urgencias. Se recomienda hospital usando servicios confirmados en el informe, sin conservar servicios urgentes no verificados para una sede concreta."
+    },
+    {
+      "health_need": "Abnormal vaginal bleeding",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Hospital",
+      "priority": 10,
+      "urgency_required": "high",
+      "explanation": "El sangrado vaginal anormal puede requerir valoracion ginecológica hospitalaria."
+    },
+    {
+      "health_need": "Análisis de sangre",
+      "recommended_service": "Análisis de sangre",
+      "recommended_specialty": "Técnico de laboratorio",
+      "recommended_institution_type": "Laboratorio",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "Los análisis de sangre se realizan en laboratorios o centros diagnósticos."
+    },
+    {
+      "health_need": "Back pain",
+      "recommended_service": "Traumatología",
+      "recommended_specialty": "Traumatólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "El dolor de espalda puede valorarse en traumatologia o medicina general."
+    },
+    {
+      "health_need": "Blood pressure control",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "El control de presion arterial puede realizarse por medicina general."
+    },
+    {
+      "health_need": "Body pain",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El dolor corporal o muscular puede iniciar por medicina general."
+    },
+    {
+      "health_need": "Cardiology consultation",
+      "recommended_service": "Cardiología",
+      "recommended_specialty": "Cardiólogo",
+      "recommended_institution_type": "Clínica privada",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La consulta cardiovascular programada corresponde a cardiologia."
+    },
+    {
+      "health_need": "Child vaccination",
+      "recommended_service": "Vacunación",
+      "recommended_specialty": "Pediatra",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La vacunación infantil preventiva se coordina con pediatria o policlínico."
+    },
+    {
+      "health_need": "Child vaccination",
+      "recommended_service": "Vacunación",
+      "recommended_specialty": "Pediatra",
+      "recommended_institution_type": "Centro pediátrico",
+      "priority": 20,
+      "urgency_required": "low",
+      "explanation": "Un centro pediátrico tambien puede orientar sobre calendario y vacunas infantiles."
+    },
+    {
+      "health_need": "Compra de médicamentos",
+      "recommended_service": "Farmacia",
+      "recommended_specialty": "Farmacéutico",
+      "recommended_institution_type": "Farmacia",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "Para médicamentos, busca una farmacia."
+    },
+    {
+      "health_need": "Consulta cardiológica",
+      "recommended_service": "Cardiología",
+      "recommended_specialty": "Cardiólogo",
+      "recommended_institution_type": "Clínica privada",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "Consulta cardiologica programada puede realizarse en clínica o hospital."
+    },
+    {
+      "health_need": "Consulta ginecológica",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Clínica ginecológica",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La consulta ginecológica corresponde a una clínica ginecológica o policlínico."
+    },
+    {
+      "health_need": "Consulta oftalmológica",
+      "recommended_service": "Oftalmología",
+      "recommended_specialty": "Oftalmólogo",
+      "recommended_institution_type": "Centro oftalmológico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La revisión de vista se realiza en centro oftalmologico."
+    },
+    {
+      "health_need": "Consulta pediátrica",
+      "recommended_service": "Pediatría",
+      "recommended_specialty": "Pediatra",
+      "recommended_institution_type": "Centro pediátrico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "Para consultas infantiles programadas, pediatria es la opcion principal."
+    },
+    {
+      "health_need": "Control de diabetes",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "El seguimiento de diabetes puede iniciar en medicina general con controles de laboratorio."
+    },
+    {
+      "health_need": "Control de embarazo",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Clínica ginecológica",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El seguimiento del embarazo corresponde a ginecologia."
+    },
+    {
+      "health_need": "Control de presión arterial",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La presion arterial se controla en atención primaria o cardiologia."
+    },
+    {
+      "health_need": "Dermatological problem",
+      "recommended_service": "Dermatología",
+      "recommended_specialty": "Dermatólogo",
+      "recommended_institution_type": "Clínica privada",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "Los problemas de piel se evaluan en dermatologia."
+    },
+    {
+      "health_need": "Diabetes control",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "El control de diabetes puede realizarse por medicina general."
+    },
+    {
+      "health_need": "Dolor abdominal",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El dolor abdominal sin signos de alarma puede iniciar por medicina general."
+    },
+    {
+      "health_need": "Dolor articular",
+      "recommended_service": "Traumatología",
+      "recommended_specialty": "Traumatólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Dolor articular sin signos de alarma puede valorarse por traumatologia."
+    },
+    {
+      "health_need": "Dolor de cabeza",
+      "recommended_service": "Neurología",
+      "recommended_specialty": "Neurólogo",
+      "recommended_institution_type": "Clínica privada",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Cefaleas persistentes o recurrentes pueden requerir neurologia."
+    },
+    {
+      "health_need": "Dolor de cabeza con fiebre",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Dolor de cabeza con fiebre requiere orientacion médica y triaje de signos de alarma."
+    },
+    {
+      "health_need": "Dolor de espalda",
+      "recommended_service": "Traumatología",
+      "recommended_specialty": "Traumatólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "Dolor de espalda puede valorarse por traumatologia o medicina general."
+    },
+    {
+      "health_need": "Dolor de garganta",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Dolor de garganta con fiebre o persistencia puede evaluarse en policlínico."
+    },
+    {
+      "health_need": "Dolor de oído",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "Dolor de oido puede iniciar con medicina general para decidir derivacion."
+    },
+    {
+      "health_need": "Dolor de rodilla",
+      "recommended_service": "Traumatología",
+      "recommended_specialty": "Traumatólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Dolor de rodilla sin fiebre suele iniciar por traumatologia o policlínico."
+    },
+    {
+      "health_need": "Dolor dental",
+      "recommended_service": "Odontología",
+      "recommended_specialty": "Dentista",
+      "recommended_institution_type": "Clínica dental",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El dolor dental se atiende principalmente en clínicas dentales; si hay fiebre o hinchazon extensa, conviene urgencias."
+    },
+    {
+      "health_need": "Dolor en el pecho",
+      "recommended_service": "Cardiología",
+      "recommended_specialty": "Cardiólogo",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "El dolor torácico puede ser grave; con signos de alarma se prioriza hospital o urgencias. Se recomienda hospital usando servicios confirmados en el informe, sin conservar servicios urgentes no verificados para una sede concreta."
+    },
+    {
+      "health_need": "Dolor muscular o corporal",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Dolor corporal con malestar o fiebre puede iniciar por medicina general."
+    },
+    {
+      "health_need": "Ear pain",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "El dolor de oido puede iniciar por medicina general."
+    },
+    {
+      "health_need": "Fiebre con debilidad",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Clínica privada",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Fiebre con debilidad requiere valoracion médica para descartar infeccion o deshidratacion."
+    },
+    {
+      "health_need": "Fiebre general",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "La fiebre sin signos graves puede iniciar con medicina general en policlínico."
+    },
+    {
+      "health_need": "Fiebre infantil",
+      "recommended_service": "Pediatría",
+      "recommended_specialty": "Pediatra",
+      "recommended_institution_type": "Centro pediátrico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "La fiebre infantil suele requerir evaluación pediatrica, especialmente si persiste o hay signos de alarma."
+    },
+    {
+      "health_need": "General fever",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Fiebre con dificultad respiratoria, debilidad intensa o signos de alarma requiere urgencias. Se recomienda hospital usando servicios confirmados en el informe, sin conservar servicios urgentes no verificados para una sede concreta."
+    },
+    {
+      "health_need": "General fever",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "La fiebre general suele evaluarse primero por medicina general en policlínico."
+    },
+    {
+      "health_need": "General malaise",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "El malestar general sin signos de alarma puede evaluarse por medicina general."
+    },
+    {
+      "health_need": "Gynecological consultation",
+      "recommended_service": "Consulta ginecológica",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La consulta ginecológica puede realizarse en policlínico o clínica ginecológica."
+    },
+    {
+      "health_need": "Gynecological consultation",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Clínica ginecológica",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La consulta ginecológica corresponde a ginecologia."
+    },
+    {
+      "health_need": "Headache",
+      "recommended_service": "Neurología",
+      "recommended_specialty": "Neurólogo",
+      "recommended_institution_type": "Clínica privada",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Cefaleas persistentes o recurrentes pueden requerir neurologia."
+    },
+    {
+      "health_need": "Headache with fever",
+      "recommended_service": "Neurología",
+      "recommended_specialty": "Neurólogo",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Dolor de cabeza con fiebre alta, rigidez de cuello, confusion o signos neurologicos requiere urgencias. Se recomienda hospital usando servicios confirmados en el informe, sin conservar servicios urgentes no verificados para una sede concreta."
+    },
+    {
+      "health_need": "Headache with fever",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Dolor de cabeza con fiebre puede iniciar por medicina general si no hay signos de alarma."
+    },
+    {
+      "health_need": "Herida con riesgo de tétanos",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Hospital",
+      "priority": 5,
+      "urgency_required": "high",
+      "explanation": "Heridas sucias, mordeduras o cortes profundos requieren evaluación pronta y posible profilaxis antitetanica. Se recomienda hospital usando servicios confirmados en el informe, sin conservar servicios urgentes no verificados para una sede concreta."
+    },
+    {
+      "health_need": "Inflamación articular",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Hospital",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Articulacion inflamada con fiebre puede requerir urgencias. Se recomienda hospital usando servicios confirmados en el informe, sin conservar servicios urgentes no verificados para una sede concreta."
+    },
+    {
+      "health_need": "Irregular menstruation",
+      "recommended_service": "Consulta ginecológica",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La menstruación irregular se evalua en consulta ginecológica programada."
+    },
+    {
+      "health_need": "Joint pain",
+      "recommended_service": "Traumatología",
+      "recommended_specialty": "Traumatólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El dolor articular sin signos de alarma puede iniciar por traumatologia o medicina general."
+    },
+    {
+      "health_need": "Knee pain",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Dolor de rodilla con fiebre, deformidad, golpe fuerte o imposibilidad para caminar requiere evaluación urgente. Se recomienda hospital usando servicios confirmados en el informe, sin conservar servicios urgentes no verificados para una sede concreta."
+    },
+    {
+      "health_need": "Knee pain",
+      "recommended_service": "Traumatología",
+      "recommended_specialty": "Traumatólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El dolor de rodilla se orienta inicialmente a traumatologia en policlínico si no hay signos de alarma."
+    },
+    {
+      "health_need": "Knee pain",
+      "recommended_service": "Traumatología",
+      "recommended_specialty": "Traumatólogo",
+      "recommended_institution_type": "Hospital",
+      "priority": 20,
+      "urgency_required": "medium",
+      "explanation": "Sí hay lesion importante, incapacidad para caminar o fiebre, puede requerir hospital."
+    },
+    {
+      "health_need": "Malestar general",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Malestar general persistente puede evaluarse en medicina general."
+    },
+    {
+      "health_need": "Necesidad de farmacia",
+      "recommended_service": "Farmacia",
+      "recommended_specialty": "Farmacéutico",
+      "recommended_institution_type": "Farmacia",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "Una farmacia puede cubrir compra de médicamentos y productos basicos de salud."
+    },
+    {
+      "health_need": "Ophthalmology consultation",
+      "recommended_service": "Oftalmología",
+      "recommended_specialty": "Oftalmólogo",
+      "recommended_institution_type": "Centro oftalmológico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La consulta oftalmologica corresponde a oftalmologia."
+    },
+    {
+      "health_need": "Pediatric consultation",
+      "recommended_service": "Pediatría",
+      "recommended_specialty": "Pediatra",
+      "recommended_institution_type": "Centro pediátrico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La consulta para niños corresponde a pediatria."
+    },
+    {
+      "health_need": "Pelvic pain",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Dolor pelvico fuerte con fiebre, sangrado o embarazo posible requiere urgencias. Se recomienda hospital usando servicios confirmados en el informe, sin conservar servicios urgentes no verificados para una sede concreta."
+    },
+    {
+      "health_need": "Pelvic pain",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El dolor pélvico puede requerir evaluación ginecológica."
+    },
+    {
+      "health_need": "Pharmacy need",
+      "recommended_service": "Farmacia",
+      "recommended_specialty": "Farmacéutico",
+      "recommended_institution_type": "Farmacia",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "Para médicamentos o productos de salud, una farmacia es la opcion adecuada."
+    },
+    {
+      "health_need": "Possible pregnancy",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Clínica ginecológica",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Para posible embarazo, consulta ginecologia para confirmacion y orientacion."
+    },
+    {
+      "health_need": "Possible pregnancy",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 20,
+      "urgency_required": "medium",
+      "explanation": "Un policlínico con ginecologia puede orientar y solicitar pruebas."
+    },
+    {
+      "health_need": "Pregnancy control",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Clínica ginecológica",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El control de embarazo corresponde a ginecologia o consulta prenatal."
+    },
+    {
+      "health_need": "Pregnancy control",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 20,
+      "urgency_required": "medium",
+      "explanation": "Un policlínico con ginecologia puede realizar seguimiento prenatal inicial."
+    },
+    {
+      "health_need": "Problemas de visión",
+      "recommended_service": "Oftalmología",
+      "recommended_specialty": "Oftalmólogo",
+      "recommended_institution_type": "Centro oftalmológico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "Los problemas de visión se evalúan en oftalmologia."
+    },
+    {
+      "health_need": "Problemas dermatológicos",
+      "recommended_service": "Dermatología",
+      "recommended_specialty": "Dermatólogo",
+      "recommended_institution_type": "Clínica privada",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "Lesiones o erupciones cutaneas se orientan a dermatologia."
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Sangrado abundante con mareos, palidez, dolor fuerte o posible embarazo requiere hospital o urgencias. Se recomienda hospital usando servicios confirmados en el informe, sin conservar servicios urgentes no verificados para una sede concreta."
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El sangrado menstrual prolongado requiere valoracion ginecológica; si hay debilidad intensa o sangrado muy abundante, puede requerir urgencias."
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Clínica ginecológica",
+      "priority": 20,
+      "urgency_required": "medium",
+      "explanation": "Una clínica ginecológica puede evaluar menstruación prolongada, ecografía y análisis si corresponde."
+    },
+    {
+      "health_need": "Severe menstrual pain",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Dolor menstrual intenso con sangrado abundante, fiebre, desmayo o posible embarazo requiere urgencias. Se recomienda hospital usando servicios confirmados en el informe, sin conservar servicios urgentes no verificados para una sede concreta."
+    },
+    {
+      "health_need": "Severe menstrual pain",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "El dolor menstrual fuerte puede iniciar por ginecologia en policlínico."
+    },
+    {
+      "health_need": "Severe menstrual pain",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "recommended_institution_type": "Clínica ginecológica",
+      "priority": 20,
+      "urgency_required": "medium",
+      "explanation": "Una clínica ginecológica puede evaluar dolor menstrual fuerte y solicitar estudios."
+    },
+    {
+      "health_need": "Sospecha de infección",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Una sospecha de infeccion requiere evaluación clínica."
+    },
+    {
+      "health_need": "Síntomas respiratorios",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "Síntomas respiratorios suelen iniciar por medicina general; dificultad respiratoria requiere urgencias."
+    },
+    {
+      "health_need": "Tetanus vaccination",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Vacuna antitetanica tras herida sucia, mordedura o corte profundo requiere evaluación urgente. Se recomienda hospital usando servicios confirmados en el informe, sin conservar servicios urgentes no verificados para una sede concreta."
+    },
+    {
+      "health_need": "Vacunación infantil",
+      "recommended_service": "Vacunación",
+      "recommended_specialty": "Pediatra",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "La vacunación infantil debe coordinarse con pediatria o policlínico."
+    },
+    {
+      "health_need": "Vacunación infantil",
+      "recommended_service": "Vacunación",
+      "recommended_specialty": "Pediatra",
+      "recommended_institution_type": "Centro pediátrico",
+      "priority": 20,
+      "urgency_required": "low",
+      "explanation": "Un centro pediátrico tambien puede orientar sobre calendario de vacunas."
+    },
+    {
+      "health_need": "Vision problems",
+      "recommended_service": "Oftalmología",
+      "recommended_specialty": "Oftalmólogo",
+      "recommended_institution_type": "Centro oftalmológico",
+      "priority": 10,
+      "urgency_required": "low",
+      "explanation": "Los problemas de visión se evaluan en oftalmologia."
+    },
+    {
+      "health_need": "Weakness",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Hospital",
+      "priority": 1,
+      "urgency_required": "high",
+      "explanation": "Debilidad repentina, dolor de pecho o dificultad respiratoria requiere urgencias. Se recomienda hospital usando servicios confirmados en el informe, sin conservar servicios urgentes no verificados para una sede concreta."
+    },
+    {
+      "health_need": "Weakness",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Policlínico",
+      "priority": 10,
+      "urgency_required": "medium",
+      "explanation": "La debilidad puede iniciar por medicina general para valorar causas frecuentes."
+    },
+    {
+      "health_need": "Wound or trauma",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "recommended_institution_type": "Hospital",
+      "priority": 5,
+      "urgency_required": "medium",
+      "explanation": "Heridas, golpes o lesiones recientes deben evaluarse según profundidad, sangrado y movilidad. Se recomienda hospital usando servicios confirmados en el informe, sin conservar servicios urgentes no verificados para una sede concreta."
+    }
+  ],
+  "triage_questions": [
+    {
+      "health_need": "Dolor dental",
+      "question_text": "?El dolor es muy intenso o tienes hinchazon en la cara?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No, es tolerable",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Sí, dolor intenso",
+          "risk_score": 2
+        },
+        {
+          "option_text": "Sí, hinchazon, fiebre o dificultad para abrir la boca",
+          "risk_score": 6
+        }
+      ]
+    },
+    {
+      "health_need": "Dolor en el pecho",
+      "question_text": "?Tienes falta de aire, sudor frio, mareo o dolor que va al brazo/mandibula?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 2
+        },
+        {
+          "option_text": "Si",
+          "risk_score": 9
+        }
+      ]
+    },
+    {
+      "health_need": "Fiebre infantil",
+      "question_text": "?Qué tan alta es la fiebre o hay signos de alarma?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "Menos de 38.5 y buen estado general",
+          "risk_score": 1
+        },
+        {
+          "option_text": "Más de 39 o fiebre persistente",
+          "risk_score": 4
+        },
+        {
+          "option_text": "Dificultad para respirar, somnolencia o convulsiones",
+          "risk_score": 9
+        }
+      ]
+    },
+    {
+      "health_need": "Vacunación infantil",
+      "question_text": "?El niño esta enfermo ahora o tuvo una reaccion fuerte a una vacuna?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No, solo necesito vacunación programada",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Tiene fiebre o enfermedad aguda",
+          "risk_score": 4
+        },
+        {
+          "option_text": "Tuvo reaccion alergica grave antes",
+          "risk_score": 8
+        }
+      ]
+    },
+    {
+      "health_need": "Herida con riesgo de tétanos",
+      "question_text": "?La herida es profunda, sucia, por mordedura o con metal oxidado?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No, es superficial y limpia",
+          "risk_score": 2
+        },
+        {
+          "option_text": "Sí, sucia o profunda",
+          "risk_score": 7
+        },
+        {
+          "option_text": "Sí, mordedura o no recuerdo mi vacuna antitetánica",
+          "risk_score": 9
+        }
+      ]
+    },
+    {
+      "health_need": "Dolor abdominal",
+      "question_text": "?El dolor abdominal es intenso o viene con fiebre, vómitos persistentes o abdomen rígido?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No, es leve o moderado",
+          "risk_score": 1
+        },
+        {
+          "option_text": "Sí, intenso o persistente",
+          "risk_score": 5
+        },
+        {
+          "option_text": "Sí, con fiebre alta, vómitos persistentes o abdomen rígido",
+          "risk_score": 9
+        }
+      ]
+    },
+    {
+      "health_need": "Dolor de cabeza",
+      "question_text": "?El dolor empezo de golpe o hay debilidad, confusion, fiebre alta o rigidez de cuello?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No, es parecido a dolores previos",
+          "risk_score": 1
+        },
+        {
+          "option_text": "Es muy intenso o nuevo",
+          "risk_score": 5
+        },
+        {
+          "option_text": "Sí, hay signos neurológicos o rigidez de cuello",
+          "risk_score": 9
+        }
+      ]
+    },
+    {
+      "health_need": "Fiebre general",
+      "question_text": "?La temperatura es mayor a 38.5 grados C o dura más de 3 dias?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No, es menor o reciente",
+          "risk_score": 1
+        },
+        {
+          "option_text": "Sí, más de 38.5",
+          "risk_score": 4
+        },
+        {
+          "option_text": "Sí, más de 3 dias",
+          "risk_score": 5
+        }
+      ]
+    },
+    {
+      "health_need": "Fiebre general",
+      "question_text": "?Tienes dificultad para respirar, confusion o debilidad intensa?",
+      "answer_type": "single_choice",
+      "priority": 20,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Dificultad para respirar",
+          "risk_score": 8
+        },
+        {
+          "option_text": "Confusion o debilidad intensa",
+          "risk_score": 8
+        }
+      ]
+    },
+    {
+      "health_need": "Fiebre con debilidad",
+      "question_text": "?La debilidad te impide caminar, mantenerte de pie o pensar con claridad?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No, es cansancio moderado",
+          "risk_score": 2
+        },
+        {
+          "option_text": "Sí, debilidad intensa",
+          "risk_score": 7
+        },
+        {
+          "option_text": "Sí, confusion o desmayo",
+          "risk_score": 9
+        }
+      ]
+    },
+    {
+      "health_need": "Dolor de rodilla",
+      "question_text": "?La rodilla esta hinchada o caliente?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 1
+        },
+        {
+          "option_text": "Sí, hinchada",
+          "risk_score": 5
+        },
+        {
+          "option_text": "Sí, caliente y muy dolorosa",
+          "risk_score": 8
+        }
+      ]
+    },
+    {
+      "health_need": "Dolor de rodilla",
+      "question_text": "?Puedes caminar normalmente o hubo golpe/lesion?",
+      "answer_type": "single_choice",
+      "priority": 20,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "Camino normalmente",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Me cuesta caminar",
+          "risk_score": 4
+        },
+        {
+          "option_text": "Hubo golpe fuerte o no puedo apoyar",
+          "risk_score": 7
+        }
+      ]
+    },
+    {
+      "health_need": "Dolor de rodilla",
+      "question_text": "?Tambien tienes fiebre?",
+      "answer_type": "single_choice",
+      "priority": 30,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Si",
+          "risk_score": 6
+        }
+      ]
+    },
+    {
+      "health_need": "Dolor articular",
+      "question_text": "?Hay inflamación, fiebre o dificultad para mover la articulacion?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 1
+        },
+        {
+          "option_text": "Inflamacion o dificultad para mover",
+          "risk_score": 5
+        },
+        {
+          "option_text": "Fiebre junto al dolor articular",
+          "risk_score": 8
+        }
+      ]
+    },
+    {
+      "health_need": "Dolor muscular o corporal",
+      "question_text": "?El dolor corporal viene con fiebre alta o debilidad intensa?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 1
+        },
+        {
+          "option_text": "Con fiebre",
+          "risk_score": 4
+        },
+        {
+          "option_text": "Con debilidad intensa",
+          "risk_score": 7
+        }
+      ]
+    },
+    {
+      "health_need": "Dolor de cabeza con fiebre",
+      "question_text": "?Hay rigidez de cuello, confusion, vómitos persistentes o dolor repentino muy intenso?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 2
+        },
+        {
+          "option_text": "Dolor muy intenso o vómitos",
+          "risk_score": 6
+        },
+        {
+          "option_text": "Rigidez de cuello, confusion o signos neurológicos",
+          "risk_score": 10
+        }
+      ]
+    },
+    {
+      "health_need": "Dolor de garganta",
+      "question_text": "?Tienes fiebre alta, dificultad para respirar o tragar saliva?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 1
+        },
+        {
+          "option_text": "Fiebre alta",
+          "risk_score": 4
+        },
+        {
+          "option_text": "Dificultad para respirar o tragar",
+          "risk_score": 8
+        }
+      ]
+    },
+    {
+      "health_need": "Knee pain",
+      "question_text": "?¿La rodilla está hinchada?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Sí, algo hinchada",
+          "risk_score": 3
+        },
+        {
+          "option_text": "Sí, muy hinchada o caliente",
+          "risk_score": 6
+        }
+      ]
+    },
+    {
+      "health_need": "Knee pain",
+      "question_text": "?¿Puedes caminar normalmente?",
+      "answer_type": "single_choice",
+      "priority": 20,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "Si",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Camino con dificultad",
+          "risk_score": 4
+        },
+        {
+          "option_text": "No puedo caminar",
+          "risk_score": 8
+        }
+      ]
+    },
+    {
+      "health_need": "Knee pain",
+      "question_text": "?¿Hubo golpe o lesión?",
+      "answer_type": "single_choice",
+      "priority": 30,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Sí, golpe leve",
+          "risk_score": 3
+        },
+        {
+          "option_text": "Sí, golpe fuerte o deformidad",
+          "risk_score": 8
+        }
+      ]
+    },
+    {
+      "health_need": "Knee pain",
+      "question_text": "?¿También tienes fiebre?",
+      "answer_type": "single_choice",
+      "priority": 40,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Sí, fiebre baja",
+          "risk_score": 4
+        },
+        {
+          "option_text": "Sí, fiebre alta o escalofrios",
+          "risk_score": 8
+        }
+      ]
+    },
+    {
+      "health_need": "General fever",
+      "question_text": "?¿La temperatura es mayor a 38.5 °C?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No o no lo se",
+          "risk_score": 1
+        },
+        {
+          "option_text": "Sí, mayor a 38.5 °C",
+          "risk_score": 4
+        },
+        {
+          "option_text": "Sí, mayor a 39.5 °C",
+          "risk_score": 7
+        }
+      ]
+    },
+    {
+      "health_need": "General fever",
+      "question_text": "?¿Tienes dificultad para respirar?",
+      "answer_type": "single_choice",
+      "priority": 20,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Si",
+          "risk_score": 4
+        }
+      ]
+    },
+    {
+      "health_need": "General fever",
+      "question_text": "?¿Te sientes muy débil?",
+      "answer_type": "single_choice",
+      "priority": 30,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Sí, debilidad moderada",
+          "risk_score": 4
+        },
+        {
+          "option_text": "Sí, casi no puedo levantarme",
+          "risk_score": 8
+        }
+      ]
+    },
+    {
+      "health_need": "General fever",
+      "question_text": "?¿Cuántos días llevas con fiebre?",
+      "answer_type": "single_choice",
+      "priority": 40,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "Menos de 2 dias",
+          "risk_score": 1
+        },
+        {
+          "option_text": "2 a 3 dias",
+          "risk_score": 3
+        },
+        {
+          "option_text": "Más de 3 dias",
+          "risk_score": 5
+        }
+      ]
+    },
+    {
+      "health_need": "Weakness",
+      "question_text": "?¿La debilidad apareció de repente?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No, fue gradual",
+          "risk_score": 1
+        },
+        {
+          "option_text": "Sí, de repente",
+          "risk_score": 7
+        }
+      ]
+    },
+    {
+      "health_need": "Weakness",
+      "question_text": "?¿Tienes fiebre?",
+      "answer_type": "single_choice",
+      "priority": 20,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Si",
+          "risk_score": 4
+        }
+      ]
+    },
+    {
+      "health_need": "Weakness",
+      "question_text": "?¿Tienes dolor en el pecho o dificultad para respirar?",
+      "answer_type": "single_choice",
+      "priority": 30,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Sí, uno de los dos",
+          "risk_score": 8
+        },
+        {
+          "option_text": "Sí, ambos",
+          "risk_score": 10
+        }
+      ]
+    },
+    {
+      "health_need": "Child vaccination",
+      "question_text": "?¿Es una vacuna preventiva?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "Sí, preventiva o calendario",
+          "risk_score": 0
+        },
+        {
+          "option_text": "No lo se",
+          "risk_score": 1
+        },
+        {
+          "option_text": "No, es por una exposicion o accidente",
+          "risk_score": 5
+        }
+      ]
+    },
+    {
+      "health_need": "Child vaccination",
+      "question_text": "?¿Hubo una herida o exposición reciente?",
+      "answer_type": "single_choice",
+      "priority": 20,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Sí, herida limpia o leve",
+          "risk_score": 4
+        },
+        {
+          "option_text": "Sí, herida sucia, mordedura o metal oxidado",
+          "risk_score": 9
+        }
+      ]
+    },
+    {
+      "health_need": "Child vaccination",
+      "question_text": "?¿El paciente es un niño?",
+      "answer_type": "single_choice",
+      "priority": 30,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "Si",
+          "risk_score": 0
+        },
+        {
+          "option_text": "No, es adulto",
+          "risk_score": 1
+        }
+      ]
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "question_text": "?¿El sangrado es muy abundante?",
+      "answer_type": "single_choice",
+      "priority": 10,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Sí, más abundante de lo normal",
+          "risk_score": 2
+        },
+        {
+          "option_text": "Sí, empapo toallas/tampones con mucha frecuencia",
+          "risk_score": 5
+        }
+      ]
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "question_text": "?¿Tienes mareos, debilidad o palidez?",
+      "answer_type": "single_choice",
+      "priority": 20,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Sí, un poco",
+          "risk_score": 2
+        },
+        {
+          "option_text": "Sí, intenso",
+          "risk_score": 5
+        }
+      ]
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "question_text": "?¿Tienes dolor fuerte en la parte baja del abdomen?",
+      "answer_type": "single_choice",
+      "priority": 30,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Sí, dolor moderado",
+          "risk_score": 2
+        },
+        {
+          "option_text": "Sí, dolor fuerte o empeora",
+          "risk_score": 5
+        }
+      ]
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "question_text": "?¿Existe posibilidad de embarazo?",
+      "answer_type": "single_choice",
+      "priority": 40,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "No estoy segura",
+          "risk_score": 3
+        },
+        {
+          "option_text": "Sí",
+          "risk_score": 5
+        }
+      ]
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "question_text": "?¿Has tenido coágulos grandes?",
+      "answer_type": "single_choice",
+      "priority": 50,
+      "is_required": true,
+      "options": [
+        {
+          "option_text": "No",
+          "risk_score": 0
+        },
+        {
+          "option_text": "Sí, algunos",
+          "risk_score": 2
+        },
+        {
+          "option_text": "Sí, grandes o repetidos",
+          "risk_score": 4
+        }
+      ]
+    }
+  ],
+  "recommendation_rules": [
+    {
+      "health_need": "Abnormal vaginal bleeding",
+      "min_risk_score": 0,
+      "max_risk_score": 6,
+      "recommended_institution_type": "Clínica ginecológica",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "message": "Te recomiendo valoracion ginecológica prioritaria.",
+      "priority": 5
+    },
+    {
+      "health_need": "Abnormal vaginal bleeding",
+      "min_risk_score": 7,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "message": "Sangrado vaginal con signos de alarma requiere hospital o urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Análisis de sangre",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Laboratorio",
+      "recommended_service": "Análisis de sangre",
+      "recommended_specialty": "Técnico de laboratorio",
+      "message": "Para análisis de sangre, te recomiendo un laboratorio.",
+      "priority": 10
+    },
+    {
+      "health_need": "Child vaccination",
+      "min_risk_score": 0,
+      "max_risk_score": 4,
+      "recommended_institution_type": "Centro pediátrico",
+      "recommended_service": "Vacunación",
+      "recommended_specialty": "Pediatra",
+      "message": "Para vacunación infantil preventiva, acude a policlínico o centro pediátrico.",
+      "priority": 10
+    },
+    {
+      "health_need": "Child vaccination",
+      "min_risk_score": 5,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Si la vacuna se relaciona con herida o exposicion reciente, conviene evaluación urgente. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Compra de médicamentos",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Farmacia",
+      "recommended_service": "Farmacia",
+      "recommended_specialty": "Farmacéutico",
+      "message": "Te recomiendo una farmacia en Kursk.",
+      "priority": 10
+    },
+    {
+      "health_need": "Consulta cardiológica",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Clínica privada",
+      "recommended_service": "Cardiología",
+      "recommended_specialty": "Cardiólogo",
+      "message": "Te recomiendo una consulta cardiologica.",
+      "priority": 10
+    },
+    {
+      "health_need": "Consulta ginecológica",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Clínica ginecológica",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "message": "Te recomiendo una clínica ginecológica.",
+      "priority": 10
+    },
+    {
+      "health_need": "Consulta oftalmológica",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Centro oftalmológico",
+      "recommended_service": "Oftalmología",
+      "recommended_specialty": "Oftalmólogo",
+      "message": "Te recomiendo una consulta oftalmologica.",
+      "priority": 10
+    },
+    {
+      "health_need": "Consulta pediátrica",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Centro pediátrico",
+      "recommended_service": "Pediatría",
+      "recommended_specialty": "Pediatra",
+      "message": "Te recomiendo una consulta pediatrica.",
+      "priority": 10
+    },
+    {
+      "health_need": "Control de diabetes",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Para control de diabetes, inicia por medicina general y laboratorio.",
+      "priority": 10
+    },
+    {
+      "health_need": "Control de embarazo",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Clínica ginecológica",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "message": "Para control de embarazo, agenda ginecologia.",
+      "priority": 10
+    },
+    {
+      "health_need": "Control de presión arterial",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Para control de presion arterial, acude a medicina general.",
+      "priority": 10
+    },
+    {
+      "health_need": "Dolor abdominal",
+      "min_risk_score": 0,
+      "max_risk_score": 4,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Puedes iniciar con medicina general en policlínico.",
+      "priority": 10
+    },
+    {
+      "health_need": "Dolor abdominal",
+      "min_risk_score": 5,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Dolor abdominal con signos de alarma debe evaluarse en urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Dolor articular",
+      "min_risk_score": 0,
+      "max_risk_score": 5,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Traumatología",
+      "recommended_specialty": "Traumatólogo",
+      "message": "Dolor articular sin fiebre puede valorarse en policlínico.",
+      "priority": 10
+    },
+    {
+      "health_need": "Dolor articular",
+      "min_risk_score": 6,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Dolor articular con fiebre o inflamacion importante requiere urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Dolor de cabeza",
+      "min_risk_score": 0,
+      "max_risk_score": 4,
+      "recommended_institution_type": "Clínica privada",
+      "recommended_service": "Neurología",
+      "recommended_specialty": "Neurólogo",
+      "message": "Para cefalea recurrente o persistente, agenda neurologia.",
+      "priority": 10
+    },
+    {
+      "health_need": "Dolor de cabeza",
+      "min_risk_score": 5,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Neurología",
+      "recommended_specialty": "Neurólogo",
+      "message": "Dolor de cabeza con signos de alarma requiere urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Dolor de cabeza con fiebre",
+      "min_risk_score": 0,
+      "max_risk_score": 5,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Dolor de cabeza con fiebre sin signos neurológicos: consulta medicina general.",
+      "priority": 10
+    },
+    {
+      "health_need": "Dolor de cabeza con fiebre",
+      "min_risk_score": 6,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Neurología",
+      "recommended_specialty": "Neurólogo",
+      "message": "Dolor de cabeza con fiebre y signos de alarma requiere urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Dolor de espalda",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Traumatología",
+      "recommended_specialty": "Traumatólogo",
+      "message": "Para dolor de espalda, consulta traumatologia o medicina general.",
+      "priority": 10
+    },
+    {
+      "health_need": "Dolor de garganta",
+      "min_risk_score": 0,
+      "max_risk_score": 5,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Dolor de garganta sin signos graves: consulta medicina general.",
+      "priority": 10
+    },
+    {
+      "health_need": "Dolor de garganta",
+      "min_risk_score": 6,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Dolor de garganta con dificultad respiratoria o para tragar requiere urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Dolor de oído",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Puedes iniciar con medicina general en policlínico.",
+      "priority": 10
+    },
+    {
+      "health_need": "Dolor de rodilla",
+      "min_risk_score": 0,
+      "max_risk_score": 5,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Traumatología",
+      "recommended_specialty": "Traumatólogo",
+      "message": "Dolor de rodilla sin signos graves: consulta traumatologia/policlínico.",
+      "priority": 10
+    },
+    {
+      "health_need": "Dolor de rodilla",
+      "min_risk_score": 6,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Dolor de rodilla con fiebre, inflamacion importante o incapacidad para apoyar requiere urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Dolor dental",
+      "min_risk_score": 0,
+      "max_risk_score": 3,
+      "recommended_institution_type": "Clínica dental",
+      "recommended_service": "Odontología",
+      "recommended_specialty": "Dentista",
+      "message": "Según tus respuestas, te recomiendo acudir a una clínica dental.",
+      "priority": 10
+    },
+    {
+      "health_need": "Dolor dental",
+      "min_risk_score": 4,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Hay signos de posible complicacion. Te recomiendo acudir a urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Dolor en el pecho",
+      "min_risk_score": 0,
+      "max_risk_score": 3,
+      "recommended_institution_type": "Clínica privada",
+      "recommended_service": "Cardiología",
+      "recommended_specialty": "Cardiólogo",
+      "message": "Sí no hay signos de alarma, agenda una consulta cardiologica.",
+      "priority": 10
+    },
+    {
+      "health_need": "Dolor en el pecho",
+      "min_risk_score": 4,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Cardiología",
+      "recommended_specialty": "Cardiólogo",
+      "message": "Dolor de pecho con signos de alarma requiere hospital o urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Dolor muscular o corporal",
+      "min_risk_score": 0,
+      "max_risk_score": 5,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Dolor corporal con o sin fiebre leve: consulta medicina general.",
+      "priority": 10
+    },
+    {
+      "health_need": "Dolor muscular o corporal",
+      "min_risk_score": 6,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Dolor corporal con fiebre alta o debilidad intensa requiere urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Fiebre con debilidad",
+      "min_risk_score": 0,
+      "max_risk_score": 5,
+      "recommended_institution_type": "Clínica privada",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Fiebre con debilidad moderada requiere consulta médica.",
+      "priority": 10
+    },
+    {
+      "health_need": "Fiebre con debilidad",
+      "min_risk_score": 6,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Debilidad intensa con fiebre requiere evaluación urgente. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Fiebre general",
+      "min_risk_score": 0,
+      "max_risk_score": 5,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Parece fiebre sin signos graves. Te recomiendo medicina general en policlínico.",
+      "priority": 10
+    },
+    {
+      "health_need": "Fiebre general",
+      "min_risk_score": 6,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "La fiebre tiene signos de alarma. Te recomiendo hospital o urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Fiebre infantil",
+      "min_risk_score": 0,
+      "max_risk_score": 5,
+      "recommended_institution_type": "Centro pediátrico",
+      "recommended_service": "Pediatría",
+      "recommended_specialty": "Pediatra",
+      "message": "Te recomiendo una consulta pediatrica.",
+      "priority": 10
+    },
+    {
+      "health_need": "Fiebre infantil",
+      "min_risk_score": 6,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Hay signos de alarma en un menor. Acude a hospital o urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "General fever",
+      "min_risk_score": 0,
+      "max_risk_score": 7,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Te recomiendo medicina general en policlínico.",
+      "priority": 10
+    },
+    {
+      "health_need": "General fever",
+      "min_risk_score": 8,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Fiebre con signos de alarma requiere atención urgente. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Headache with fever",
+      "min_risk_score": 0,
+      "max_risk_score": 5,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Dolor de cabeza con fiebre sin signos de alarma puede iniciar por medicina general.",
+      "priority": 10
+    },
+    {
+      "health_need": "Headache with fever",
+      "min_risk_score": 6,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Neurología",
+      "recommended_specialty": "Neurólogo",
+      "message": "Dolor de cabeza con fiebre alta, confusion o rigidez de cuello requiere urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Herida con riesgo de tétanos",
+      "min_risk_score": 5,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "La herida requiere evaluación urgente y posible profilaxis antitetanica. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Inflamación articular",
+      "min_risk_score": 0,
+      "max_risk_score": 4,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Traumatología",
+      "recommended_specialty": "Traumatólogo",
+      "message": "Inflamacion articular leve: consulta traumatologia.",
+      "priority": 10
+    },
+    {
+      "health_need": "Inflamación articular",
+      "min_risk_score": 5,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Inflamacion articular con fiebre o dolor intenso requiere urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Knee pain",
+      "min_risk_score": 0,
+      "max_risk_score": 7,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Traumatología",
+      "recommended_specialty": "Traumatólogo",
+      "message": "Te recomiendo consulta con traumatologia en policlínico.",
+      "priority": 10
+    },
+    {
+      "health_need": "Knee pain",
+      "min_risk_score": 8,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Dolor de rodilla con fiebre, lesion fuerte o incapacidad para caminar requiere urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Malestar general",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Malestar general persistente: consulta medicina general.",
+      "priority": 10
+    },
+    {
+      "health_need": "Necesidad de farmacia",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Farmacia",
+      "recommended_service": "Farmacia",
+      "recommended_specialty": "Farmacéutico",
+      "message": "Te recomiendo una farmacia cercana en Kursk.",
+      "priority": 10
+    },
+    {
+      "health_need": "Possible pregnancy",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Clínica ginecológica",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "message": "Te recomiendo consulta ginecológica para confirmar y orientar el posible embarazo.",
+      "priority": 10
+    },
+    {
+      "health_need": "Problemas de visión",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Centro oftalmológico",
+      "recommended_service": "Oftalmología",
+      "recommended_specialty": "Oftalmólogo",
+      "message": "Te recomiendo un centro oftalmologico.",
+      "priority": 10
+    },
+    {
+      "health_need": "Problemas dermatológicos",
+      "min_risk_score": 0,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Clínica privada",
+      "recommended_service": "Dermatología",
+      "recommended_specialty": "Dermatólogo",
+      "message": "Te recomiendo dermatologia.",
+      "priority": 10
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "min_risk_score": 0,
+      "max_risk_score": 4,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "message": "Según tus respuestas, te recomiendo consulta con ginecología en policlínico o clínica ginecológica.",
+      "priority": 10
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "min_risk_score": 5,
+      "max_risk_score": 9,
+      "recommended_institution_type": "Clínica ginecológica",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "message": "Por la duración y síntomas, te recomiendo ginecología prioritaria.",
+      "priority": 5
+    },
+    {
+      "health_need": "Prolonged menstrual bleeding",
+      "min_risk_score": 10,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "message": "Por el sangrado y signos de alarma, te recomiendo hospital o urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Severe menstrual pain",
+      "min_risk_score": 0,
+      "max_risk_score": 6,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "message": "Te recomiendo consulta con ginecologia.",
+      "priority": 10
+    },
+    {
+      "health_need": "Severe menstrual pain",
+      "min_risk_score": 7,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Ginecología",
+      "recommended_specialty": "Ginecólogo",
+      "message": "Dolor menstrual fuerte con signos de alarma requiere urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Sospecha de infección",
+      "min_risk_score": 0,
+      "max_risk_score": 5,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Sospecha de infeccion: consulta medicina general.",
+      "priority": 10
+    },
+    {
+      "health_need": "Sospecha de infección",
+      "min_risk_score": 6,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Infeccion con signos de alarma requiere urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Síntomas respiratorios",
+      "min_risk_score": 0,
+      "max_risk_score": 5,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Síntomas respiratorios leves: consulta medicina general.",
+      "priority": 10
+    },
+    {
+      "health_need": "Síntomas respiratorios",
+      "min_risk_score": 6,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Dificultad respiratoria requiere urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Tetanus vaccination",
+      "min_risk_score": 5,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Herida con riesgo de tetanos requiere evaluación urgente. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    },
+    {
+      "health_need": "Vacunación infantil",
+      "min_risk_score": 0,
+      "max_risk_score": 3,
+      "recommended_institution_type": "Centro pediátrico",
+      "recommended_service": "Vacunación",
+      "recommended_specialty": "Pediatra",
+      "message": "Para vacunación infantil programada, acude a policlínico o centro pediátrico.",
+      "priority": 10
+    },
+    {
+      "health_need": "Vacunación infantil",
+      "min_risk_score": 4,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Centro pediátrico",
+      "recommended_service": "Pediatría",
+      "recommended_specialty": "Pediatra",
+      "message": "Antes de vacunar, conviene consultar pediatria por los antecedentes o síntomas.",
+      "priority": 5
+    },
+    {
+      "health_need": "Weakness",
+      "min_risk_score": 0,
+      "max_risk_score": 6,
+      "recommended_institution_type": "Policlínico",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Te recomiendo medicina general para valorar la debilidad.",
+      "priority": 10
+    },
+    {
+      "health_need": "Weakness",
+      "min_risk_score": 7,
+      "max_risk_score": 99,
+      "recommended_institution_type": "Hospital",
+      "recommended_service": "Medicina general",
+      "recommended_specialty": "Médico general",
+      "message": "Debilidad repentina o con dolor torácico/dificultad respiratoria requiere urgencias. Se prioriza hospital con servicios confirmados por el informe.",
+      "priority": 1
+    }
+  ],
+  "medical_centers": [
+    {
+      "name": "Kursk Regional Multidisciplinary Clinical Hospital",
+      "official_name": "ОБУЗ «Курская областная многопрофильная клиническая больница»",
+      "institution_type": "Hospital",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Сумская, 45А",
+      "original_address": null,
+      "address_status": "confirmed",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://kurskokb.gosuslugi.ru/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "public",
+      "has_emergency": true,
+      "is_public": true,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://kurskokb.gosuslugi.ru/",
+      "source_urls": [
+        "https://kurskokb.gosuslugi.ru/",
+        "https://kurskokb.gosuslugi.ru/informatsiya-dlya-patsientov/otdeleniya/kardiologicheskoe-otdelenie-konsultativno-diagnosticheskoy-polikliniki.html",
+        "https://kurskokb.gosuslugi.ru/informatsiya-dlya-patsientov/otdeleniya/nevrologicheskoe-otdelenie.html",
+        "https://kurskokb.gosuslugi.ru/informatsiya-dlya-patsientov/otdeleniya/konsultativno-diagnosticheskaya-poliklinika/"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Cardiología, Neurología, Diagnóstico por imagen.",
+      "services": [
+        "Cardiología",
+        "Neurología",
+        "Diagnóstico por imagen"
+      ],
+      "specialties": [
+        "Cardiólogo",
+        "Neurólogo"
+      ],
+      "verification_notes": "Nombre/dirección Сумская 45А confirmados. Varios servicios se verifican por páginas de departamentos oficiales."
+    },
+    {
+      "name": "Kursk City Hospital No. 1",
+      "official_name": "ОБУЗ «Курская городская больница №1 им. Н.С. Короткова»",
+      "institution_type": "Hospital",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Садовая, 40",
+      "original_address": "ул. Димитрова, 62",
+      "address_status": "corrected",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://gbk-kursk.ru/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "public",
+      "has_emergency": true,
+      "is_public": true,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://gbk-kursk.ru/",
+      "source_urls": [
+        "https://gbk-kursk.ru/",
+        "https://gbk-kursk.ru/wp-content/uploads/2024/12/tseny-s-09.01.2025-1.pdf",
+        "https://gbk-kursk.ru/administratsiya/",
+        "https://gbk-kursk.ru/wp-content/uploads/2024/01/grafik_1_etap.pdf",
+        "https://gbk-kursk.ru/wp-content/uploads/2024/01/grafik_2_etap.pdf"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Medicina general, Cardiología, Radiografía, Ginecología.",
+      "services": [
+        "Medicina general",
+        "Cardiología",
+        "Radiografía",
+        "Ginecología"
+      ],
+      "specialties": [
+        "Médico general",
+        "Cardiólogo",
+        "Ginecólogo"
+      ],
+      "verification_notes": "En el JSON figura ул. Димитрова, 62, pero la fuente oficial principal muestra ул. Садовая, 40 como dirección de la institución; hay que corregir/normalizar sedes."
+    },
+    {
+      "name": "Kursk City Hospital No. 4 Trauma Point",
+      "official_name": "Курская городская клиническая больница №4, травматологический пункт",
+      "institution_type": "Centro de urgencias",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "2-й Промышленный пер., 13",
+      "original_address": "ул. Радищева, 42",
+      "address_status": "corrected",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://yandex.ru/medicine/clinic/kurskaya-gorodskaya-klinicheskaya-bolnitsa-4-travmatologicheskiy-punkt_1112295489",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "public",
+      "has_emergency": true,
+      "is_public": true,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://yandex.ru/medicine/clinic/kurskaya-gorodskaya-klinicheskaya-bolnitsa-4-travmatologicheskiy-punkt_1112295489",
+      "source_urls": [
+        "https://yandex.ru/medicine/clinic/kurskaya-gorodskaya-klinicheskaya-bolnitsa-4-travmatologicheskiy-punkt_1112295489"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: ningún servicio del JSON original quedó confirmado.",
+      "services": [],
+      "specialties": [],
+      "verification_notes": "La dirección encontrada es 2-й Промышленный пер., 13, no Радищева, 42. El nombre del JSON no coincide."
+    },
+    {
+      "name": "City Hospital No. 1 Polyclinic, Sadovaya 40",
+      "official_name": "Поликлиника ОБУЗ «Курская городская больница №1 им. Н.С. Короткова», ул. Садовая, 40",
+      "institution_type": "Policlínico",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Садовая, 40",
+      "original_address": "ул. Ленина, 30",
+      "address_status": "corrected",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://gbk-kursk.ru/poliklinika-na-ul-sadovaya-40/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "public",
+      "has_emergency": false,
+      "is_public": true,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://gbk-kursk.ru/poliklinika-na-ul-sadovaya-40/",
+      "source_urls": [
+        "https://gbk-kursk.ru/poliklinika-na-ul-sadovaya-40/"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Medicina general, Vacunación, Análisis de sangre, Ecografía.",
+      "services": [
+        "Medicina general",
+        "Vacunación",
+        "Análisis de sangre",
+        "Ecografía"
+      ],
+      "specialties": [
+        "Médico general",
+        "Pediatra",
+        "Técnico de laboratorio"
+      ],
+      "verification_notes": "En el JSON figura ул. Ленина, 30; la fuente oficial verificada para la policlínica asociada indica ул. Садовая, 40. Requiere corrección."
+    },
+    {
+      "name": "Kursk City Polyclinic No. 5",
+      "official_name": "ОБУЗ «Курская городская поликлиника №5»",
+      "institution_type": "Policlínico",
+      "city": "Курск",
+      "district": "Железнодорожный",
+      "address": "ул. Запольная, 43А",
+      "original_address": "ул. Союзная, 30",
+      "address_status": "corrected",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://kgp5kursk.gosuslugi.ru/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "public",
+      "has_emergency": false,
+      "is_public": true,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://kgp5kursk.gosuslugi.ru/",
+      "source_urls": [
+        "https://kgp5kursk.gosuslugi.ru/",
+        "https://kgp5kursk.gosuslugi.ru/informatsiya-dlya-patsientov/platnye-uslugi/"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Medicina general, Vacunación, Análisis de sangre.",
+      "services": [
+        "Medicina general",
+        "Vacunación",
+        "Análisis de sangre"
+      ],
+      "specialties": [
+        "Médico general",
+        "Pediatra",
+        "Técnico de laboratorio"
+      ],
+      "verification_notes": "La fuente oficial muestra ул. Запольная 43А como dirección postal; el JSON usa ул. Союзная, 30, que corresponde a otra entidad/hospital №6 según otra fuente."
+    },
+    {
+      "name": "Medassist Medical Center Kursk",
+      "official_name": "Медицинский центр «Медассист»",
+      "institution_type": "Clínica privada",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Димитрова, 16",
+      "original_address": null,
+      "address_status": "confirmed",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://medassist-k.ru/doctors/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://medassist-k.ru/doctors/",
+      "source_urls": [
+        "https://medassist-k.ru/doctors/",
+        "https://medassist-k.ru/schedule/"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Medicina general, Cardiología, Ginecología, Neurología, Dermatología, Ecografía.",
+      "services": [
+        "Medicina general",
+        "Cardiología",
+        "Ginecología",
+        "Neurología",
+        "Dermatología",
+        "Ecografía"
+      ],
+      "specialties": [
+        "Médico general",
+        "Cardiólogo",
+        "Ginecólogo",
+        "Neurólogo",
+        "Dermatólogo"
+      ],
+      "verification_notes": "Sitio oficial y horarios/doctores confirman sede en ул. Димитрова, 16."
+    },
+    {
+      "name": "Expert Clinic Kursk",
+      "official_name": "Медицинская сеть «Клиника Эксперт» Курск",
+      "institution_type": "Clínica privada",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Карла Либкнехта, 7; ул. 50 лет Октября, 88А",
+      "original_address": "ул. Карла Маркса, 66Б",
+      "address_status": "corrected",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://kur.klinikaexpert.ru/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://kur.klinikaexpert.ru/",
+      "source_urls": [
+        "https://kur.klinikaexpert.ru/",
+        "https://kur.klinikaexpert.ru/prices"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Cardiología, Neurología, Diagnóstico por imagen, Ecografía.",
+      "services": [
+        "Cardiología",
+        "Neurología",
+        "Diagnóstico por imagen",
+        "Ecografía"
+      ],
+      "specialties": [
+        "Cardiólogo",
+        "Neurólogo"
+      ],
+      "verification_notes": "Confirmado, pero el JSON usa Карла Маркса 66Б; la web oficial verificada lista Карла Либкнехта 7 y 50 лет Октября 88А para Kursk. Revisar dirección."
+    },
+    {
+      "name": "Healthy Family Medical Center Kursk",
+      "official_name": "МЦ «Здоровая семья» / Family MC",
+      "institution_type": "Clínica privada",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": null,
+      "original_address": "ул. Радищева, 86",
+      "address_status": "not_confirmed",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://family-mc.ru/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://family-mc.ru/",
+      "source_urls": [
+        "https://family-mc.ru/"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Medicina general, Pediatría, Dermatología.",
+      "services": [
+        "Medicina general",
+        "Pediatría",
+        "Dermatología"
+      ],
+      "specialties": [
+        "Médico general",
+        "Pediatra",
+        "Dermatólogo"
+      ],
+      "verification_notes": "Confirmado por web de clínica; el JSON usa Радищева 86 pero la fuente encontrada no confirma esa dirección. Revisar sede exacta."
+    },
+    {
+      "name": "Kursk Regional Dental Polyclinic",
+      "official_name": "ОБУЗ «Курская областная стоматологическая поликлиника» / стоматологическая помощь",
+      "institution_type": "Clínica dental",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Садовая, 42А; ул. Радищева, 109",
+      "original_address": "ул. Горького, 15",
+      "address_status": "corrected",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://med-p-kosp-r38.gosweb.gosuslugi.ru/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://med-p-kosp-r38.gosweb.gosuslugi.ru/",
+      "source_urls": [
+        "https://med-p-kosp-r38.gosweb.gosuslugi.ru/"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Odontología.",
+      "services": [
+        "Odontología"
+      ],
+      "specialties": [
+        "Dentista"
+      ],
+      "verification_notes": "El JSON usa «Dental Clinic No. 1» y Горького 15; las fuentes oficiales encontradas corresponden a областная стоматологическая поликлиника con sedes Садовая 42А/Радищева 109. Requiere corrección."
+    },
+    {
+      "name": "Denta-Lux Kursk",
+      "official_name": "ООО «Дента-Люкс»",
+      "institution_type": "Clínica dental",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Интернациональная, 45",
+      "original_address": "ул. Ленина, 72",
+      "address_status": "corrected",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://dentalux-k.ru/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://dentalux-k.ru/",
+      "source_urls": [
+        "https://dentalux-k.ru/",
+        "https://dentallux72.ru/services"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Odontología.",
+      "services": [
+        "Odontología"
+      ],
+      "specialties": [
+        "Dentista"
+      ],
+      "verification_notes": "Confirmado, pero la fuente de contacto encontrada indica Интернациональная 45; el JSON usa Ленина 72. Revisar sede."
+    },
+    {
+      "name": "Smile Dental Center Kursk",
+      "official_name": "Стоматологическая клиника/центр «Смайл»",
+      "institution_type": "Clínica dental",
+      "city": "Курск",
+      "district": "Сеймский",
+      "address": "пр-т Кулакова, 9",
+      "original_address": null,
+      "address_status": "confirmed",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://yandex.ru/medicine/clinic/smayl_1182588955",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://yandex.ru/medicine/clinic/smayl_1182588955",
+      "source_urls": [
+        "https://yandex.ru/medicine/clinic/smayl_1182588955"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Odontología.",
+      "services": [
+        "Odontología"
+      ],
+      "specialties": [
+        "Dentista"
+      ],
+      "verification_notes": "Confirmado en directorios reputados; no encontré sitio oficial propio."
+    },
+    {
+      "name": "Kursk City Children Polyclinic",
+      "official_name": "ОБУЗ «Курская городская детская поликлиника» / филиалы",
+      "institution_type": "Centro pediátrico",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": null,
+      "original_address": "ул. Садовая, 40",
+      "address_status": "not_confirmed",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://obuzkgdp.ru/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "public",
+      "has_emergency": false,
+      "is_public": true,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://obuzkgdp.ru/",
+      "source_urls": [
+        "https://obuzkgdp.ru/",
+        "https://obuzkgdp.ru/obyavleniya/novoe-postuplenie-vakczin.html"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Pediatría, Vacunación.",
+      "services": [
+        "Pediatría",
+        "Vacunación"
+      ],
+      "specialties": [
+        "Pediatra"
+      ],
+      "verification_notes": "Confirmada la organización pediátrica; la dirección Садовая 40 no corresponde claramente a esta entidad pediátrica en la fuente principal. Revisar sede."
+    },
+    {
+      "name": "INVITRO Kursk",
+      "official_name": "ИНВИТРО, медицинские офисы в Курске",
+      "institution_type": "Laboratorio",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": null,
+      "original_address": "ул. Ленина, 60",
+      "address_status": "not_confirmed",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://www.invitro.ru/offices/kursk/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://www.invitro.ru/offices/kursk/",
+      "source_urls": [
+        "https://www.invitro.ru/offices/kursk/",
+        "https://www.invitro.ru/analizes/for-doctors/kursk/156/28932/"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Análisis de sangre.",
+      "services": [
+        "Análisis de sangre"
+      ],
+      "specialties": [
+        "Técnico de laboratorio"
+      ],
+      "verification_notes": "Confirmado como red y oficinas en Kursk; dirección específica Ленина 60 no quedó confirmada en la fuente recuperada."
+    },
+    {
+      "name": "Gemotest Kursk",
+      "official_name": "Лаборатория Гемотест",
+      "institution_type": "Laboratorio",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": null,
+      "original_address": "ул. Радищева, 79",
+      "address_status": "not_confirmed",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://gemotest.ru/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://gemotest.ru/",
+      "source_urls": [
+        "https://gemotest.ru/"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Análisis de sangre.",
+      "services": [
+        "Análisis de sangre"
+      ],
+      "specialties": [
+        "Técnico de laboratorio"
+      ],
+      "verification_notes": "Confirmado como red de laboratorios; la dirección Радищева 79 no quedó confirmada en fuente oficial recuperada."
+    },
+    {
+      "name": "KDL Medical Laboratory Kursk",
+      "official_name": "KDL, медицинская лаборатория",
+      "institution_type": "Laboratorio",
+      "city": "Курск",
+      "district": "Сеймский",
+      "address": "ул. Ленина, 53",
+      "original_address": "пр-т Кулакова, 5",
+      "address_status": "corrected",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://kdl.ru/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://kdl.ru/",
+      "source_urls": [
+        "https://kdl.ru/",
+        "https://kdl.ru/analizy-i-tseny/obshiy-analiz-krovi"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Análisis de sangre.",
+      "services": [
+        "Análisis de sangre"
+      ],
+      "specialties": [
+        "Técnico de laboratorio"
+      ],
+      "verification_notes": "Confirmado como red; la dirección verificada por directorio fue Ленина 53, no Кулакова 5."
+    },
+    {
+      "name": "MRT Expert Kursk",
+      "official_name": "Клиника Эксперт / МРТ Эксперт Курск",
+      "institution_type": "Centro diagnóstico",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Карла Либкнехта, 7; ул. 50 лет Октября, 88А",
+      "original_address": "ул. Карла Маркса, 49",
+      "address_status": "corrected",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://kur.klinikaexpert.ru/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://kur.klinikaexpert.ru/",
+      "source_urls": [
+        "https://kur.klinikaexpert.ru/",
+        "https://kur.klinikaexpert.ru/categories/12",
+        "https://kur.klinikaexpert.ru/categories/71"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Diagnóstico por imagen, Ecografía, Radiografía.",
+      "services": [
+        "Diagnóstico por imagen",
+        "Ecografía",
+        "Radiografía"
+      ],
+      "specialties": [],
+      "verification_notes": "Confirmado; el JSON usa Карла Маркса 49, pero la fuente oficial muestra Карла Либкнехта 7 y 50 лет Октября 88А."
+    },
+    {
+      "name": "Nadezhda Diagnostic Center Kursk",
+      "official_name": "Клиника «Надежда» / диагностический центр на Павлуновского 48А",
+      "institution_type": "Centro diagnóstico",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Павлуновского, 48А",
+      "original_address": "ул. Павлуновского, 48",
+      "address_status": "corrected",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://yandex.ru/medicine/clinic/nadezhda_1745966612",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://yandex.ru/medicine/clinic/nadezhda_1745966612",
+      "source_urls": [
+        "https://yandex.ru/medicine/clinic/nadezhda_1745966612"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Ecografía.",
+      "services": [
+        "Ecografía"
+      ],
+      "specialties": [],
+      "verification_notes": "Confirmado por directorio médico; no oficial propio recuperado. El JSON usa Павлуновского 48, fuente indica 48А."
+    },
+    {
+      "name": "Kursk Ophthalmology Clinical Hospital",
+      "official_name": "ОБУЗ «Офтальмологическая клиническая больница — офтальмологический центр»",
+      "institution_type": "Centro oftalmológico",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Садовая, 42А",
+      "original_address": "ул. Радищева, 20",
+      "address_status": "corrected",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://vision-kursk.ru/%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D1%8B%D0%B5-%D1%83%D1%81%D0%BB%D1%83%D0%B3%D0%B8/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "mixed",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://vision-kursk.ru/%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D1%8B%D0%B5-%D1%83%D1%81%D0%BB%D1%83%D0%B3%D0%B8/",
+      "source_urls": [
+        "https://vision-kursk.ru/%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D1%8B%D0%B5-%D1%83%D1%81%D0%BB%D1%83%D0%B3%D0%B8/",
+        "https://kurskeyeclinic.ru/index.php?Itemid=50&id=90&option=com_content&view=article"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Oftalmología.",
+      "services": [
+        "Oftalmología"
+      ],
+      "specialties": [
+        "Oftalmólogo"
+      ],
+      "verification_notes": "Confirmado; dirección oficial Садовая 42А, no Радищева 20."
+    },
+    {
+      "name": "Vision Protection Center Kursk",
+      "official_name": "Центр охраны зрения, Курск",
+      "institution_type": "Centro oftalmológico",
+      "city": "Курск",
+      "district": "Сеймский",
+      "address": "ул. Хуторская, 4",
+      "original_address": "пр-т Кулакова, 24",
+      "address_status": "corrected",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://zrenie46.ru/doctors",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "mixed",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://zrenie46.ru/doctors",
+      "source_urls": [
+        "https://zrenie46.ru/doctors",
+        "https://zrenie46.ru/apparatnoe-lechenie/lechebno-diagnosticheskie-uslugi"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Oftalmología.",
+      "services": [
+        "Oftalmología"
+      ],
+      "specialties": [
+        "Oftalmólogo"
+      ],
+      "verification_notes": "Confirmado como centro oftalmológico; la dirección oficial encontrada Хуторская 4, no Кулакова 24."
+    },
+    {
+      "name": "New Medical Technologies Kursk, Lenina 90/2",
+      "official_name": "Новые медицинские технологии, филиал Курск Ленина 90/2",
+      "institution_type": "Clínica ginecológica",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Ленина, 90/2",
+      "original_address": "ул. Ленина, 90",
+      "address_status": "corrected",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://nmtkursk.ru/v-kurske/kursk-lenina-90-2",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "mixed",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://nmtkursk.ru/v-kurske/kursk-lenina-90-2",
+      "source_urls": [
+        "https://nmtkursk.ru/v-kurske/kursk-lenina-90-2",
+        "https://nmtkursk.ru/diagnostika/drugie-vidy-diagnostiki/ginekologiya/"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Ginecología, Ecografía, Consulta ginecológica.",
+      "services": [
+        "Ginecología",
+        "Ecografía",
+        "Consulta ginecológica"
+      ],
+      "specialties": [
+        "Ginecólogo"
+      ],
+      "verification_notes": "Confirmado como NMT/АПЕКСМЕД en Ленина 90/2; nombre «Women's Health» no oficial. Requiere renombrar."
+    },
+    {
+      "name": "Kursk City Clinical Maternity Hospital",
+      "official_name": "Курский городской клинический родильный дом / перинатальный профиль",
+      "institution_type": "Clínica ginecológica",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Пирогова, 10",
+      "original_address": null,
+      "address_status": "confirmed",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://yandex.ru/medicine/clinic/kurskiy-gorodskoy-klinicheskiy-rodilny-dom_1356893497",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "mixed",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://yandex.ru/medicine/clinic/kurskiy-gorodskoy-klinicheskiy-rodilny-dom_1356893497",
+      "source_urls": [
+        "https://yandex.ru/medicine/clinic/kurskiy-gorodskoy-klinicheskiy-rodilny-dom_1356893497"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Ginecología, Ecografía, Consulta ginecológica.",
+      "services": [
+        "Ginecología",
+        "Ecografía",
+        "Consulta ginecológica"
+      ],
+      "specialties": [
+        "Ginecólogo"
+      ],
+      "verification_notes": "Confirmado en Пирогова 10; para servicios oficiales de pago se usó página del областной перинатальный центр, no necesariamente la misma entidad."
+    },
+    {
+      "name": "April Pharmacy Kursk, Kulakova 3G",
+      "official_name": "Аптека «Апрель»",
+      "institution_type": "Farmacia",
+      "city": "Курск",
+      "district": "Сеймский",
+      "address": "пр-т Кулакова, 3Г",
+      "original_address": "пр-т Кулакова, 3",
+      "address_status": "corrected",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://apteka-april.ru/apteki/122586-kursk",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://apteka-april.ru/apteki/122586-kursk",
+      "source_urls": [
+        "https://apteka-april.ru/apteki/122586-kursk"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Farmacia.",
+      "services": [
+        "Farmacia"
+      ],
+      "specialties": [
+        "Farmacéutico"
+      ],
+      "verification_notes": "Confirmada en Курск, проспект Кулакова 3Г; el JSON usa 3, hay que corregir a 3Г."
+    },
+    {
+      "name": "ReaMed+ Rehabilitation Center Kursk",
+      "official_name": "РеаМед+ / ООО «Оздоровительно-реабилитационный центр Аква-Курск»",
+      "institution_type": "Clínica privada",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Союзная, 26",
+      "original_address": "ул. Садовая, 12",
+      "address_status": "corrected",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://reamedplus.ru/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://reamedplus.ru/",
+      "source_urls": [
+        "https://reamedplus.ru/",
+        "https://reamedplus.ru/services/lfk/"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Rehabilitación, Traumatología.",
+      "services": [
+        "Rehabilitación",
+        "Traumatología"
+      ],
+      "specialties": [
+        "Traumatólogo"
+      ],
+      "verification_notes": "Confirmado; dirección oficial Союзная 26, no Садовая 12."
+    },
+    {
+      "name": "Medial Medical Center Kursk",
+      "official_name": "Медицинский центр «Медиал» / либо КОККВД",
+      "institution_type": "Clínica privada",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Радищева, 60/15",
+      "original_address": "ул. Радищева, 60",
+      "address_status": "corrected",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://prodoctorov.ru/kursk/lpu/27963-medial/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "confirmed",
+      "verification_source_url": "https://prodoctorov.ru/kursk/lpu/27963-medial/",
+      "source_urls": [
+        "https://prodoctorov.ru/kursk/lpu/27963-medial/"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Dermatología.",
+      "services": [
+        "Dermatología"
+      ],
+      "specialties": [
+        "Dermatólogo"
+      ],
+      "verification_notes": "La dirección Радищева 60/15 corresponde a МЦ «Медиал» en directorio médico; no a un nombre genérico “Dermatology Clinic”. Para dermatología pública, la fuente oficial del КОККВД está en Димитрова 62."
+    }
+  ],
+  "medical_centers_needs_review": [
+    {
+      "name": "City Polyclinic No. 2 Kursk",
+      "official_name": "No confirmado como «City Polyclinic No. 2» en пр-т Кулакова, 23",
+      "institution_type": "Policlínico",
+      "city": "Курск",
+      "district": "Сеймский",
+      "address": "пр-т Кулакова, 23",
+      "original_address": null,
+      "address_status": "confirmed",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": null,
+      "working_hours": null,
+      "rating": null,
+      "price_level": "public",
+      "has_emergency": false,
+      "is_public": true,
+      "existence_status": "not_confirmed",
+      "verification_source_url": null,
+      "source_urls": [],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: ningún servicio del JSON original quedó confirmado.",
+      "services": [],
+      "specialties": [],
+      "verification_notes": "No queda como institución activa recomendada. No encontré fuente oficial clara para esa combinación nombre-dirección. Puede existir bajo otra organización/sede."
+    },
+    {
+      "name": "Children Polyclinic No. 2 Kursk",
+      "official_name": "Филиал/детская поликлиника, ул. Маяковского 100",
+      "institution_type": "Centro pediátrico",
+      "city": "Курск",
+      "district": "Железнодорожный",
+      "address": "ул. Маяковского, 100",
+      "original_address": null,
+      "address_status": "confirmed",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": null,
+      "working_hours": null,
+      "rating": null,
+      "price_level": "public",
+      "has_emergency": false,
+      "is_public": true,
+      "existence_status": "not_confirmed",
+      "verification_source_url": null,
+      "source_urls": [],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: ningún servicio del JSON original quedó confirmado.",
+      "services": [],
+      "specialties": [],
+      "verification_notes": "No queda como institución activa recomendada. No encontré fuente oficial clara que confirme esa combinación nombre-dirección."
+    },
+    {
+      "name": "Pediatric Center Zdorovie Detey",
+      "official_name": "Педиатрический центр «Здоровье детей»",
+      "institution_type": "Centro pediátrico",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Карла Маркса, 55",
+      "original_address": null,
+      "address_status": "confirmed",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": null,
+      "working_hours": null,
+      "rating": null,
+      "price_level": "public",
+      "has_emergency": false,
+      "is_public": true,
+      "existence_status": "not_confirmed",
+      "verification_source_url": null,
+      "source_urls": [],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: ningún servicio del JSON original quedó confirmado.",
+      "services": [],
+      "specialties": [],
+      "verification_notes": "No queda como institución activa recomendada. No encontré fuente oficial verificable para Карла Маркса 55 con ese nombre."
+    },
+    {
+      "name": "Apteka 36.6 Kursk Center",
+      "official_name": "Аптека 36,6",
+      "institution_type": "Farmacia",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Ленина, 24",
+      "original_address": null,
+      "address_status": "confirmed",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://366.ru/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "not_confirmed",
+      "verification_source_url": "https://366.ru/",
+      "source_urls": [
+        "https://366.ru/"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: ningún servicio del JSON original quedó confirmado.",
+      "services": [],
+      "specialties": [],
+      "verification_notes": "No queda como institución activa recomendada. La red existe, pero no confirmé oficialmente una farmacia 36.6 en Курск, ул. Ленина 24."
+    },
+    {
+      "name": "Rigla Pharmacy Kursk",
+      "official_name": "Ригла, федеральная аптечная сеть",
+      "institution_type": "Farmacia",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Карла Маркса, 17",
+      "original_address": null,
+      "address_status": "confirmed",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://kursk.rigla.ru/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "not_confirmed",
+      "verification_source_url": "https://kursk.rigla.ru/",
+      "source_urls": [
+        "https://kursk.rigla.ru/",
+        "https://kursk.rigla.ru/mans/apteka"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: Farmacia.",
+      "services": [
+        "Farmacia"
+      ],
+      "specialties": [
+        "Farmacéutico"
+      ],
+      "verification_notes": "No queda como institución activa recomendada. La red y sitio regional existen, pero no confirmé la dirección Карла Маркса 17 como Ригла; búsqueda arrojó otra farmacia en esa dirección."
+    },
+    {
+      "name": "Neurology Center Kursk",
+      "official_name": "No confirmado como centro neurológico en Дзержинского 84",
+      "institution_type": "Clínica privada",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Дзержинского, 84",
+      "original_address": null,
+      "address_status": "confirmed",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": null,
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "not_confirmed",
+      "verification_source_url": null,
+      "source_urls": [],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: ningún servicio del JSON original quedó confirmado.",
+      "services": [],
+      "specialties": [],
+      "verification_notes": "No queda como institución activa recomendada. No encontré fuente oficial o reputada clara para esa combinación."
+    },
+    {
+      "name": "Cardio Center Kursk",
+      "official_name": "МедАльянс / медицинская реабилитация на Перекальского 5А",
+      "institution_type": "Clínica privada",
+      "city": "Курск",
+      "district": "Центральный",
+      "address": "ул. Перекальского, 5",
+      "original_address": null,
+      "address_status": "confirmed",
+      "latitude": null,
+      "longitude": null,
+      "phone": null,
+      "website": "https://yandex.ru/maps/org/medalyans/1662974466/",
+      "working_hours": null,
+      "rating": null,
+      "price_level": "private",
+      "has_emergency": false,
+      "is_public": false,
+      "existence_status": "not_confirmed",
+      "verification_source_url": "https://yandex.ru/maps/org/medalyans/1662974466/",
+      "source_urls": [
+        "https://yandex.ru/maps/org/medalyans/1662974466/"
+      ],
+      "description": "Institución verificada para Kursk. Servicios confirmados en el informe: ningún servicio del JSON original quedó confirmado.",
+      "services": [],
+      "specialties": [],
+      "verification_notes": "No queda como institución activa recomendada. Encontré МедАльянс en Перекальского 5А, pero no confirmó “Cardio Center” ni servicios de cardiología como en el JSON."
+    }
+  ]
+}
