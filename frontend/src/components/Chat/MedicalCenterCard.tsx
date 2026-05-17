@@ -10,6 +10,7 @@ import {
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { useLanguage } from "@/lib/i18n"
 
 interface MedicalCenter {
   name: string
@@ -41,9 +42,10 @@ export function MedicalCenterCard({
   recommendedService,
   recommendedSpecialty,
 }: MedicalCenterCardProps) {
+  const { t } = useLanguage()
   const services = center.main_services?.length ? center.main_services : []
   const specialties = center.main_specialties?.length ? center.main_specialties : []
-  const typeLabel = center.institution_type_name || "Centro medico"
+  const typeLabel = center.institution_type_name || t("medical.typeMissing")
   const hasRecommendedService =
     recommendedService && services.includes(recommendedService)
   const hasRecommendedSpecialty =
@@ -76,12 +78,12 @@ export function MedicalCenterCard({
 
         <div className="mb-3 flex flex-wrap gap-1.5">
           <Badge variant={center.is_public ? "secondary" : "outline"}>
-            {center.is_public ? "Publico" : "Privado"}
+            {center.is_public ? t("common.public") : t("common.private")}
           </Badge>
           {center.has_emergency && (
             <Badge variant="destructive" className="gap-1">
               <AlertCircle className="h-3 w-3" />
-              Urgencias
+              {t("medical.emergency")}
             </Badge>
           )}
           {hasRecommendedService && (
@@ -129,17 +131,17 @@ export function MedicalCenterCard({
           <div className="flex items-center gap-2 text-muted-foreground">
             <MapPin className="h-4 w-4 shrink-0" />
             <span>
-              {center.address || "Direccion no informada"}
+              {center.address || t("medical.addressMissing")}
               {center.district ? `, ${center.district}` : ""}
             </span>
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
             <Phone className="h-4 w-4 shrink-0" />
-            <span>{center.phone || "Telefono no informado"}</span>
+            <span>{center.phone || t("medical.phoneMissing")}</span>
           </div>
           <div className="flex items-center gap-2 text-muted-foreground">
             <Clock className="h-4 w-4 shrink-0" />
-            <span>{center.working_hours || "Horario no informado"}</span>
+            <span>{center.working_hours || t("medical.hoursMissing")}</span>
           </div>
         </div>
       </div>
@@ -149,7 +151,7 @@ export function MedicalCenterCard({
           <Button variant="outline" size="sm" className="w-full gap-2" asChild>
             <a href={center.website} target="_blank" rel="noopener noreferrer">
               <ExternalLink className="h-4 w-4" />
-              Ver sitio web
+              {t("medical.site")}
             </a>
           </Button>
         </div>

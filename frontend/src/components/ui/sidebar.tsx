@@ -269,7 +269,8 @@ function SidebarTrigger({
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { toggleSidebar, open } = useSidebar()
-  const sidebarCopy = open ? "Collapse Sidebar" : "Open Sidebar"
+  const sidebarCopy =
+    props["aria-label"] ?? (open ? "Collapse Sidebar" : "Open Sidebar")
 
   return (
     <Button

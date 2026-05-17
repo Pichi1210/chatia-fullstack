@@ -1,6 +1,7 @@
 import { OpenAPI } from "@/client"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { apiLanguageHeaders, useLanguage } from "@/lib/i18n"
 import { createFileRoute } from "@tanstack/react-router"
 import { Building2, Clock, MapPin, Phone, Star } from "lucide-react"
 import { useEffect, useState } from "react"
@@ -32,15 +33,18 @@ export const Route = createFileRoute("/_layout/medical-centers")({
 })
 
 function MedicalCentersPage() {
+  const { language, t } = useLanguage()
   const [centers, setCenters] = useState<MedicalCenter[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const loadCenters = async () => {
+      setIsLoading(true)
       try {
         const response = await fetch(`${OpenAPI.BASE}/api/v1/medical-centers/`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
+            ...apiLanguageHeaders(language),
           },
         })
         if (!response.ok) return
@@ -52,21 +56,21 @@ function MedicalCentersPage() {
     }
 
     loadCenters()
-  }, [])
+  }, [language])
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-semibold tracking-normal">
-          Centros medicos en Kursk
+          {t("medical.centersTitle")}
         </h1>
         <p className="text-sm text-muted-foreground">
-          Catalogo local usado por VILPU para mostrar recomendaciones.
+          {t("medical.centersSubtitle")}
         </p>
       </div>
 
       {isLoading ? (
-        <p className="text-sm text-muted-foreground">Cargando centros...</p>
+        <p className="text-sm text-muted-foreground">{t("medical.centersLoading")}</p>
       ) : (
         <div className="grid gap-4 lg:grid-cols-2">
           {centers.map((center) => (
@@ -83,10 +87,11 @@ function MedicalCentersPage() {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="secondary">
-                    {center.is_public ? "Publico" : "Privado"}
+                    {center.is_public ? t("common.public") : t("common.private")}
                   </Badge>
                   <Badge variant={center.has_emergency ? "destructive" : "outline"}>
-                    Urgencias: {center.has_emergency ? "Si" : "No"}
+                    {t("medical.emergency")}:{" "}
+                    {center.has_emergency ? t("common.yes") : t("common.no")}
                   </Badge>
                 </div>
               </CardHeader>
@@ -96,24 +101,25 @@ function MedicalCentersPage() {
                 )}
                 <p className="flex gap-2">
                   <Building2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                  {center.institution_type_name || "Tipo no informado"}
+                  {center.institution_type_name || t("medical.typeMissing")}
                 </p>
                 <p className="flex gap-2">
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                   <span>
-                    {center.address || "Direccion no informada"}
+                    {center.address || t("medical.addressMissing")}
                     <span className="block text-muted-foreground">
-                      Distrito: {center.district || "No informado"}
+                      {t("medical.district")}:{" "}
+                      {center.district || t("medical.districtMissing")}
                     </span>
                   </span>
                 </p>
                 <p className="flex gap-2">
                   <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                  {center.phone || "Telefono no informado"}
+                  {center.phone || t("medical.phoneMissing")}
                 </p>
                 <p className="flex gap-2">
                   <Clock className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                  {center.working_hours || "Horario no informado"}
+                  {center.working_hours || t("medical.hoursMissing")}
                 </p>
               </CardContent>
             </Card>

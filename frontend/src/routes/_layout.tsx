@@ -13,6 +13,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { isLoggedIn } from "@/hooks/useAuth"
+import { useLanguage } from "@/lib/i18n"
 
 export const Route = createFileRoute("/_layout")({
   component: Layout,
@@ -27,6 +28,7 @@ export const Route = createFileRoute("/_layout")({
 
 function Layout() {
   const router = useRouterState()
+  const { t } = useLanguage()
   const isChatRoute = router.location.pathname === "/chat"
 
   return (
@@ -35,9 +37,12 @@ function Layout() {
       <SidebarInset className={isChatRoute ? "h-screen" : undefined}>
         <div className="relative flex h-full flex-col">
           <div className="absolute left-4 top-4 z-20">
-            <SidebarTrigger className="h-10 w-10 rounded-full border border-border bg-card/80 shadow-sm backdrop-blur-sm transition-all duration-200 hover:bg-card">
+            <SidebarTrigger
+              aria-label={t("sidebar.toggle")}
+              className="h-10 w-10 rounded-full border border-border bg-card/80 shadow-sm backdrop-blur-sm transition-all duration-200 hover:bg-card"
+            >
               <Menu className="h-4 w-4" />
-              <span className="sr-only">Alternar menu lateral</span>
+              <span className="sr-only">{t("sidebar.toggle")}</span>
             </SidebarTrigger>
           </div>
           <main className={isChatRoute ? "flex-1" : "flex-1 p-6 pt-20 md:p-8 md:pt-20"}>

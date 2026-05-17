@@ -21,13 +21,7 @@ import {
 import { type Item, Main } from "./Main"
 import { User } from "./User"
 import useAuth from "@/hooks/useAuth"
-
-const baseItems: Item[] = [
-  { icon: MessageSquare, title: "Chat medico", path: "/chat" },
-  { icon: Building2, title: "Centros medicos", path: "/medical-centers" },
-  { icon: Stethoscope, title: "Servicios", path: "/services" },
-  { icon: CircleHelp, title: "Acerca del sistema", path: "/about" },
-]
+import { apiLanguageHeaders, useLanguage } from "@/lib/i18n"
 
 interface ChatSessionSummary {
   id: string
@@ -40,10 +34,11 @@ interface ChatSessionsResponse {
   count: number
 }
 
-const fetchChatSessions = async () => {
+const fetchChatSessions = async (language: "es" | "ru") => {
   const response = await fetch(`${OpenAPI.BASE}/api/v1/chat/sessions?limit=8`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("access_token") || ""}`,
+      ...apiLanguageHeaders(language),
     },
   })
 
@@ -56,7 +51,14 @@ const fetchChatSessions = async () => {
 
 export function AppSidebar() {
   const { user: currentUser } = useAuth()
+  const { language, t } = useLanguage()
   const router = useRouterState()
+  const baseItems: Item[] = [
+    { icon: MessageSquare, title: t("nav.chat"), path: "/chat" },
+    { icon: Building2, title: t("nav.medicalCenters"), path: "/medical-centers" },
+    { icon: Stethoscope, title: t("nav.services"), path: "/services" },
+    { icon: CircleHelp, title: t("nav.about"), path: "/about" },
+  ]
   const activeChatId =
     typeof router.location.search.chat === "string"
       ? router.location.search.chat
@@ -66,8 +68,8 @@ export function AppSidebar() {
     isLoading: isLoadingChatSessions,
     isError: hasChatSessionsError,
   } = useQuery({
-    queryKey: ["chatSessions"],
-    queryFn: fetchChatSessions,
+    queryKey: ["chatSessions", language],
+    queryFn: () => fetchChatSessions(language),
     retry: false,
     refetchOnWindowFocus: false,
   })
@@ -85,7 +87,7 @@ export function AppSidebar() {
               VILPU
             </span>
             <span className="truncate text-[9px] text-sidebar-foreground/60">
-              Elige mejor. Vive mejor.
+              {t("nav.slogan")}
             </span>
           </div>
         </div>
@@ -101,7 +103,7 @@ export function AppSidebar() {
             <Link to="/chat" search={{ new: Date.now().toString() }}>
               <Plus className="h-4 w-4" />
               <span className="group-data-[collapsible=icon]:hidden">
-                Nueva consulta
+                {t("nav.newChat")}
               </span>
             </Link>
           </Button>
@@ -109,15 +111,15 @@ export function AppSidebar() {
         <Main items={baseItems} />
         <div className="mt-2 px-2 group-data-[collapsible=icon]:hidden">
           <p className="px-2 pb-2 text-[10px] font-medium uppercase tracking-normal text-sidebar-foreground/50">
-            Historial
+            {t("nav.history")}
           </p>
           {isLoadingChatSessions ? (
             <p className="px-2 py-1.5 text-xs text-sidebar-foreground/50">
-              Cargando chats...
+              {t("nav.historyLoading")}
             </p>
           ) : hasChatSessionsError ? (
             <p className="px-2 py-1.5 text-xs text-sidebar-foreground/50">
-              No se pudo cargar el historial
+              {t("nav.historyError")}
             </p>
           ) : chatSessions?.data.length ? (
             <div className="flex flex-col gap-1">
@@ -139,7 +141,7 @@ export function AppSidebar() {
             </div>
           ) : (
             <p className="px-2 py-1.5 text-xs text-sidebar-foreground/50">
-              Sin chats guardados
+              {t("nav.historyEmpty")}
             </p>
           )}
         </div>
@@ -150,11 +152,11 @@ export function AppSidebar() {
           <div className="flex items-center gap-2">
             <div className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-primary" />
             <span className="text-xs text-sidebar-foreground/70 group-data-[collapsible=icon]:hidden">
-              Base local de Kursk
+              {t("nav.localBase")}
             </span>
           </div>
           <span className="mt-1 block text-[10px] text-sidebar-foreground/50 group-data-[collapsible=icon]:hidden">
-            Datos medicos actualizados
+            {t("nav.localData")}
           </span>
         </div>
         <SidebarAppearance />

@@ -21,6 +21,7 @@ import { useEffect, useRef, useState } from "react"
 import { OpenAPI } from "@/client"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { apiLanguageHeaders, type AppLanguage, useLanguage } from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import { MedicalCenterCard } from "./MedicalCenterCard"
 
@@ -123,13 +124,22 @@ interface ChatInputProps {
   showTools?: boolean
 }
 
-const suggestions = [
-  "Tengo dolor de cabeza",
-  "Necesito un analisis de sangre",
-  "Busco vacunacion",
-  "Consulta con especialista",
-  "Emergencia medica",
-]
+const suggestions: Record<AppLanguage, string[]> = {
+  es: [
+    "Tengo dolor de cabeza",
+    "Necesito un analisis de sangre",
+    "Busco vacunacion",
+    "Consulta con especialista",
+    "Emergencia medica",
+  ],
+  ru: [
+    "У меня болит голова",
+    "Нужен анализ крови",
+    "Ищу вакцинацию",
+    "Консультация специалиста",
+    "Экстренная помощь",
+  ],
+}
 
 const normalizeChatResponse = (response: Partial<ChatResponse>): ChatResponse => ({
   chat_session_id: response.chat_session_id ?? null,
@@ -217,11 +227,12 @@ const createMessageId = () =>
 function ChatInput({
   onSubmit,
   isLoading = false,
-  placeholder = "Describe tu necesidad medica...",
+  placeholder,
   disabled = false,
   centered = false,
   showTools = false,
 }: ChatInputProps) {
+  const { t } = useLanguage()
   const [message, setMessage] = useState("")
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -281,7 +292,7 @@ function ChatInput({
             value={message}
             onChange={(event) => setMessage(event.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder={placeholder}
+            placeholder={placeholder ?? t("chat.inputPlaceholder")}
             disabled={disabled || isLoading}
             rows={3}
             className={cn(
@@ -301,7 +312,7 @@ function ChatInput({
                 className="h-9 w-9 rounded-full text-muted-foreground hover:text-foreground"
               >
                 <Mic className="h-4 w-4" />
-                <span className="sr-only">Entrada de voz</span>
+                <span className="sr-only">{t("chat.voice")}</span>
               </Button>
             )}
             <Button
@@ -320,7 +331,7 @@ function ChatInput({
               ) : (
                 <Send className="h-4 w-4" />
               )}
-              <span className="sr-only">Enviar mensaje</span>
+              <span className="sr-only">{t("chat.send")}</span>
             </Button>
           </div>
         </div>
@@ -334,9 +345,11 @@ function SuggestionChips({
 }: {
   onSelect: (suggestion: string) => void
 }) {
+  const { language } = useLanguage()
+
   return (
     <div className="flex flex-wrap items-center justify-center gap-2">
-      {suggestions.map((suggestion) => (
+      {suggestions[language].map((suggestion) => (
         <button
           key={suggestion}
           type="button"
@@ -418,6 +431,8 @@ function TriageQuestionCard({
   ) => void
   onSubmit: () => void
 }) {
+  const { t } = useLanguage()
+
   return (
     <div className="mx-4 my-3 max-w-2xl animate-in fade-in slide-in-from-bottom-3 duration-300">
       <div className="overflow-hidden rounded-xl border border-border bg-card">
@@ -428,12 +443,12 @@ function TriageQuestionCard({
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <h3 className="font-medium text-card-foreground">
-                Preguntas de orientacion
+                {t("chat.questionsTitle")}
               </h3>
               {healthNeedName && <Badge variant="outline">{healthNeedName}</Badge>}
             </div>
             <p className="text-xs text-muted-foreground">
-              Responde para obtener una recomendacion precisa
+              {t("chat.questionsSubtitle")}
             </p>
           </div>
         </div>
@@ -492,17 +507,17 @@ function TriageQuestionCard({
             {isSubmitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Analizando...
+                {t("chat.analyzing")}
               </>
             ) : isSubmitted ? (
-              "Respuestas enviadas"
+              t("chat.answerSent")
             ) : (
-              "Analizar respuestas"
+              t("chat.analyze")
             )}
           </Button>
           {!canSubmit && !isSubmitted && (
             <p className="mt-2 text-center text-xs text-muted-foreground">
-              Responde todas las preguntas obligatorias para continuar
+              {t("chat.requiredQuestions")}
             </p>
           )}
         </div>
@@ -512,9 +527,14 @@ function TriageQuestionCard({
 }
 
 function RecommendationSummaryCard({ message }: { message: Message }) {
+  const { language, t } = useLanguage()
   const riskLevel = message.riskLevel ?? "low"
   const risk = riskConfig[riskLevel]
   const RiskIcon = risk.icon
+  const riskLabel =
+    language === "ru"
+      ? ({ low: "низкий", medium: "средний", high: "высокий" }[riskLevel])
+      : risk.label
 
   return (
     <div className="mx-4 my-3 max-w-2xl animate-in fade-in slide-in-from-bottom-3 duration-300">
@@ -525,7 +545,7 @@ function RecommendationSummaryCard({ message }: { message: Message }) {
               <FileText className="h-4 w-4 text-accent" />
             </div>
             <h3 className="font-medium text-card-foreground">
-              Resultado de orientacion
+              {t("chat.recommendationResult")}
             </h3>
           </div>
           <div
@@ -536,7 +556,7 @@ function RecommendationSummaryCard({ message }: { message: Message }) {
           >
             <RiskIcon className={cn("h-3.5 w-3.5", risk.color)} />
             <span className={cn("text-xs font-medium", risk.color)}>
-              Riesgo {risk.label}
+              {t("chat.risk")} {riskLabel}
             </span>
           </div>
         </div>
@@ -548,10 +568,10 @@ function RecommendationSummaryCard({ message }: { message: Message }) {
             </div>
             <div>
               <p className="text-xs text-muted-foreground">
-                Servicio recomendado
+                {t("chat.service")}
               </p>
               <p className="font-medium text-card-foreground">
-                {message.recommendedService || "No definido"}
+                {message.recommendedService || t("chat.noService")}
               </p>
             </div>
           </div>
@@ -561,9 +581,9 @@ function RecommendationSummaryCard({ message }: { message: Message }) {
               <UserRound className="h-4 w-4 text-primary" />
             </div>
             <div>
-              <p className="text-xs text-muted-foreground">Especialidad</p>
+              <p className="text-xs text-muted-foreground">{t("chat.specialty")}</p>
               <p className="font-medium text-card-foreground">
-                {message.recommendedSpecialty || "No definida"}
+                {message.recommendedSpecialty || t("chat.noSpecialty")}
               </p>
             </div>
           </div>
@@ -574,10 +594,10 @@ function RecommendationSummaryCard({ message }: { message: Message }) {
             </div>
             <div>
               <p className="text-xs text-muted-foreground">
-                Tipo de institucion
+                {t("chat.type")}
               </p>
               <p className="font-medium text-card-foreground">
-                {message.recommendedInstitutionType || "No definido"}
+                {message.recommendedInstitutionType || t("chat.noType")}
               </p>
             </div>
           </div>
@@ -604,6 +624,8 @@ function MedicalCentersGrid({
   recommendedService?: string | null
   recommendedSpecialty?: string | null
 }) {
+  const { t } = useLanguage()
+
   return (
     <div className="mx-4 my-3 w-full animate-in fade-in slide-in-from-bottom-4 duration-300">
       <div className="mb-4 flex items-center gap-3">
@@ -612,10 +634,10 @@ function MedicalCentersGrid({
         </div>
         <div>
           <h3 className="font-medium text-foreground">
-            Centros medicos compatibles
+            {t("chat.compatibleCenters")}
           </h3>
           <p className="text-xs text-muted-foreground">
-            {centers.length} centros encontrados en Kursk
+            {centers.length} {t("medical.centersFound")}
           </p>
         </div>
       </div>
@@ -635,14 +657,14 @@ function MedicalCentersGrid({
 }
 
 function DisclaimerBanner() {
+  const { t } = useLanguage()
+
   return (
     <div className="px-4 py-2">
       <div className="mx-auto flex max-w-3xl items-start gap-2">
         <Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
         <p className="text-xs leading-relaxed text-muted-foreground">
-          Este sistema no reemplaza una consulta medica profesional. En caso de
-          sintomas graves o emergencia, acude a urgencias o llama a los servicios
-          de emergencia.
+          {t("chat.disclaimer")}
         </p>
       </div>
     </div>
@@ -650,6 +672,8 @@ function DisclaimerBanner() {
 }
 
 function ErrorState({ message, onRetry }: { message: string; onRetry: () => void }) {
+  const { t } = useLanguage()
+
   return (
     <div className="mx-4 my-3 max-w-2xl rounded-xl border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
       <div className="flex items-start gap-3">
@@ -657,7 +681,7 @@ function ErrorState({ message, onRetry }: { message: string; onRetry: () => void
         <div className="space-y-3">
           <p>{message}</p>
           <Button type="button" variant="outline" size="sm" onClick={onRetry}>
-            Intentar de nuevo
+            {t("chat.retry")}
           </Button>
         </div>
       </div>
@@ -668,6 +692,7 @@ function ErrorState({ message, onRetry }: { message: string; onRetry: () => void
 export default function ChatInterface({ chatId, newChatKey }: ChatInterfaceProps) {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
+  const { language, t } = useLanguage()
   const [messages, setMessages] = useState<Message[]>([])
   const [activeChatId, setActiveChatId] = useState<string | null>(chatId || null)
   const [isLoading, setIsLoading] = useState(false)
@@ -709,7 +734,10 @@ export default function ChatInterface({ chatId, newChatKey }: ChatInterfaceProps
         const response = await fetch(
           `${OpenAPI.BASE}/api/v1/chat/sessions/${chatId}`,
           {
-            headers: authHeaders(),
+            headers: {
+              ...authHeaders(),
+              ...apiLanguageHeaders(language),
+            },
           },
         )
 
@@ -731,7 +759,8 @@ export default function ChatInterface({ chatId, newChatKey }: ChatInterfaceProps
             .some(
               (nextMessage) =>
                 nextMessage.sender === "user" &&
-                nextMessage.text === "Respuestas de triaje enviadas",
+                (nextMessage.text === "Respuestas de triaje enviadas" ||
+                  nextMessage.text === t("chat.submittedTriage")),
             )
         })
 
@@ -741,7 +770,7 @@ export default function ChatInterface({ chatId, newChatKey }: ChatInterfaceProps
         setSubmittedTriageMessages(submittedMessages)
       } catch (_error) {
         if (isCurrent) {
-          setError("No pude cargar el historial de este chat.")
+          setError(t("chat.errorHistory"))
         }
       } finally {
         if (isCurrent) {
@@ -755,7 +784,7 @@ export default function ChatInterface({ chatId, newChatKey }: ChatInterfaceProps
     return () => {
       isCurrent = false
     }
-  }, [chatId, newChatKey])
+  }, [chatId, newChatKey, language, t])
 
   const appendBotResponse = (response: ChatResponse) => {
     setMessages((prev) => [
@@ -783,6 +812,7 @@ export default function ChatInterface({ chatId, newChatKey }: ChatInterfaceProps
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        ...apiLanguageHeaders(language),
         ...authHeaders(),
       },
       body: JSON.stringify(body),
@@ -827,7 +857,7 @@ export default function ChatInterface({ chatId, newChatKey }: ChatInterfaceProps
       appendBotResponse(response)
     } catch (_error) {
       setError(
-        "No pude conectar con el chatbot medico. Revisa que el backend este corriendo.",
+        t("chat.errorConnect"),
       )
     } finally {
       setIsLoading(false)
@@ -872,7 +902,7 @@ export default function ChatInterface({ chatId, newChatKey }: ChatInterfaceProps
       {
         id: createMessageId(),
         sender: "user",
-        text: "Respuestas de triaje enviadas",
+        text: t("chat.submittedTriage"),
       },
     ])
     setIsLoading(true)
@@ -905,7 +935,7 @@ export default function ChatInterface({ chatId, newChatKey }: ChatInterfaceProps
         [messageIndex]: true,
       }))
     } catch (_error) {
-      setError("No pude procesar las respuestas de triaje.")
+      setError(t("chat.errorTriage"))
     } finally {
       setIsLoading(false)
     }
@@ -919,16 +949,16 @@ export default function ChatInterface({ chatId, newChatKey }: ChatInterfaceProps
         {isLoadingHistory ? (
           <div className="flex h-full min-h-[calc(100vh-4rem)] items-center justify-center text-sm text-muted-foreground">
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Cargando historial...
+            {t("chat.historyLoading")}
           </div>
         ) : showWelcomeScreen ? (
           <div className="relative flex h-full min-h-[calc(100vh-4rem)] flex-col items-center justify-center px-4 animate-in fade-in duration-500">
             <div className="mb-10 text-center">
               <p className="mb-1 text-lg text-muted-foreground animate-in fade-in slide-in-from-bottom-2 duration-500 delay-100">
-                Hola, bienvenido a VILPU
+                {t("chat.welcome")}
               </p>
               <h1 className="text-3xl font-semibold tracking-normal text-foreground animate-in fade-in slide-in-from-bottom-3 duration-500 delay-200 md:text-4xl">
-                En que puedo ayudarte hoy?
+                {t("chat.promptTitle")}
               </h1>
             </div>
 
@@ -937,7 +967,7 @@ export default function ChatInterface({ chatId, newChatKey }: ChatInterfaceProps
                 onSubmit={handleSendMessage}
                 isLoading={isLoading}
                 disabled={isLoadingHistory}
-                placeholder="Describe tu necesidad medica..."
+                placeholder={t("chat.inputPlaceholder")}
                 centered
                 showTools
               />
@@ -949,8 +979,7 @@ export default function ChatInterface({ chatId, newChatKey }: ChatInterfaceProps
 
             <div className="absolute bottom-4 left-0 right-0 px-4">
               <p className="text-center text-xs text-muted-foreground">
-                VILPU ofrece orientacion general. Siempre consulta a un
-                profesional medico.
+                {t("chat.promptSubtitle")}
               </p>
             </div>
           </div>
@@ -1022,7 +1051,7 @@ export default function ChatInterface({ chatId, newChatKey }: ChatInterfaceProps
             {isLoading && (
               <div className="mx-auto flex max-w-3xl items-center gap-3 px-4 py-3 text-sm text-muted-foreground">
                 <Loader2 className="h-4 w-4 animate-spin" />
-                Analizando...
+                {t("chat.analyzing")}
               </div>
             )}
 
@@ -1039,7 +1068,7 @@ export default function ChatInterface({ chatId, newChatKey }: ChatInterfaceProps
             onSubmit={handleSendMessage}
             isLoading={isLoading}
             disabled={isLoading || isLoadingHistory}
-            placeholder="Describe tu necesidad medica..."
+            placeholder={t("chat.inputPlaceholder")}
           />
         </>
       )}

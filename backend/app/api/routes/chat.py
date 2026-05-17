@@ -1,6 +1,6 @@
 import uuid
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from sqlalchemy import func
 from sqlmodel import col, select
 
@@ -15,6 +15,7 @@ from app.models import (
 )
 from app.schemas.chat import (
     ChatAnswerRequest,
+    ChatMessagePublic,
     ChatNluDebugRequest,
     ChatRequest,
     ChatResponse,
@@ -28,6 +29,7 @@ from app.services.chatbot import (
     build_recommendation_response,
     handle_initial_chat,
 )
+from app.services.i18n import get_locale, localize_chat_payload, localize_chat_response
 
 router = APIRouter()
 
@@ -119,6 +121,7 @@ async def create_session(
 
 @router.get("/sessions", response_model=ChatSessionsPublic)
 async def read_sessions(
+    request: Request,
     session: SessionDep,
     current_user: CurrentUser,
     skip: int = 0,
@@ -137,11 +140,23 @@ async def read_sessions(
         .where(ChatSession.owner_id == current_user.id)
     ).one()
 
-    return ChatSessionsPublic(data=list(session.exec(statement).all()), count=count)
+    locale = get_locale(request.headers.get("accept-language"))
+    chat_sessions = []
+    for chat_session in session.exec(statement).all():
+        public_session = ChatSessionPublic.model_validate(chat_session)
+        if locale == "ru":
+            public_session.title = public_session.title.replace(
+                "Nueva consulta",
+                "Новая консультация",
+            )
+        chat_sessions.append(public_session)
+
+    return ChatSessionsPublic(data=chat_sessions, count=count)
 
 
 @router.get("/sessions/{chat_session_id}", response_model=ChatSessionDetail)
 async def read_session(
+    request: Request,
     chat_session_id: uuid.UUID,
     session: SessionDep,
     current_user: CurrentUser,
@@ -157,29 +172,47 @@ async def read_session(
         .order_by(col(ChatMessage.created_at))
     ).all()
 
+    locale = get_locale(request.headers.get("accept-language"))
+    localized_messages = []
+    for message in messages:
+        public_message = ChatMessagePublic.model_validate(message)
+        if locale == "ru":
+            public_message.response_payload = localize_chat_payload(
+                public_message.response_payload,
+                locale,
+            )
+        localized_messages.append(public_message)
+
     return ChatSessionDetail(
         id=chat_session.id,
-        title=chat_session.title,
+        title=chat_session.title.replace("Nueva consulta", "Новая консультация")
+        if locale == "ru"
+        else chat_session.title,
         city=chat_session.city,
         created_at=chat_session.created_at,
         updated_at=chat_session.updated_at,
-        messages=list(messages),
+        messages=localized_messages,
     )
 
 
 @router.post("", response_model=ChatResponse)
 async def chat_with_bot(
-    request: ChatRequest,
+    request: Request,
+    chat_request: ChatRequest,
     session: SessionDep,
 ):
     """
     Identify the user's health need and either ask triage questions or return a
     local PostgreSQL-based recommendation.
     """
-    return await handle_initial_chat(
+    response = await handle_initial_chat(
         session=session,
-        message=request.message,
-        city=request.city,
+        message=chat_request.message,
+        city=chat_request.city,
+    )
+    return localize_chat_response(
+        response,
+        get_locale(request.headers.get("accept-language")),
     )
 
 
@@ -193,18 +226,19 @@ async def nlu_debug(
 
 @router.post("/answer", response_model=ChatResponse)
 async def answer_triage(
-    request: ChatAnswerRequest,
+    request: Request,
+    chat_request: ChatAnswerRequest,
     session: SessionDep,
 ):
     """
     Receive all required triage answers, calculate the total risk score, and
     return one final recommendation.
     """
-    health_need = session.get(HealthNeed, request.health_need_id)
+    health_need = session.get(HealthNeed, chat_request.health_need_id)
     if not health_need:
         raise HTTPException(status_code=404, detail="Health need not found")
 
-    if not request.answers:
+    if not chat_request.answers:
         raise HTTPException(status_code=400, detail="At least one answer is required")
 
     required_question_ids = set(
@@ -214,8 +248,10 @@ async def answer_triage(
             .where(TriageQuestion.is_required == True)  # noqa: E712
         ).all()
     )
-    answered_by_question = {answer.question_id: answer for answer in request.answers}
-    if len(answered_by_question) != len(request.answers):
+    answered_by_question = {
+        answer.question_id: answer for answer in chat_request.answers
+    }
+    if len(answered_by_question) != len(chat_request.answers):
         raise HTTPException(status_code=400, detail="Duplicate triage question answer")
 
     missing_question_ids = required_question_ids - set(answered_by_question)
@@ -229,7 +265,7 @@ async def answer_triage(
         )
 
     total_risk_score = 0
-    for answer in request.answers:
+    for answer in chat_request.answers:
         option = session.get(TriageAnswerOption, answer.answer_option_id)
         if not option or option.question_id != answer.question_id:
             raise HTTPException(status_code=400, detail="Invalid answer option")
@@ -246,9 +282,13 @@ async def answer_triage(
 
         total_risk_score += risk_score
 
-    return build_recommendation_response(
+    response = build_recommendation_response(
         session=session,
         health_need=health_need,
         risk_score=total_risk_score,
-        city=request.city,
+        city=chat_request.city,
+    )
+    return localize_chat_response(
+        response,
+        get_locale(request.headers.get("accept-language")),
     )
