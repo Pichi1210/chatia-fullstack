@@ -84,7 +84,7 @@ export function AppSidebar() {
           <Logo variant="responsive" />
           <div className="flex flex-col overflow-hidden group-data-[collapsible=icon]:hidden">
             <span className="text-sm font-semibold tracking-normal text-sidebar-foreground">
-              VILPU
+              {language === "ru" ? "ВИЛПУ" : "VILPU"}
             </span>
             <span className="truncate text-[9px] text-sidebar-foreground/60">
               {t("nav.slogan")}

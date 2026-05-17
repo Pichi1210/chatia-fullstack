@@ -17,6 +17,10 @@ RU_TRANSLATIONS = {
     "Necesito hacer unas preguntas basicas para recomendarte el tipo de institucion adecuado.": "Нужно задать несколько базовых вопросов, чтобы рекомендовать подходящий тип учреждения.",
     "No pude identificar la necesidad con suficiente seguridad. Puedes describir el sintoma principal, duracion, intensidad y si estas en Kursk.": "Не удалось достаточно надежно определить потребность. Опишите основной симптом, длительность, интенсивность и находитесь ли вы в Курске.",
     "Puedo recomendarte una institucion medica segun tu necesidad.": "Могу рекомендовать медицинское учреждение с учетом вашей потребности.",
+    "Para analisis de sangre, te recomiendo un laboratorio.": "Для анализа крови рекомендую лабораторию.",
+    "Para análisis de sangre, te recomiendo un laboratorio.": "Для анализа крови рекомендую лабораторию.",
+    "Los analisis de sangre se realizan en laboratorios o centros diagnosticos.": "Анализы крови выполняются в лабораториях или диагностических центрах.",
+    "Los análisis de sangre se realizan en laboratorios o centros diagnósticos.": "Анализы крови выполняются в лабораториях или диагностических центрах.",
     "Parece que describes un sangrado menstrual prolongado. Para orientarte mejor necesito hacer unas preguntas.": "Похоже, вы описываете длительное менструальное кровотечение. Чтобы лучше сориентировать, нужно задать несколько вопросов.",
     "Parece que tienes fiebre acompanada de dolor de rodilla. Para orientarte mejor necesito hacer unas preguntas.": "Похоже, у вас температура вместе с болью в колене. Чтобы лучше сориентировать, нужно задать несколько вопросов.",
     "Parece que tienes fiebre acompañada de dolor de rodilla. Para orientarte mejor necesito hacer unas preguntas.": "Похоже, у вас температура вместе с болью в колене. Чтобы лучше сориентировать, нужно задать несколько вопросов.",
@@ -107,6 +111,51 @@ RU_TRANSLATIONS = {
     "Ecografía": "УЗИ",
     "Diagnostico por imagen": "Визуальная диагностика",
     "Diagnóstico por imagen": "Визуальная диагностика",
+    "Técnico de laboratorio": "Лаборант",
+    "Tecnico de laboratorio": "Лаборант",
+    "Médico general": "Терапевт",
+    "Medico general": "Терапевт",
+    "Cardiología": "Кардиология",
+    "Cardiologia": "Кардиология",
+    "Cardiólogo": "Кардиолог",
+    "Cardiologo": "Кардиолог",
+    "Neurología": "Неврология",
+    "Neurologia": "Неврология",
+    "Neurólogo": "Невролог",
+    "Neurologo": "Невролог",
+    "Dermatología": "Дерматология",
+    "Dermatologia": "Дерматология",
+    "Dermatólogo": "Дерматолог",
+    "Dermatologo": "Дерматолог",
+    "Dentista": "Стоматолог",
+    "Farmacéutico": "Фармацевт",
+    "Farmaceutico": "Фармацевт",
+    "Ginecólogo": "Гинеколог",
+    "Ginecologo": "Гинеколог",
+    "Oftalmólogo": "Офтальмолог",
+    "Oftalmologo": "Офтальмолог",
+    "Traumatólogo": "Травматолог",
+    "Traumatologo": "Травматолог",
+    "Vacunación": "Вакцинация",
+    "Vacunacion": "Вакцинация",
+    "Consulta ginecológica": "Гинекологическая консультация",
+    "Consulta ginecologica": "Гинекологическая консультация",
+    "Centro de urgencias": "Травмпункт",
+    "Centro diagnóstico": "Диагностический центр",
+    "Centro diagnostico": "Диагностический центр",
+    "Centro oftalmológico": "Офтальмологический центр",
+    "Centro oftalmologico": "Офтальмологический центр",
+    "Centro pediátrico": "Детская поликлиника",
+    "Centro pediatrico": "Детская поликлиника",
+    "Clínica dental": "Стоматологическая клиника",
+    "Clinica dental": "Стоматологическая клиника",
+    "Clínica ginecológica": "Гинекологическая клиника",
+    "Clinica ginecologica": "Гинекологическая клиника",
+    "Invitro Kursk Lenin": "ИНВИТРО Курск, Ленина",
+    "INVITRO Kursk": "ИНВИТРО Курск",
+    "Gemotest Kursk": "Гемотест Курск",
+    "KDL Kursk Laboratory": "KDL, медицинская лаборатория Курск",
+    "KDL Medical Laboratory Kursk": "KDL, медицинская лаборатория Курск",
     "¿La rodilla está hinchada?": "Колено опухло?",
     "?¿La rodilla está hinchada?": "Колено опухло?",
     "La rodilla esta hinchada o caliente?": "Колено опухло или горячее?",
@@ -194,6 +243,21 @@ RU_REPLACEMENTS = (
     ("cuenta con urgencias", "есть неотложная помощь"),
 )
 
+RU_CONNECTOR_REPLACEMENTS = (
+    (" con ", " с "),
+    (" en ", " в "),
+)
+
+RU_GRAMMAR_REPLACEMENTS = (
+    (
+        "Рекомендуется Анализ крови с Лаборант в Лаборатория.",
+        "Рекомендуется анализ крови у лаборанта в лаборатории.",
+    ),
+    ("тип Лаборатория", "тип: Лаборатория"),
+    ("услуга Анализ крови", "услуга: Анализ крови"),
+    ("специальность Лаборант", "специальность: Лаборант"),
+)
+
 
 def translate_text(value: str | None, locale: str) -> str | None:
     if value is None or locale != "ru":
@@ -212,7 +276,27 @@ def translate_text(value: str | None, locale: str) -> str | None:
         reverse=True,
     ):
         translated = translated.replace(source, replacement)
+    for source, replacement in RU_CONNECTOR_REPLACEMENTS:
+        translated = translated.replace(source, replacement)
+    for source, replacement in RU_GRAMMAR_REPLACEMENTS:
+        translated = translated.replace(source, replacement)
     return translated
+
+
+def localize_working_hours(value: str | None, locale: str) -> str | None:
+    if value is None or locale != "ru":
+        return value
+
+    replacements = (
+        ("Mo-Su", "Пн-Вс"),
+        ("Mo-Sa", "Пн-Сб"),
+        ("Mo-Fr", "Пн-Пт"),
+        ("24/7", "Круглосуточно"),
+    )
+    localized = value
+    for source, replacement in replacements:
+        localized = localized.replace(source, replacement)
+    return localized
 
 
 def localize_chat_response(response: ChatResponse, locale: str) -> ChatResponse:
@@ -276,11 +360,16 @@ def localize_medical_center_public(
         return center
 
     localized = center.model_copy(deep=True)
+    localized.name = translate_text(localized.name, locale) or localized.name
     localized.institution_type_name = translate_text(
         localized.institution_type_name,
         locale,
     )
     localized.description = translate_text(localized.description, locale)
+    localized.working_hours = localize_working_hours(
+        localized.working_hours,
+        locale,
+    )
     localized.price_level = translate_text(localized.price_level, locale)
     localized.main_services = [
         translate_text(service, locale) or service
