@@ -1,88 +1,104 @@
-# Full Stack Chapia Template
+# Chatia Fullstack
 
-<a href="https://github.com/fastapi/full-stack-fastapi-template/actions?query=workflow%3A%22Test+Docker+Compose%22" target="_blank"><img src="https://github.com/fastapi/full-stack-fastapi-template/workflows/Test%20Docker%20Compose/badge.svg" alt="Test Docker Compose"></a>
-<a href="https://github.com/fastapi/full-stack-fastapi-template/actions?query=workflow%3A%22Test+Backend%22" target="_blank"><img src="https://github.com/fastapi/full-stack-fastapi-template/workflows/Test%20Backend/badge.svg" alt="Test Backend"></a>
-<a href="https://coverage-badge.samuelcolvin.workers.dev/redirect/fastapi/full-stack-fastapi-template" target="_blank"><img src="https://coverage-badge.samuelcolvin.workers.dev/fastapi/full-stack-fastapi-template.svg" alt="Coverage"></a>
+Chatia Fullstack es una aplicacion web de orientacion medica inicial para la ciudad de Kursk. El sistema permite que una persona describa una necesidad de salud, responde con preguntas de triaje cuando hacen falta mas datos y recomienda el tipo de institucion medica mas adecuado junto con centros locales compatibles.
 
-## Technology Stack and Features
+El proyecto parte de una base FastAPI + React, pero ya esta adaptado a un caso de uso propio: chatbot medico, catalogo local de instituciones, reglas de triaje, recomendaciones por riesgo, historial de conversaciones y una integracion opcional con Rasa para NLU.
 
-- ⚡ [**Chapia**](https://fastapi.tiangolo.com) for the Python backend API.
-  - 🧰 [SQLModel](https://sqlmodel.tiangolo.com) for the Python SQL database interactions (ORM).
-  - 🔍 [Pydantic](https://docs.pydantic.dev), used by FastAPI, for the data validation and settings management.
-  - 💾 [PostgreSQL](https://www.postgresql.org) as the SQL database.
-- 🚀 [React](https://react.dev) for the frontend.
-  - 💃 Using TypeScript, hooks, [Vite](https://vitejs.dev), and other parts of a modern frontend stack.
-  - 🎨 [Tailwind CSS](https://tailwindcss.com) and [shadcn/ui](https://ui.shadcn.com) for the frontend components.
-  - 🤖 An automatically generated frontend client.
-  - 🧪 [Playwright](https://playwright.dev) for End-to-End testing.
-  - 🦇 Dark mode support.
-- 🐋 [Docker Compose](https://www.docker.com) for development and production.
-- 🔒 Secure password hashing by default.
-- 🔑 JWT (JSON Web Token) authentication.
-- 📫 Email based password recovery.
-- 📬 [Mailcatcher](https://mailcatcher.me) for local email testing during development.
-- ✅ Tests with [Pytest](https://pytest.org).
-- 📞 [Traefik](https://traefik.io) as a reverse proxy / load balancer.
-- 🚢 Deployment instructions using Docker Compose, including how to set up a frontend Traefik proxy to handle automatic HTTPS certificates.
-- 🏭 CI (continuous integration) and CD (continuous deployment) based on GitHub Actions.
+## Funcionalidades principales
 
-### Dashboard Login
+- Chat medico en la interfaz web VILPU.
+- Identificacion de necesidades como dolor dental, dolor de rodilla, fiebre, dolor abdominal, problemas de vision, vacunacion, farmacia y urgencias.
+- Preguntas de triaje con opciones y puntaje de riesgo.
+- Calculo de riesgo `low`, `medium` o `high`.
+- Recomendacion de servicio, especialidad y tipo de institucion.
+- Listado de centros medicos locales en Kursk con direccion, horario, telefono, rating, servicios y especialidades.
+- Historial de sesiones de chat por usuario autenticado.
+- Catalogos medicos cargados desde datos semilla en PostgreSQL.
+- Rasa opcional como capa de comprension de lenguaje natural.
+- Autenticacion JWT, usuarios, recuperacion de contrasena y panel administrativo heredados de la base fullstack.
 
-[![API docs](img/login.png)](https://github.com/fastapi/full-stack-fastapi-template)
+## Stack tecnico
 
-### Dashboard - Admin
+- Backend: FastAPI, SQLModel, Pydantic, Alembic, PostgreSQL.
+- Frontend: React, TypeScript, Vite, TanStack Router, TanStack Query, Tailwind CSS, shadcn/ui y lucide-react.
+- Chatbot: reglas propias en FastAPI, datos medicos en PostgreSQL y Rasa opcional.
+- Infraestructura local: Docker Compose, Traefik, Adminer y Mailcatcher.
+- Testing: Pytest para backend y Playwright para frontend.
+- Herramientas: `uv` para Python y `bun` para frontend.
 
-[![API docs](img/dashboard.png)](https://github.com/fastapi/full-stack-fastapi-template)
+## Estructura del repositorio
 
-### Dashboard - Items
+```text
+backend/                 API FastAPI, modelos, migraciones, servicios y tests
+frontend/                Aplicacion React/Vite y cliente OpenAPI generado
+rasa/                    Configuracion, datos NLU, acciones y modelos Rasa
+docs/                    Documentacion local y casos de validacion del chatbot
+scripts/                 Scripts auxiliares de setup, test y generacion
+compose.yml              Servicios base para Docker Compose
+compose.override.yml     Puertos y servicios de desarrollo local
+```
 
-[![API docs](img/dashboard-items.png)](https://github.com/fastapi/full-stack-fastapi-template)
+## Requisitos
 
-### Dashboard - Dark Mode
+Para desarrollo nativo en Windows:
 
-[![API docs](img/dashboard-dark.png)](https://github.com/fastapi/full-stack-fastapi-template)
+- Python 3.10 o superior.
+- `uv`.
+- Bun.
+- PostgreSQL.
 
-### Interactive API Documentation
+Para desarrollo con contenedores:
 
-[![API docs](img/docs.png)](https://github.com/fastapi/full-stack-fastapi-template)
+- Docker Desktop con WSL2 habilitado.
+- Docker Compose.
 
-## Arranque local de Chatia
+La configuracion ya preparada en esta maquina esta documentada en [docs/local_setup.md](./docs/local_setup.md).
 
-Esta seccion resume como inicializar los servicios para usar la aplicacion en
-local. Hay dos formas de trabajo:
+## Variables de entorno
 
-- **Nativa en Windows**: usa PostgreSQL instalado en Windows, el backend desde
-  `.venv` y el frontend con Bun. Es la configuracion que quedo preparada en
-  esta maquina.
-- **Docker Compose**: levanta base de datos, backend, frontend y servicios de
-  desarrollo en contenedores. Requiere Docker Desktop con WSL2 funcionando.
+El proyecto usa un archivo `.env` en la raiz. Las variables mas relevantes son:
 
-Para mas detalles de la preparacion local ya realizada, revisa
-[`docs/local_setup.md`](./docs/local_setup.md).
+```env
+PROJECT_NAME=Chatia
+ENVIRONMENT=local
+FRONTEND_HOST=http://localhost:5173
+BACKEND_CORS_ORIGINS=http://localhost:5173
 
-### Opcion recomendada en esta maquina: arranque nativo
+SECRET_KEY=changethis
+FIRST_SUPERUSER=admin@example.com
+FIRST_SUPERUSER_PASSWORD=changethis
 
-Abre una terminal de PowerShell en la raiz del proyecto:
+POSTGRES_SERVER=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=app
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=changethis
+
+YANDEX_API_KEY=
+RASA_ENABLED=false
+RASA_URL=http://rasa:5005
+RASA_CONFIDENCE_THRESHOLD=0.55
+```
+
+Los valores `changethis` solo son aceptables en desarrollo local. Para cualquier entorno compartido o despliegue cambia `SECRET_KEY`, `POSTGRES_PASSWORD` y `FIRST_SUPERUSER_PASSWORD`.
+
+## Arranque local nativo
+
+Esta es la forma recomendada en la maquina donde se preparo el proyecto.
+
+1. Abre PowerShell en la raiz del repositorio.
 
 ```powershell
 cd C:\Users\Trabajo\Desktop\diploma-t\proyecto-practico\chatia-fullstack
 ```
 
-1. Verifica que PostgreSQL este activo.
+2. Comprueba que PostgreSQL este activo.
 
 ```powershell
 Get-Service postgresql-x64-17
 ```
 
-Si el servicio aparece detenido, inicialo desde una PowerShell con permisos de
-administrador:
-
-```powershell
-Start-Service postgresql-x64-17
-```
-
-2. Si es la primera vez que inicializas la base de datos, aplica migraciones y
-   datos iniciales.
+3. Si es la primera ejecucion, inicializa la base de datos.
 
 ```powershell
 cd backend
@@ -92,21 +108,21 @@ cd backend
 cd ..
 ```
 
-3. Arranca el backend en una terminal.
+4. Arranca el backend.
 
 ```powershell
-cd C:\Users\Trabajo\Desktop\diploma-t\proyecto-practico\chatia-fullstack\backend
+cd backend
 ..\.venv\Scripts\python.exe -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
-4. Arranca el frontend en otra terminal.
+5. En otra terminal, arranca el frontend.
 
 ```powershell
-cd C:\Users\Trabajo\Desktop\diploma-t\proyecto-practico\chatia-fullstack\frontend
+cd frontend
 bun run dev --host 127.0.0.1 --port 5173
 ```
 
-5. Abre la aplicacion y los servicios locales.
+6. Abre la aplicacion.
 
 ```text
 Frontend: http://localhost:5173
@@ -115,73 +131,110 @@ Swagger:  http://localhost:8000/docs
 Health:   http://localhost:8000/api/v1/utils/health-check/
 ```
 
-Usuario local inicial:
+Usuario inicial local:
 
 ```text
 Email: admin@example.com
 Password: changethis
 ```
 
-En modo nativo, si no vas a levantar Rasa aparte, deja `RASA_ENABLED=false` en
-`.env`. Si quieres usar Rasa localmente, arranca Rasa en el puerto `5005` y usa
-`RASA_URL=http://localhost:5005` para el backend nativo.
+## Arranque con Docker Compose
 
-### Opcion Docker Compose
-
-Usa esta opcion cuando Docker Desktop y WSL2 esten disponibles.
-
-1. Revisa `.env` antes de iniciar. Para desarrollo local pueden usarse los
-   valores por defecto, pero en cualquier entorno compartido cambia al menos:
-   `SECRET_KEY`, `POSTGRES_PASSWORD` y `FIRST_SUPERUSER_PASSWORD`.
-
-2. Arranca el stack desde la raiz del proyecto.
+Usa esta opcion cuando Docker Desktop y WSL2 esten funcionando.
 
 ```powershell
 docker compose watch
 ```
 
-Docker Compose carga automaticamente `compose.yml` y `compose.override.yml`.
-Los servicios principales quedan disponibles en:
+Servicios de desarrollo:
 
 ```text
 Frontend:    http://localhost:5173
-Backend:     http://localhost:8000
-Swagger:     http://localhost:8000/docs
+Backend:     http://localhost:8001
+Swagger:     http://localhost:8001/docs
 Adminer:     http://localhost:8080
 Mailcatcher: http://localhost:1080
 Traefik:     http://localhost:8090
 ```
 
-3. Para ver logs:
+Comandos utiles:
 
 ```powershell
 docker compose logs -f backend
 docker compose logs -f frontend
-```
-
-4. Para detener los servicios:
-
-```powershell
 docker compose down
-```
-
-5. Para detener y borrar tambien los datos locales de PostgreSQL:
-
-```powershell
 docker compose down -v
 ```
 
-### Servicios opcionales
+`docker compose down -v` elimina tambien el volumen local de PostgreSQL.
 
-#### Rasa
+## Chatbot medico
 
-Rasa se usa como capa NLU opcional. Antes de habilitarlo, entrena el modelo:
+El flujo principal vive en:
+
+- [backend/app/api/routes/chat.py](./backend/app/api/routes/chat.py)
+- [backend/app/services/chatbot.py](./backend/app/services/chatbot.py)
+- [frontend/src/components/Chat/ChatInterface.tsx](./frontend/src/components/Chat/ChatInterface.tsx)
+
+Endpoints principales:
+
+```text
+POST /api/v1/chat
+POST /api/v1/chat/answer
+POST /api/v1/chat/nlu-debug
+GET  /api/v1/chat/sessions
+GET  /api/v1/chat/sessions/{chat_session_id}
+POST /api/v1/medical-centers/search
+GET  /api/v1/medical-centers/
+```
+
+Ejemplo de uso desde la interfaz:
+
+```text
+Me duele mucho una muela desde ayer y tengo la encia inflamada.
+```
+
+El sistema debe detectar la necesidad medica, pedir triaje si corresponde y devolver una orientacion con nivel de riesgo, servicio recomendado, especialidad, tipo de institucion y centros medicos compatibles.
+
+Los casos de validacion funcional estan en [docs/chatbot_test_cases.md](./docs/chatbot_test_cases.md).
+
+## Datos medicos
+
+La base medica se carga desde:
+
+```text
+backend/app/seed_data/medical_seed.json
+```
+
+Incluye:
+
+- Tipos de institucion medica.
+- Servicios.
+- Especialidades.
+- Necesidades de salud.
+- Reglas necesidad-servicio.
+- Preguntas y opciones de triaje.
+- Reglas de recomendacion por puntaje.
+- Centros medicos locales.
+
+Para volver a cargar los datos semilla:
+
+```powershell
+cd backend
+..\.venv\Scripts\python.exe -m app.scripts.seed_medical_data
+```
+
+## Rasa opcional
+
+Rasa esta deshabilitado por defecto. El backend puede funcionar solo con reglas y palabras clave.
+
+Entrena el modelo:
 
 ```powershell
 docker compose run --rm rasa train
 ```
 
-Despues, habilita Rasa en `.env`:
+Habilita Rasa en `.env`:
 
 ```env
 COMPOSE_PROFILES=rasa
@@ -189,299 +242,69 @@ RASA_ENABLED=true
 RASA_URL=http://rasa:5005
 ```
 
-Y levanta el stack:
+Levanta el stack con el perfil:
 
 ```powershell
 docker compose --profile rasa watch
 ```
 
-Si Rasa no esta disponible o responde con baja confianza, el backend conserva
-el flujo de fallback por keywords.
+Si Rasa no responde, falla o devuelve baja confianza, el backend usa el flujo de fallback basado en reglas.
 
-#### Yandex Maps
+## Comandos de desarrollo
 
-Para usar busquedas reales de centros medicos, agrega la clave en `.env` y
-reinicia el backend:
+Backend:
 
-```env
-YANDEX_API_KEY=tu_api_key
+```powershell
+cd backend
+..\.venv\Scripts\ruff.exe check app tests
+..\.venv\Scripts\pytest.exe tests
 ```
 
-Sin esa clave, el chatbot usa datos simulados o datos locales.
+Frontend:
 
-## How To Use It
-
-You can **just fork or clone** this repository and use it as is.
-
-✨ It just works. ✨
-
-### How to Use a Private Repository
-
-If you want to have a private repository, GitHub won't allow you to simply fork it as it doesn't allow changing the visibility of forks.
-
-But you can do the following:
-
-- Create a new GitHub repo, for example `my-full-stack`.
-- Clone this repository manually, set the name with the name of the project you want to use, for example `my-full-stack`:
-
-```bash
-git clone git@github.com:fastapi/full-stack-fastapi-template.git my-full-stack
+```powershell
+cd frontend
+bun run lint
+bun run build
+bun run test
 ```
 
-- Enter into the new directory:
+Workspace frontend desde la raiz:
 
-```bash
-cd my-full-stack
+```powershell
+bun run dev
+bun run lint
+bun run test
 ```
 
-- Set the new origin to your new repository, copy it from the GitHub interface, for example:
+Regenerar cliente OpenAPI:
 
-```bash
-git remote set-url origin git@github.com:octocat/my-full-stack.git
+```powershell
+cd frontend
+bun run generate-client
 ```
 
-- Add this repo as another "remote" to allow you to get updates later:
+## Despliegue
 
-```bash
-git remote add upstream git@github.com:fastapi/full-stack-fastapi-template.git
-```
+El despliegue sigue el enfoque Docker Compose del proyecto base. Antes de desplegar:
 
-- Push the code to your new repository:
+- Cambia todos los secretos por valores seguros.
+- Configura `DOMAIN`, `FRONTEND_HOST` y `BACKEND_CORS_ORIGINS`.
+- Define credenciales reales de PostgreSQL.
+- Configura SMTP si se usara recuperacion de contrasena por email.
+- Agrega `YANDEX_API_KEY` si se integraran busquedas externas.
 
-```bash
-git push -u origin master
-```
+Consulta [deployment.md](./deployment.md) para detalles de despliegue y Traefik.
 
-### Update From the Original Template
+## Documentacion relacionada
 
-After cloning the repository, and after doing changes, you might want to get the latest changes from this original template.
+- [docs/local_setup.md](./docs/local_setup.md): configuracion local preparada en esta maquina.
+- [docs/chatbot_test_cases.md](./docs/chatbot_test_cases.md): validacion funcional del chatbot medico.
+- [backend/README.md](./backend/README.md): notas especificas del backend.
+- [frontend/README.md](./frontend/README.md): notas especificas del frontend.
+- [development.md](./development.md): desarrollo general del stack.
+- [deployment.md](./deployment.md): despliegue con Docker Compose.
 
-- Make sure you added the original repository as a remote, you can check it with:
+## Licencia
 
-```bash
-git remote -v
-
-origin    git@github.com:octocat/my-full-stack.git (fetch)
-origin    git@github.com:octocat/my-full-stack.git (push)
-upstream    git@github.com:fastapi/full-stack-fastapi-template.git (fetch)
-upstream    git@github.com:fastapi/full-stack-fastapi-template.git (push)
-```
-
-- Pull the latest changes without merging:
-
-```bash
-git pull --no-commit upstream master
-```
-
-This will download the latest changes from this template without committing them, that way you can check everything is right before committing.
-
-- If there are conflicts, solve them in your editor.
-
-- Once you are done, commit the changes:
-
-```bash
-git merge --continue
-```
-
-### Configure
-
-You can then update configs in the `.env` files to customize your configurations.
-
-Before deploying it, make sure you change at least the values for:
-
-- `SECRET_KEY`
-- `FIRST_SUPERUSER_PASSWORD`
-- `POSTGRES_PASSWORD`
-
-You can (and should) pass these as environment variables from secrets.
-
-Read the [deployment.md](./deployment.md) docs for more details.
-
-### Generate Secret Keys
-
-Some environment variables in the `.env` file have a default value of `changethis`.
-
-You have to change them with a secret key, to generate secret keys you can run the following command:
-
-```bash
-python -c "import secrets; print(secrets.token_urlsafe(32))"
-```
-
-Copy the content and use that as password / secret key. And run that again to generate another secure key.
-
-## How To Use It - Alternative With Copier
-
-This repository also supports generating a new project using [Copier](https://copier.readthedocs.io).
-
-It will copy all the files, ask you configuration questions, and update the `.env` files with your answers.
-
-### Install Copier
-
-You can install Copier with:
-
-```bash
-pip install copier
-```
-
-Or better, if you have [`pipx`](https://pipx.pypa.io/), you can run it with:
-
-```bash
-pipx install copier
-```
-
-**Note**: If you have `pipx`, installing copier is optional, you could run it directly.
-
-### Generate a Project With Copier
-
-Decide a name for your new project's directory, you will use it below. For example, `my-awesome-project`.
-
-Go to the directory that will be the parent of your project, and run the command with your project's name:
-
-```bash
-copier copy https://github.com/fastapi/full-stack-fastapi-template my-awesome-project --trust
-```
-
-If you have `pipx` and you didn't install `copier`, you can run it directly:
-
-```bash
-pipx run copier copy https://github.com/fastapi/full-stack-fastapi-template my-awesome-project --trust
-```
-
-**Note** the `--trust` option is necessary to be able to execute a [post-creation script](https://github.com/fastapi/full-stack-fastapi-template/blob/master/.copier/update_dotenv.py) that updates your `.env` files.
-
-### Input Variables
-
-Copier will ask you for some data, you might want to have at hand before generating the project.
-
-But don't worry, you can just update any of that in the `.env` files afterwards.
-
-The input variables, with their default values (some auto generated) are:
-
-- `project_name`: (default: `"Chapia Project"`) The name of the project, shown to API users (in .env).
-- `stack_name`: (default: `"fastapi-project"`) The name of the stack used for Docker Compose labels and project name (no spaces, no periods) (in .env).
-- `secret_key`: (default: `"changethis"`) The secret key for the project, used for security, stored in .env, you can generate one with the method above.
-- `first_superuser`: (default: `"admin@example.com"`) The email of the first superuser (in .env).
-- `first_superuser_password`: (default: `"changethis"`) The password of the first superuser (in .env).
-- `smtp_host`: (default: "") The SMTP server host to send emails, you can set it later in .env.
-- `smtp_user`: (default: "") The SMTP server user to send emails, you can set it later in .env.
-- `smtp_password`: (default: "") The SMTP server password to send emails, you can set it later in .env.
-- `emails_from_email`: (default: `"info@example.com"`) The email account to send emails from, you can set it later in .env.
-- `postgres_password`: (default: `"changethis"`) The password for the PostgreSQL database, stored in .env, you can generate one with the method above.
-- `sentry_dsn`: (default: "") The DSN for Sentry, if you are using it, you can set it later in .env.
-
-
-## Chatbot Feature
-
-This project includes a chatbot feature for finding medical centers in Russia.
-
-### Chatbot Usage
-
-- Navigate to the `/chat` page in the frontend.
-- Type a message in the input box, for example: `"Necesito un dentista en Kursk"`.
-- The chatbot will return a list of recommended medical centers based on your query.
-
-### Yandex Maps API Key
-
-The chatbot uses the Yandex Maps Search API to find medical centers. To use this feature, you need to provide a Yandex API key.
-
-- Get an API key from the [Yandex Developer Console](https://developer.tech.yandex.ru/).
-- Add the API key to your `.env` file:
-
-```
-YANDEX_API_KEY=your_api_key_here
-```
-
-If you don't provide an API key, the chatbot will return mock data.
-
-## Integración opcional con Rasa
-
-Rasa se usa solo como capa NLU opcional. FastAPI sigue siendo responsable de
-consultar PostgreSQL, aplicar reglas de triaje, calcular `risk_score` y
-recomendar instituciones y centros médicos. Si Rasa no está disponible, falla o
-devuelve baja confianza, el chatbot conserva el sistema actual basado en
-keywords.
-
-### Entrenar Rasa
-
-El proyecto incluye la configuración en `rasa/`. Entrena el modelo con:
-
-```bash
-docker compose run --rm rasa train
-```
-
-En un servidor o entorno ya levantado:
-
-```bash
-docker compose exec rasa rasa train
-```
-
-El modelo entrenado queda en:
-
-```txt
-rasa/models/
-```
-
-### Habilitar o deshabilitar Rasa
-
-Por defecto Rasa está deshabilitado:
-
-```env
-RASA_ENABLED=false
-RASA_URL=http://rasa:5005
-RASA_CONFIDENCE_THRESHOLD=0.55
-```
-
-Para probar Rasa como NLU, entrena el modelo, levanta el servicio `rasa` y
-habilita:
-
-```env
-COMPOSE_PROFILES=rasa
-RASA_ENABLED=true
-```
-
-Para volver completamente al flujo por keywords:
-
-```env
-RASA_ENABLED=false
-```
-
-### Diagnóstico NLU
-
-Con sesión autenticada puedes probar:
-
-```bash
-curl -X POST http://localhost:8000/api/v1/chat/nlu-debug \
-  -H "Authorization: Bearer <token>" \
-  -H "Content-Type: application/json" \
-  -d '{"message":"me duele la rodilla"}'
-```
-
-La respuesta incluye `rasa_result`, `keyword_result` y `final_health_need` para
-ver si FastAPI usó Rasa o el fallback por keywords.
-
-## Backend Development
-
-
-Backend docs: [backend/README.md](./backend/README.md).
-
-## Frontend Development
-
-Frontend docs: [frontend/README.md](./frontend/README.md).
-
-## Deployment
-
-Deployment docs: [deployment.md](./deployment.md).
-
-## Development
-
-General development docs: [development.md](./development.md).
-
-This includes using Docker Compose, custom local domains, `.env` configurations, etc.
-
-## Release Notes
-
-Check the file [release-notes.md](./release-notes.md).
-
-## License
-
-The Full Stack FastAPI Template is licensed under the terms of the MIT license.
+Este proyecto conserva la licencia MIT incluida en [LICENSE](./LICENSE).
