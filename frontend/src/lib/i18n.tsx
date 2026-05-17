@@ -216,7 +216,7 @@ const translations: Record<AppLanguage, Record<TranslationKey, string>> = {
   },
   ru: {
     "about.description":
-      "VILPU / ВИЛПУ помогает выбрать подходящий медицинский центр в Курске.",
+      "ВИЛПУ помогает выбрать подходящий медицинский центр в Курске.",
     "about.scope.body1":
       "Приложение использует локальные данные по Курску и не заменяет профессиональную медицинскую оценку.",
     "about.scope.body2":
@@ -224,7 +224,7 @@ const translations: Record<AppLanguage, Record<TranslationKey, string>> = {
     "about.scope.title": "Область применения",
     "about.title": "О системе",
     "about.purpose.body1":
-      "VILPU принимает медицинскую потребность, задает вопросы триажа и рекомендует подходящий тип учреждения по локальным правилам.",
+      "ВИЛПУ принимает медицинскую потребность, задает вопросы триажа и рекомендует подходящий тип учреждения по локальным правилам.",
     "about.purpose.body2":
       "Система помогает с первичным выбором: аптека, лаборатория, поликлиника, специализированная клиника или больница/неотложная помощь.",
     "about.purpose.title": "Назначение",
@@ -250,7 +250,7 @@ const translations: Record<AppLanguage, Record<TranslationKey, string>> = {
     "chat.noService": "Не указан",
     "chat.noType": "Не указан",
     "chat.promptSubtitle":
-      "VILPU предоставляет общую ориентацию. Всегда консультируйтесь с врачом.",
+      "ВИЛПУ предоставляет общую ориентацию. Всегда консультируйтесь с врачом.",
     "chat.promptTitle": "Чем я могу помочь сегодня?",
     "chat.questionsSubtitle": "Ответьте, чтобы получить точную рекомендацию",
     "chat.questionsTitle": "Уточняющие вопросы",
@@ -265,7 +265,7 @@ const translations: Record<AppLanguage, Record<TranslationKey, string>> = {
     "chat.submittedTriage": "Ответы триажа отправлены",
     "chat.type": "Тип учреждения",
     "chat.voice": "Голосовой ввод",
-    "chat.welcome": "Здравствуйте, добро пожаловать в VILPU",
+    "chat.welcome": "Здравствуйте, добро пожаловать в ВИЛПУ",
     "common.no": "Нет",
     "common.private": "Частный",
     "common.public": "Государственный",
@@ -277,7 +277,7 @@ const translations: Record<AppLanguage, Record<TranslationKey, string>> = {
     "medical.centersFound": "центров найдено в Курске",
     "medical.centersLoading": "Загрузка центров...",
     "medical.centersSubtitle":
-      "Локальный каталог, который VILPU использует для рекомендаций.",
+      "Локальный каталог, который ВИЛПУ использует для рекомендаций.",
     "medical.centersTitle": "Медицинские центры в Курске",
     "medical.district": "Район",
     "medical.districtMissing": "Не указан",
@@ -299,7 +299,7 @@ const translations: Record<AppLanguage, Record<TranslationKey, string>> = {
     "nav.medicalCenters": "Медицинские центры",
     "nav.slogan": "Выбирай лучше. Живи лучше.",
     "services.available": "Доступно в триаже",
-    "services.description": "Типы ориентации, доступные в системе VILPU.",
+    "services.description": "Типы ориентации, доступные в системе ВИЛПУ.",
     "services.title": "Сервисы",
     "services.consultation.description":
       "Ориентация по поликлиникам, клиникам и специальностям.",

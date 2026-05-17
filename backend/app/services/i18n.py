@@ -33,6 +33,8 @@ RU_TRANSLATIONS = {
     "Parece que tienes dolor corporal y predominio de dolor de cabeza. Para orientarte mejor necesito hacer unas preguntas.": "Похоже, у вас боль в теле и выраженная головная боль. Чтобы лучше сориентировать, нужно задать несколько вопросов.",
     "Dolor de rodilla con fiebre, inflamacion importante o incapacidad para apoyar requiere urgencias.": "Боль в колене с температурой, выраженным воспалением или невозможностью опираться требует неотложной помощи.",
     "Dolor de rodilla con fiebre, lesion fuerte o incapacidad para caminar requiere urgencias.": "Боль в колене с температурой, серьезной травмой или невозможностью ходить требует неотложной помощи.",
+    "Dolor de rodilla con fiebre, deformidad, golpe fuerte o imposibilidad para caminar requiere evaluacion urgente.": "Боль в колене с температурой, деформацией, сильным ударом или невозможностью ходить требует срочной оценки.",
+    "Dolor de rodilla con fiebre, deformidad, golpe fuerte o imposibilidad para caminar requiere evaluación urgente.": "Боль в колене с температурой, деформацией, сильным ударом или невозможностью ходить требует срочной оценки.",
     "Inflamacion articular con fiebre o dolor intenso requiere urgencias.": "Воспаление сустава с температурой или сильной болью требует неотложной помощи.",
     "Dolor articular sin fiebre puede valorarse en policlinico.": "Боль в суставе без температуры можно оценить в поликлинике.",
     "Dolor articular con fiebre o inflamacion importante requiere urgencias.": "Боль в суставе с температурой или выраженным воспалением требует неотложной помощи.",
@@ -71,6 +73,23 @@ RU_TRANSLATIONS = {
     "Pharmacy need": "Потребность в аптеке",
     "Necesidad de farmacia": "Потребность в аптеке",
     "Emergency care": "Экстренная помощь",
+    "General malaise": "Общее недомогание",
+    "Wound or trauma": "Рана или травма",
+    "Back pain": "Боль в спине",
+    "Dermatological problem": "Дерматологическая проблема",
+    "Ear pain": "Боль в ухе",
+    "Blood pressure control": "Контроль артериального давления",
+    "Diabetes control": "Контроль диабета",
+    "Pediatric consultation": "Консультация педиатра",
+    "Gynecological consultation": "Консультация гинеколога",
+    "Cardiology consultation": "Консультация кардиолога",
+    "Ophthalmology consultation": "Консультация офтальмолога",
+    "Irregular menstruation": "Нерегулярная менструация",
+    "Severe menstrual pain": "Сильная менструальная боль",
+    "Abnormal vaginal bleeding": "Аномальное вагинальное кровотечение",
+    "Pelvic pain": "Боль в тазу",
+    "Possible pregnancy": "Возможная беременность",
+    "Pregnancy control": "Ведение беременности",
     "Weakness": "Слабость",
     "Dolor de cabeza con fiebre": "Головная боль с температурой",
     "Headache with fever": "Головная боль с температурой",
@@ -89,6 +108,7 @@ RU_TRANSLATIONS = {
     "Laboratorio": "Лаборатория",
     "Atencion urgente": "Неотложная помощь",
     "Atención urgente": "Неотложная помощь",
+    "Urgencias": "Неотложная помощь",
     "Medicina general": "Терапия",
     "Traumatologia": "Травматология",
     "Traumatología": "Травматология",
@@ -136,6 +156,8 @@ RU_TRANSLATIONS = {
     "Oftalmologo": "Офтальмолог",
     "Traumatólogo": "Травматолог",
     "Traumatologo": "Травматолог",
+    "Enfermería": "Медсестринская помощь",
+    "Enfermeria": "Медсестринская помощь",
     "Vacunación": "Вакцинация",
     "Vacunacion": "Вакцинация",
     "Consulta ginecológica": "Гинекологическая консультация",
@@ -156,6 +178,51 @@ RU_TRANSLATIONS = {
     "Gemotest Kursk": "Гемотест Курск",
     "KDL Kursk Laboratory": "KDL, медицинская лаборатория Курск",
     "KDL Medical Laboratory Kursk": "KDL, медицинская лаборатория Курск",
+    "Kursk Regional Clinical Hospital": "ОБУЗ «Курская областная многопрофильная клиническая больница»",
+    "Kursk City Clinical Hospital No. 1": "ОБУЗ «Курская городская больница №1 им. Н.С. Короткова»",
+    "Kursk Emergency Care Center": "Курский центр неотложной помощи",
+    "City Polyclinic No. 1 Kursk": "Поликлиника №1, Курск",
+    "City Polyclinic No. 2 Kursk": "Поликлиника №2, Курск",
+    "City Polyclinic No. 5 Kursk": "ОБУЗ «Курская городская поликлиника №5»",
+    "Medassist Kursk": "Медицинский центр «Медассист»",
+    "Medassist Medical Center Kursk": "Медицинский центр «Медассист»",
+    "Expert Clinic Kursk": "Клиника Эксперт Курск",
+    "Healthy Family Kursk": "МЦ «Здоровая семья»",
+    "Healthy Family Medical Center Kursk": "МЦ «Здоровая семья»",
+    "Kursk Dental Clinic No. 1": "Курская областная стоматологическая поликлиника",
+    "Kursk Regional Dental Polyclinic": "ОБУЗ «Курская областная стоматологическая поликлиника»",
+    "Dental Lux Kursk": "Дента-Люкс Курск",
+    "Denta-Lux Kursk": "Дента-Люкс Курск",
+    "Smile Studio Kursk": "Стоматологическая клиника «Смайл»",
+    "Smile Dental Center Kursk": "Стоматологическая клиника «Смайл»",
+    "Children Polyclinic No. 1 Kursk": "Детская поликлиника №1, Курск",
+    "Children Polyclinic No. 2 Kursk": "Детская поликлиника №2, Курск",
+    "Kursk City Children Polyclinic": "Курская городская детская поликлиника",
+    "Pediatric Center Zdorovie Detey": "Педиатрический центр «Здоровье детей»",
+    "MRT Expert Kursk": "МРТ Эксперт Курск",
+    "Diagnostic Center Kursk": "Диагностический центр Курск",
+    "Nadezhda Diagnostic Center Kursk": "Клиника «Надежда», диагностический центр",
+    "Ophthalmology Center Kursk": "Офтальмологический центр Курск",
+    "Kursk Ophthalmology Clinical Hospital": "Офтальмологическая клиническая больница",
+    "Vision Plus Kursk": "Центр охраны зрения Курск",
+    "Vision Protection Center Kursk": "Центр охраны зрения Курск",
+    "Women's Health Kursk": "Новые медицинские технологии Курск",
+    "New Medical Technologies Kursk, Lenina 90/2": "Новые медицинские технологии, Курск, Ленина 90/2",
+    "Perinatal Consultation Kursk": "Курский городской клинический родильный дом",
+    "Kursk City Clinical Maternity Hospital": "Курский городской клинический родильный дом",
+    "Apteka 36.6 Kursk Center": "Аптека 36,6 Курск",
+    "Rigla Pharmacy Kursk": "Аптека «Ригла» Курск",
+    "April Pharmacy Kursk": "Аптека «Апрель» Курск",
+    "April Pharmacy Kursk, Kulakova 3G": "Аптека «Апрель», Курск, Кулакова 3Г",
+    "Rehabilitation Center Kursk": "Реабилитационный центр Курск",
+    "ReaMed+ Rehabilitation Center Kursk": "РеаМед+ Курск",
+    "Dermatology Clinic Kursk": "Дерматологическая клиника Курск",
+    "Medial Medical Center Kursk": "Медицинский центр «Медиал»",
+    "Neurology Center Kursk": "Неврологический центр Курск",
+    "Cardio Center Kursk": "Кардиоцентр Курск",
+    "Hospital regional multidisciplinario para atencion especializada y urgencias.": "Региональная многопрофильная больница для специализированной и неотложной помощи.",
+    "Hospital regional multidisciplinario para atención especializada y urgencias.": "Региональная многопрофильная больница для специализированной и неотложной помощи.",
+    "Hospital municipal con servicios de urgencias y especialistas.": "Городская больница со службой неотложной помощи и специалистами.",
     "¿La rodilla está hinchada?": "Колено опухло?",
     "?¿La rodilla está hinchada?": "Колено опухло?",
     "La rodilla esta hinchada o caliente?": "Колено опухло или горячее?",
@@ -237,9 +304,9 @@ RU_REPLACEMENTS = (
         "coincide con el tipo de atención recomendado",
         "соответствует рекомендованному типу помощи",
     ),
-    ("tipo", "тип"),
-    ("servicio", "услуга"),
-    ("especialidad", "специальность"),
+    ("tipo ", "тип: "),
+    ("servicio ", "услуга: "),
+    ("especialidad ", "специальность: "),
     ("cuenta con urgencias", "есть неотложная помощь"),
 )
 
@@ -281,6 +348,21 @@ def translate_text(value: str | None, locale: str) -> str | None:
     for source, replacement in RU_GRAMMAR_REPLACEMENTS:
         translated = translated.replace(source, replacement)
     return translated
+
+
+def has_cyrillic_text(value: str) -> bool:
+    return any("а" <= char.lower() <= "я" or char == "ё" for char in value)
+
+
+def extract_russian_official_name(raw_data: dict[str, Any] | None) -> str | None:
+    if not raw_data:
+        return None
+
+    official_name = raw_data.get("official_name")
+    if not isinstance(official_name, str) or not has_cyrillic_text(official_name):
+        return None
+
+    return official_name.split(" / ", 1)[0].strip()
 
 
 def localize_working_hours(value: str | None, locale: str) -> str | None:
@@ -360,7 +442,11 @@ def localize_medical_center_public(
         return center
 
     localized = center.model_copy(deep=True)
-    localized.name = translate_text(localized.name, locale) or localized.name
+    localized.name = (
+        extract_russian_official_name(localized.raw_data)
+        or translate_text(localized.name, locale)
+        or localized.name
+    )
     localized.institution_type_name = translate_text(
         localized.institution_type_name,
         locale,
