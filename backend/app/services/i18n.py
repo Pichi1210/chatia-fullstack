@@ -1,3 +1,4 @@
+import re
 from typing import Any
 
 from app.schemas.chat import ChatResponse
@@ -47,6 +48,14 @@ RU_TRANSLATIONS = {
     "Dolor de cabeza con fiebre alta, confusion o rigidez de cuello requiere urgencias.": "Головная боль с высокой температурой, спутанностью или ригидностью шеи требует неотложной помощи.",
     "Dolor de cabeza con fiebre sin signos neurologicos: consulta medicina general.": "Головная боль с температурой без неврологических признаков: обратитесь к терапевту.",
     "Dolor de cabeza con fiebre y signos de alarma requiere urgencias.": "Головная боль с температурой и тревожными признаками требует неотложной помощи.",
+    "Te recomiendo consulta con traumatologia en policlinico.": "Рекомендую консультацию травматолога в поликлинике.",
+    "Te recomiendo consulta con traumatologia en policlínico.": "Рекомендую консультацию травматолога в поликлинике.",
+    "Te recomiendo consulta con traumatología en policlinico.": "Рекомендую консультацию травматолога в поликлинике.",
+    "Te recomiendo consulta con traumatología en policlínico.": "Рекомендую консультацию травматолога в поликлинике.",
+    "Te recomiendo consulta c traumatologia в policlinico.": "Рекомендую консультацию травматолога в поликлинике.",
+    "Te recomiendo consulta с traumatologia в policlinico.": "Рекомендую консультацию травматолога в поликлинике.",
+    "Dolor de rodilla sin signos graves: consulta traumatologia/policlinico.": "Боль в колене без тяжелых признаков: консультация травматолога в поликлинике.",
+    "Dolor de rodilla sin signos graves: consulta traumatologia/policlínico.": "Боль в колене без тяжелых признаков: консультация травматолога в поликлинике.",
     "Dolor de rodilla": "Боль в колене",
     "Knee pain": "Боль в колене",
     "Joint pain": "Боль в суставе",
@@ -261,6 +270,12 @@ RU_TRANSLATIONS = {
 }
 
 RU_REPLACEMENTS = (
+    ("Te recomiendo consulta con traumatologia en policlinico.", "Рекомендую консультацию травматолога в поликлинике."),
+    ("Te recomiendo consulta con traumatologia en policlínico.", "Рекомендую консультацию травматолога в поликлинике."),
+    ("Te recomiendo consulta con traumatología en policlinico.", "Рекомендую консультацию травматолога в поликлинике."),
+    ("Te recomiendo consulta con traumatología en policlínico.", "Рекомендую консультацию травматолога в поликлинике."),
+    ("Te recomiendo consulta c traumatologia в policlinico.", "Рекомендую консультацию травматолога в поликлинике."),
+    ("Te recomiendo consulta с traumatologia в policlinico.", "Рекомендую консультацию травматолога в поликлинике."),
     (
         "Segun tus respuestas, el caso parece de riesgo bajo.",
         "По вашим ответам случай похож на низкий риск.",
@@ -310,9 +325,38 @@ RU_REPLACEMENTS = (
     ("cuenta con urgencias", "есть неотложная помощь"),
 )
 
+RU_WORD_REPLACEMENTS = (
+    (r"\bTe recomiendo\b", "Рекомендую"),
+    (r"\bte recomiendo\b", "рекомендую"),
+    (r"\bconsulta [cс] traumatolog[ií]a\b", "консультацию травматолога"),
+    (r"\bconsulta con traumatolog[ií]a\b", "консультацию травматолога"),
+    (r"\bconsulta traumatolog[ií]a\b", "консультация травматолога"),
+    (r"\bconsulta con ginecolog[ií]a\b", "консультацию гинеколога"),
+    (r"\bconsulta ginecolog[ií]a\b", "гинекологическая консультация"),
+    (r"\bconsulta con cardiolog[ií]a\b", "консультацию кардиолога"),
+    (r"\bconsulta cardiolog[ií]a\b", "консультация кардиолога"),
+    (r"\bconsulta con oftalmolog[ií]a\b", "консультацию офтальмолога"),
+    (r"\bconsulta oftalmolog[ií]a\b", "консультация офтальмолога"),
+    (r"\bconsulta con pediatr[ií]a\b", "консультацию педиатра"),
+    (r"\bconsulta pediatr[ií]a\b", "консультация педиатра"),
+    (r"\bconsulta medicina general\b", "консультация терапевта"),
+    (r"\bmedicina general\b", "терапевт"),
+    (r"\btraumatolog[ií]a\b", "травматология"),
+    (r"\bginecolog[ií]a\b", "гинекология"),
+    (r"\bcardiolog[ií]a\b", "кардиология"),
+    (r"\boftalmolog[ií]a\b", "офтальмология"),
+    (r"\bpediatr[ií]a\b", "педиатрия"),
+    (r"\bpolicl[ií]nico\b", "поликлиника"),
+    (r"\bhospital\b", "больница"),
+    (r"\burgencias\b", "неотложная помощь"),
+    (r"\bfarmacia\b", "аптека"),
+    (r"\blaboratorio\b", "лаборатория"),
+)
+
 RU_CONNECTOR_REPLACEMENTS = (
     (" con ", " с "),
     (" en ", " в "),
+    (" o ", " или "),
 )
 
 RU_GRAMMAR_REPLACEMENTS = (
@@ -343,6 +387,8 @@ def translate_text(value: str | None, locale: str) -> str | None:
         reverse=True,
     ):
         translated = translated.replace(source, replacement)
+    for source, replacement in RU_WORD_REPLACEMENTS:
+        translated = re.sub(source, replacement, translated, flags=re.IGNORECASE)
     for source, replacement in RU_CONNECTOR_REPLACEMENTS:
         translated = translated.replace(source, replacement)
     for source, replacement in RU_GRAMMAR_REPLACEMENTS:

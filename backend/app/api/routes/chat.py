@@ -29,7 +29,12 @@ from app.services.chatbot import (
     build_recommendation_response,
     handle_initial_chat,
 )
-from app.services.i18n import get_locale, localize_chat_payload, localize_chat_response
+from app.services.i18n import (
+    get_locale,
+    localize_chat_payload,
+    localize_chat_response,
+    translate_text,
+)
 
 router = APIRouter()
 
@@ -177,6 +182,10 @@ async def read_session(
     for message in messages:
         public_message = ChatMessagePublic.model_validate(message)
         if locale == "ru":
+            if public_message.sender == "bot":
+                public_message.text = (
+                    translate_text(public_message.text, locale) or public_message.text
+                )
             public_message.response_payload = localize_chat_payload(
                 public_message.response_payload,
                 locale,
