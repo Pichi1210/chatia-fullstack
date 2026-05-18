@@ -207,6 +207,12 @@ El sistema debe detectar la necesidad medica, pedir triaje si corresponde y devo
 
 Los casos de validacion funcional estan en [docs/chatbot_test_cases.md](./docs/chatbot_test_cases.md).
 
+## Screenshots and project evidence
+
+Las capturas reales del sistema funcionando y las evidencias visuales del proyecto se organizan en `docs/screenshots/`.
+
+Consulta la guia de capturas en [Screenshots documentation](docs/screenshots/README.md).
+
 ## Datos medicos
 
 La base medica se carga desde:
@@ -309,6 +315,7 @@ Consulta [deployment.md](./deployment.md) para detalles de despliegue y Traefik.
 
 - [docs/local_setup.md](./docs/local_setup.md): configuracion local preparada en esta maquina.
 - [docs/chatbot_test_cases.md](./docs/chatbot_test_cases.md): validacion funcional del chatbot medico.
+- [docs/screenshots/README.md](./docs/screenshots/README.md): guia de capturas y evidencias visuales del sistema.
 - [backend/README.md](./backend/README.md): notas especificas del backend.
 - [frontend/README.md](./frontend/README.md): notas especificas del frontend.
 - [development.md](./development.md): desarrollo general del stack.
