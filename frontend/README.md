@@ -2,6 +2,13 @@
 
 The frontend is built with [Vite](https://vitejs.dev/), [React](https://reactjs.org/), [TypeScript](https://www.typescriptlang.org/), [TanStack Query](https://tanstack.com/query), [TanStack Router](https://tanstack.com/router) and [Tailwind CSS](https://tailwindcss.com/).
 
+Vista escritorio
+![Vista escritorio](src/assets/loginsc.png)
+
+Vista escritorio
+![Vista escritorio](src/assets/chatsc.png)
+
+
 ## Requirements
 
 - [Bun](https://bun.sh/) (recommended) or [Node.js](https://nodejs.org/)
