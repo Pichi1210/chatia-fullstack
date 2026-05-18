@@ -4,6 +4,15 @@ Chatia Fullstack es una aplicacion web de orientacion medica inicial para la ciu
 
 El proyecto parte de una base FastAPI + React, pero ya esta adaptado a un caso de uso propio: chatbot medico, catalogo local de instituciones, reglas de triaje, recomendaciones por riesgo, historial de conversaciones y una integracion opcional con Rasa para NLU.
 
+
+Vista escritorio
+![Vista escritorio](frontend/src/assets/loginsc.png)
+
+
+Vista escritorio
+![Vista escritorio](frontend/src/assets/chatsc.png)
+
+
 ## Funcionalidades principales
 
 - Chat medico en la interfaz web VILPU.
