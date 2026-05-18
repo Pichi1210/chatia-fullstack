@@ -101,7 +101,7 @@ services:
       context: .
       dockerfile: frontend/Dockerfile
       args:
-        - VITE_API_URL=http://localhost:8001
+        - VITE_API_URL=
         - NODE_ENV=development
     develop:
       watch:
