@@ -109,7 +109,7 @@ services:
       - backend
 
   rasa-actions:
-    image: rasa/rasa-sdk:3.6.2
+    image: rasa/rasa-sdk:3.16.1
     profiles:
       - rasa-actions
     working_dir: /app
